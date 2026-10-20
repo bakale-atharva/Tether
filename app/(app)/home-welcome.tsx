@@ -17,20 +17,20 @@ export function HomeWelcome() {
 
   if (viewer.status === "signedOut") {
     return (
-      <EmptyState
-        icon={<FeatherIcon className="size-6" />}
-        title="Conversations worth staying for"
-        action={
-          <SignUpButton mode="modal">
-            <button type="button" className={buttonStyles({ size: "lg" })}>
-              Join Tether
-            </button>
-          </SignUpButton>
-        }
-      >
-        Tether is a calm place for public threads. Create an account to post,
-        reply, and save what matters.
-      </EmptyState>
+      <><EmptyState
+          icon={<FeatherIcon className="size-6" />}
+          title="Conversations worth staying for"
+          action={
+            <SignUpButton mode="modal">
+              <button type="button" className={buttonStyles({ size: "lg" })}>
+                Join Tether
+              </button>
+            </SignUpButton>
+          }
+        >
+          Tether is a calm place for public threads. Create an account to post,
+          reply, and save what matters.
+        </EmptyState><PublicFeed /></>
     );
   }
 

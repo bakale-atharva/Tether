@@ -14,13 +14,17 @@ Branch: `codex/01-posts-profiles`. No worktree. Base: `a6bae1c`.
 
 ## Tasks
 
-- [ ] ATH-174 public profiles and owner editing.
-- [ ] ATH-175 owned uploads, validation, and cleanup.
-- [ ] ATH-176 posts and composer.
-- [ ] ATH-177 public feed and pagination.
-- [ ] ATH-178 permalinks and owner deletion.
-- [ ] ATH-179 verification, review, and PR; stop before merge.
+- [x] ATH-174 public profiles and owner editing.
+- [x] ATH-175 owned uploads, validation, and cleanup.
+- [x] ATH-176 posts and composer.
+- [x] ATH-177 public feed and pagination.
+- [x] ATH-178 permalinks and owner deletion.
+- [x] ATH-179 verification, review, and PR; stop before merge.
 
 ## Verification
 
-Pending implementation. Record actual results and limitations here before PR creation.
+- `node --test scripts/verify-p1.mjs`: 3 passing dependency-free checks for post, profile, and encoded-image validation.
+- `pnpm lint`, `pnpm typecheck`, and `git diff --check`: passed.
+- `pnpm exec next build --webpack`: passed. The default Turbopack build is blocked in this runner because its CSS worker cannot bind a port, including when elevated.
+- The running local server returned HTTP 200. The running Convex dev deployment accepted `posts:list` and rejected unauthenticated post creation and upload URL requests.
+- Independent review findings were fixed: profile mutations omit absent upload IDs, the signed-out home includes the public feed, text inputs preserve the backend's Unicode code-point limits, and image validation now checks complete JPEG/PNG/WebP containers before storage.

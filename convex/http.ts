@@ -42,7 +42,7 @@ http.route({ path: "/images/upload", method: "POST", handler: httpAction(async (
   const problem = imageProblem(type, size);
   if (problem) return fail(problem);
   const blob = new Blob(chunks, { type });
-  if (!imageBytesMatch(type, new Uint8Array(await blob.slice(0, 12).arrayBuffer()))) return fail("The file doesn't match its image type.");
+  if (!imageBytesMatch(type, new Uint8Array(await blob.arrayBuffer()))) return fail("The file doesn't match its image type.");
   const storageId = await ctx.storage.store(blob);
   try {
     const uploadId = await ctx.runMutation(internal.uploads.register, { storageId, purpose: purpose as UploadPurpose });
