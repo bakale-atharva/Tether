@@ -1,4 +1,4 @@
-import { PageHeader } from "@/components/shell/app-shell";
+import { PageHeader } from "@/components/ui/page-header";
 import { HomeWelcome } from "./home-welcome";
 
 export default function HomePage() {

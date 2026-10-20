@@ -34,7 +34,15 @@ export default defineSchema({
     body: v.string(),
     images: v.array(v.object({ uploadId: v.id("uploads"), alt: v.string() })),
     deleted: v.boolean(),
+    // Undeleted direct replies, shown on cards. Optional: posts created before
+    // conversations existed have no replies (read as 0).
+    replyCount: v.optional(v.number()),
+    // Every direct reply ever created, deleted or not. A deleted post keeps a
+    // placeholder in its conversation while this is above zero.
+    childCount: v.optional(v.number()),
   })
+    .index("by_parentId", ["parentId"])
+    .index("by_rootId", ["rootId"])
     .index("by_parentId_and_deleted", ["parentId", "deleted"])
     .index("by_authorId_and_parentId_and_deleted", ["authorId", "parentId", "deleted"]),
 });

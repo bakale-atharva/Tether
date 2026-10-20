@@ -1,11 +1,10 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { THEME_STORAGE_KEY } from "@/lib/constants";
 import { MonitorIcon, MoonIcon, SunIcon } from "./icons";
 
 type ThemeChoice = "system" | "light" | "dark";
-
-export const THEME_STORAGE_KEY = "tether-theme";
 
 // Inline script for <head>: applies the saved theme before first paint.
 export const themeInitScript = `try{var t=localStorage.getItem("${THEME_STORAGE_KEY}");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;

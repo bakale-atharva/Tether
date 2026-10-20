@@ -1,7 +1,6 @@
 "use client";
 
 import { useMutation, useQuery } from "convex/react";
-import { ConvexError } from "convex/values";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 import { api } from "@/convex/_generated/api";
@@ -17,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Card, LoadingState } from "@/components/ui/states";
 import { useViewer } from "@/hooks/use-viewer";
+import { errorMessage } from "@/lib/errors";
 
 export function OnboardingForm() {
   const viewer = useViewer();
@@ -45,14 +45,6 @@ function useDebounced<T>(value: T, delayMs: number): T {
     return () => clearTimeout(timer);
   }, [value, delayMs]);
   return debounced;
-}
-
-function errorMessage(error: unknown): string {
-  if (error instanceof ConvexError) {
-    const data = error.data as { message?: unknown };
-    if (typeof data?.message === "string") return data.message;
-  }
-  return "We couldn't save your profile. Check your connection and try again.";
 }
 
 function ProfileSetup({
@@ -109,7 +101,7 @@ function ProfileSetup({
       await completeOnboarding({ handle: normalized, displayName: displayName.trim() });
       router.replace("/");
     } catch (error) {
-      setSubmitError(errorMessage(error));
+      setSubmitError(errorMessage(error, "We couldn't save your profile. Check your connection and try again."));
       setSubmitting(false);
     }
   }

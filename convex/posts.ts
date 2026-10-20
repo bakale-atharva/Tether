@@ -1,5 +1,5 @@
 import { paginationOptsValidator, paginationResultValidator } from "convex/server";
-import { ConvexError, v } from "convex/values";
+import { ConvexError, v, type Infer } from "convex/values";
 import type { Doc } from "./_generated/dataModel";
 import { mutation, query, type QueryCtx } from "./_generated/server";
 import { requireViewer } from "./lib/auth";
@@ -12,16 +12,25 @@ export const publicPostValidator = v.object({
   _id: v.id("posts"), _creationTime: v.number(),
   author: publicProfileValidator,
   authorKind: v.union(v.literal("user"), v.literal("agent")),
+  parentId: v.union(v.id("posts"), v.null()),
+  rootId: v.union(v.id("posts"), v.null()),
+  replyCount: v.number(),
+  // True once any reply exists beneath this message, even if later deleted.
+  hasReplies: v.boolean(),
   body: v.string(), deleted: v.boolean(),
   images: v.array(v.object({ url: v.union(v.string(), v.null()), alt: v.string() })),
 });
 
-async function publicPost(ctx: QueryCtx, post: Doc<"posts">) {
+// The client-facing post shape, inferred from the validator rather than cast.
+export type PublicPost = Infer<typeof publicPostValidator>;
+
+export async function publicPost(ctx: QueryCtx, post: Doc<"posts">) {
   const author = await ctx.db.get("users", post.authorId);
   if (!author) throw new Error("Post author is missing.");
   return {
     _id: post._id, _creationTime: post._creationTime,
     author: await toPublicProfile(ctx, author), authorKind: post.authorKind,
+    parentId: post.parentId, rootId: post.rootId, replyCount: post.replyCount ?? 0, hasReplies: (post.childCount ?? 0) > 0,
     body: post.deleted ? "" : post.body, deleted: post.deleted,
     images: post.deleted ? [] : await Promise.all(post.images.map(async image => ({
       url: await uploadUrl(ctx, image.uploadId), alt: image.alt,
@@ -46,7 +55,7 @@ export const create = mutation({
     }
     return await ctx.db.insert("posts", {
       authorId: viewer._id, authorKind: "user", parentId: null, rootId: null,
-      body, images: args.images.map(image => ({ ...image, alt: image.alt.trim() })), deleted: false,
+      body, images: args.images.map(image => ({ ...image, alt: image.alt.trim() })), deleted: false, replyCount: 0, childCount: 0,
     });
   },
 });
@@ -92,10 +101,17 @@ export const remove = mutation({
   handler: async (ctx, args) => {
     const viewer = await requireViewer(ctx);
     const post = await ctx.db.get("posts", args.postId);
-    if (!post || post.authorId !== viewer._id) throw new ConvexError({ code: "FORBIDDEN", message: "You can only delete your own posts." });
+    if (!post || post.authorId !== viewer._id) throw new ConvexError({ code: "FORBIDDEN", message: "You can only delete your own messages." });
     if (post.deleted) return null;
     for (const image of post.images) await releaseUpload(ctx, image.uploadId);
     await ctx.db.patch("posts", post._id, { body: "", images: [], deleted: true });
+    // Same transaction as the delete, so the parent's visible count never drifts.
+    if (post.parentId) {
+      const parent = await ctx.db.get("posts", post.parentId);
+      if (parent) {
+        await ctx.db.patch("posts", parent._id, { replyCount: Math.max(0, (parent.replyCount ?? 0) - 1) });
+      }
+    }
     return null;
   },
 });

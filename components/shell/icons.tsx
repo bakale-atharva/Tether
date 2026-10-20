@@ -107,3 +107,11 @@ export function FeatherIcon(props: SVGProps<SVGSVGElement>) {
     </Icon>
   );
 }
+
+export function ChatIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <Icon {...props}>
+      <path d="M20.5 11.5a8 8 0 0 1-11.9 7l-4.1 1.1 1.1-3.9a8 8 0 1 1 14.9-4.2" />
+    </Icon>
+  );
+}
