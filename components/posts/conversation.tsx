@@ -9,19 +9,19 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { EmptyState } from "@/components/ui/states";
 import { ChatIcon } from "@/components/shell/icons";
-import { PostCard, postHref, replyButtonId, type PublicPost } from "./post-card";
+import {
+  THREAD_AUTO_EXPAND_DEPTH,
+  THREAD_FIRST_PAGE_SIZE,
+  THREAD_MAX_DEPTH,
+  THREAD_NESTED_PAGE_SIZE,
+} from "@/lib/constants";
+import type { PublicPost } from "@/convex/posts";
+import { PostCard, postHref, replyButtonId } from "./post-card";
 import { ReplyComposer } from "./reply-composer";
 
-// Levels rendered beneath the focused message before handing off to the
-// deeper message's own permalink, which keeps indentation readable on phones.
-const MAX_DEPTH = 4;
-// Levels that load their replies automatically; deeper ones wait for a tap.
-const AUTO_EXPAND_DEPTH = 2;
-const FIRST_PAGE = 10;
-const NESTED_PAGE = 3;
 
 export function ReplyList({ parentId, depth }: { parentId: Id<"posts">; depth: number }) {
-  const pageSize = depth === 0 ? FIRST_PAGE : NESTED_PAGE;
+  const pageSize = depth === 0 ? THREAD_FIRST_PAGE_SIZE : THREAD_NESTED_PAGE_SIZE;
   const { results, status, loadMore } = usePaginatedQuery(api.replies.list, { parentId }, { initialNumItems: pageSize });
 
   if (status === "LoadingFirstPage") {
@@ -61,9 +61,9 @@ export function ReplyList({ parentId, depth }: { parentId: Id<"posts">; depth: n
 
 function ReplyNode({ reply, depth }: { reply: PublicPost; depth: number }) {
   const [composing, setComposing] = useState(false);
-  const [expanded, setExpanded] = useState(depth + 1 < AUTO_EXPAND_DEPTH);
+  const [expanded, setExpanded] = useState(depth + 1 < THREAD_AUTO_EXPAND_DEPTH);
   const [postedId, setPostedId] = useState<Id<"posts"> | null>(null);
-  const canNest = depth + 1 < MAX_DEPTH;
+  const canNest = depth + 1 < THREAD_MAX_DEPTH;
 
   function closeComposer() {
     setComposing(false);

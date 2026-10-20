@@ -4,16 +4,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useMutation } from "convex/react";
-import type { FunctionReturnType } from "convex/server";
 import { api } from "@/convex/_generated/api";
+import type { PublicPost } from "@/convex/posts";
 import { ChatIcon } from "@/components/shell/icons";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ErrorState } from "@/components/ui/states";
 import { useViewer } from "@/hooks/use-viewer";
 import { errorMessage } from "@/lib/errors";
-
-export type PublicPost = Exclude<FunctionReturnType<typeof api.posts.get>, null>;
 
 export function postHref(post: Pick<PublicPost, "_id" | "author">) {
   return `/${post.author.handle}/post/${post._id}`;

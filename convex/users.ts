@@ -1,4 +1,4 @@
-import { ConvexError, v } from "convex/values";
+import { ConvexError, v, type Infer } from "convex/values";
 import type { Doc } from "./_generated/dataModel";
 import { mutation, query, type QueryCtx, type MutationCtx } from "./_generated/server";
 import { getViewer, requireIdentity, requireViewer } from "./lib/auth";
@@ -22,6 +22,8 @@ export const publicProfileValidator = v.object({
   avatarUrl: v.union(v.string(), v.null()),
   bannerUrl: v.union(v.string(), v.null()),
 });
+
+export type PublicProfile = Infer<typeof publicProfileValidator>;
 
 export async function toPublicProfile(ctx: QueryCtx | MutationCtx, user: Doc<"users">) {
   return {

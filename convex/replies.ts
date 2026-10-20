@@ -2,12 +2,8 @@ import { paginationOptsValidator, paginationResultValidator } from "convex/serve
 import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { requireViewer } from "./lib/auth";
-import { isVisibleInConversation, replyProblem } from "./lib/content";
+import { ANCESTOR_LIMIT, isVisibleInConversation, replyProblem } from "./lib/content";
 import { publicPost, publicPostValidator } from "./posts";
-
-// Ancestor chains are walked one document at a time; past this depth the
-// permalink offers a jump to the conversation start instead.
-const ANCESTOR_LIMIT = 50;
 
 // The client names only the message it replies to. The conversation root and
 // author come from the database and verified identity, never from arguments.

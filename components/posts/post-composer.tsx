@@ -4,6 +4,7 @@
 import { useRef, useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import type { Id } from "@/convex/_generated/dataModel";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ErrorState } from "@/components/ui/states";
@@ -38,14 +39,14 @@ export function PostComposer() {
     event.preventDefault(); setError(null);
     if (remaining < 0) return setError("Keep your post to 280 characters.");
     setSending(true);
-    const uploaded: string[] = [];
+    const uploaded: Id<"uploads">[] = [];
     try {
       for (const image of images) uploaded.push(await upload(image.file, "post"));
-      await create({ body, images: uploaded.map((uploadId, index) => ({ uploadId: uploadId as never, alt: images[index].alt })) });
+      await create({ body, images: uploaded.map((uploadId, index) => ({ uploadId, alt: images[index].alt })) });
       images.forEach(image => URL.revokeObjectURL(image.preview));
       setBody(""); setImages([]);
     } catch (cause) {
-      await Promise.all(uploaded.map(uploadId => discard({ uploadId: uploadId as never }).catch(() => null)));
+      await Promise.all(uploaded.map(uploadId => discard({ uploadId }).catch(() => null)));
       setError(cause instanceof Error ? cause.message : "Your post couldn't be published.");
     } finally { setSending(false); }
   }

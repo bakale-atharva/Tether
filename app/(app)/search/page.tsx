@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/shell/app-shell";
+import { PageHeader } from "@/components/ui/page-header";
 import { SearchIcon } from "@/components/shell/icons";
 import { EmptyState } from "@/components/ui/states";
 

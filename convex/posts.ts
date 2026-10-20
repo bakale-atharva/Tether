@@ -1,5 +1,5 @@
 import { paginationOptsValidator, paginationResultValidator } from "convex/server";
-import { ConvexError, v } from "convex/values";
+import { ConvexError, v, type Infer } from "convex/values";
 import type { Doc } from "./_generated/dataModel";
 import { mutation, query, type QueryCtx } from "./_generated/server";
 import { requireViewer } from "./lib/auth";
@@ -20,6 +20,9 @@ export const publicPostValidator = v.object({
   body: v.string(), deleted: v.boolean(),
   images: v.array(v.object({ url: v.union(v.string(), v.null()), alt: v.string() })),
 });
+
+// The client-facing post shape, inferred from the validator rather than cast.
+export type PublicPost = Infer<typeof publicPostValidator>;
 
 export async function publicPost(ctx: QueryCtx, post: Doc<"posts">) {
   const author = await ctx.db.get("users", post.authorId);

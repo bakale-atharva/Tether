@@ -5,6 +5,9 @@ export const IMAGE_MAX = 4;
 export const IMAGE_BYTES_MAX = 5 * 1024 * 1024;
 export const ALT_MAX = 1000;
 export const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
+// Ancestor chains are walked one document at a time; past this depth a reply
+// permalink offers a jump to the conversation start instead.
+export const ANCESTOR_LIMIT = 50;
 
 export function characterCount(text: string): number {
   return Array.from(text).length;

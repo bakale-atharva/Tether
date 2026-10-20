@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { PageHeader } from "@/components/shell/app-shell";
+import { PageHeader } from "@/components/ui/page-header";
 import { Ancestors, ReplyList } from "@/components/posts/conversation";
 import { PostCard } from "@/components/posts/post-card";
 import { ReplyComposer, replyInputId } from "@/components/posts/reply-composer";

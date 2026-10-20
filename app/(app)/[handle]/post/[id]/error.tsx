@@ -1,6 +1,6 @@
 "use client";
 
-import { PageHeader } from "@/components/shell/app-shell";
+import { PageHeader } from "@/components/ui/page-header";
 import { Button } from "@/components/ui/button";
 import { ErrorState } from "@/components/ui/states";
 
