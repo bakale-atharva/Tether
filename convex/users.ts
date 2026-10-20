@@ -1,7 +1,9 @@
 import { ConvexError, v } from "convex/values";
 import type { Doc } from "./_generated/dataModel";
-import { mutation, query } from "./_generated/server";
-import { getViewer, requireIdentity } from "./lib/auth";
+import { mutation, query, type QueryCtx, type MutationCtx } from "./_generated/server";
+import { getViewer, requireIdentity, requireViewer } from "./lib/auth";
+import { bioProblem } from "./lib/content";
+import { attachUpload, releaseUpload, uploadUrl } from "./uploads";
 import {
   HANDLE_PROBLEM_MESSAGES,
   displayNameProblem,
@@ -18,16 +20,18 @@ export const publicProfileValidator = v.object({
   displayName: v.string(),
   bio: v.union(v.string(), v.null()),
   avatarUrl: v.union(v.string(), v.null()),
+  bannerUrl: v.union(v.string(), v.null()),
 });
 
-export function toPublicProfile(user: Doc<"users">) {
+export async function toPublicProfile(ctx: QueryCtx | MutationCtx, user: Doc<"users">) {
   return {
     _id: user._id,
     _creationTime: user._creationTime,
     handle: user.handle,
     displayName: user.displayName,
     bio: user.bio ?? null,
-    avatarUrl: user.avatarUrl ?? null,
+    avatarUrl: await uploadUrl(ctx, user.avatarUploadId) ?? user.avatarUrl ?? null,
+    bannerUrl: await uploadUrl(ctx, user.bannerUploadId),
   };
 }
 
@@ -49,7 +53,7 @@ export const viewer = query({
 
     const user = await getViewer(ctx);
     if (user !== null) {
-      return { status: "ready" as const, profile: toPublicProfile(user) };
+      return { status: "ready" as const, profile: await toPublicProfile(ctx, user) };
     }
 
     const name =
@@ -154,6 +158,36 @@ export const getByHandle = query({
       .query("users")
       .withIndex("by_handleLower", (q) => q.eq("handleLower", handleLower))
       .unique();
-    return user === null ? null : toPublicProfile(user);
+    return user === null ? null : await toPublicProfile(ctx, user);
+  },
+});
+
+// No target user argument: a caller can edit only their verified profile.
+export const updateProfile = mutation({
+  args: {
+    displayName: v.string(), bio: v.string(),
+    avatarUploadId: v.optional(v.union(v.id("uploads"), v.null())),
+    bannerUploadId: v.optional(v.union(v.id("uploads"), v.null())),
+  },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    const viewer = await requireViewer(ctx);
+    const name = args.displayName.trim();
+    const bio = args.bio.trim();
+    const problem = displayNameProblem(name) ?? bioProblem(bio);
+    if (problem) throw new ConvexError({ code: "INVALID_PROFILE", message: problem });
+    const patch: Partial<Doc<"users">> = { displayName: name, bio };
+    for (const purpose of ["avatar", "banner"] as const) {
+      const key = purpose === "avatar" ? "avatarUploadId" : "bannerUploadId";
+      const next = args[key];
+      if (next === undefined) continue;
+      if (next !== null) await attachUpload(ctx, next, viewer._id, purpose);
+      const old = viewer[key];
+      if (old) await releaseUpload(ctx, old);
+      patch[key] = next ?? undefined;
+      if (purpose === "avatar") patch.avatarUrl = undefined;
+    }
+    await ctx.db.patch("users", viewer._id, patch);
+    return null;
   },
 });
