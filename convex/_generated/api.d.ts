@@ -8,11 +8,14 @@
  * @module
  */
 
+import type * as bookmarks from "../bookmarks.js";
 import type * as crons from "../crons.js";
 import type * as http from "../http.js";
+import type * as interactions from "../interactions.js";
 import type * as lib_auth from "../lib/auth.js";
 import type * as lib_content from "../lib/content.js";
 import type * as lib_handles from "../lib/handles.js";
+import type * as likes from "../likes.js";
 import type * as posts from "../posts.js";
 import type * as replies from "../replies.js";
 import type * as uploads from "../uploads.js";
@@ -25,11 +28,14 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  bookmarks: typeof bookmarks;
   crons: typeof crons;
   http: typeof http;
+  interactions: typeof interactions;
   "lib/auth": typeof lib_auth;
   "lib/content": typeof lib_content;
   "lib/handles": typeof lib_handles;
+  likes: typeof likes;
   posts: typeof posts;
   replies: typeof replies;
   uploads: typeof uploads;

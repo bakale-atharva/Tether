@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { ErrorState } from "@/components/ui/states";
 import { useViewer } from "@/hooks/use-viewer";
 import { errorMessage } from "@/lib/errors";
+import { BookmarkButton, LikeButton, actionButtonClass } from "./post-actions";
 
 export function postHref(post: Pick<PublicPost, "_id" | "author">) {
   return `/${post.author.handle}/post/${post._id}`;
@@ -86,33 +87,37 @@ export function PostCard({ post, detail = false, compact = false, onReply, reply
             {post.images.map((image, index) => image.url ? <img key={index} src={image.url} alt={image.alt} className="max-h-[27.5rem] w-full rounded-2xl border border-line object-cover" /> : null)}
           </div> : null}
           <div className="-ml-2 mt-2 flex items-center justify-between">
-            {onReply ? (
-              <button
-                id={replyButtonId(post._id)}
-                type="button"
-                onClick={onReply}
-                aria-expanded={replyOpen}
-                className="inline-flex h-9 items-center gap-1.5 rounded-full px-2 text-sm text-muted transition-colors hover:bg-accent-soft hover:text-accent-text"
-              >
-                <ChatIcon className="size-[1.125rem]" />
-                <span>Reply</span>
-                {post.replyCount > 0 ? (
-                  <>
-                    <span aria-hidden="true" className="tabular-nums">· {post.replyCount}</span>
-                    <span className="sr-only">, {replyLabel}</span>
-                  </>
-                ) : null}
-              </button>
-            ) : (
-              <Link
-                href={href}
-                aria-label={post.replyCount > 0 ? `${replyLabel}. Open conversation` : "Reply"}
-                className="inline-flex h-9 items-center gap-1.5 rounded-full px-2 text-sm text-muted transition-colors hover:bg-accent-soft hover:text-accent-text"
-              >
-                <ChatIcon className="size-[1.125rem]" />
-                <span aria-hidden="true">{post.replyCount > 0 ? post.replyCount : "Reply"}</span>
-              </Link>
-            )}
+            <div className="flex items-center gap-2 sm:gap-4">
+              {onReply ? (
+                <button
+                  id={replyButtonId(post._id)}
+                  type="button"
+                  onClick={onReply}
+                  aria-expanded={replyOpen}
+                  className={actionButtonClass}
+                >
+                  <ChatIcon className="size-[1.125rem]" />
+                  <span>Reply</span>
+                  {post.replyCount > 0 ? (
+                    <>
+                      <span aria-hidden="true" className="tabular-nums">· {post.replyCount}</span>
+                      <span className="sr-only">, {replyLabel}</span>
+                    </>
+                  ) : null}
+                </button>
+              ) : (
+                <Link
+                  href={href}
+                  aria-label={post.replyCount > 0 ? `${replyLabel}. Open conversation` : "Reply"}
+                  className={actionButtonClass}
+                >
+                  <ChatIcon className="size-[1.125rem]" />
+                  <span aria-hidden="true">{post.replyCount > 0 ? post.replyCount : "Reply"}</span>
+                </Link>
+              )}
+              <LikeButton post={post} />
+              {isReply ? null : <BookmarkButton post={post} />}
+            </div>
             {isOwner ? <Button variant="ghost" size="sm" loading={removing} onClick={deletePost}>Delete</Button> : null}
           </div>
           {error ? <ErrorState title="Message wasn't deleted">{error}</ErrorState> : null}

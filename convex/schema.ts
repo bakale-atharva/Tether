@@ -40,9 +40,25 @@ export default defineSchema({
     // Every direct reply ever created, deleted or not. A deleted post keeps a
     // placeholder in its conversation while this is above zero.
     childCount: v.optional(v.number()),
+    // Rows in `likes` for this message. Optional: older posts read as 0.
+    likeCount: v.optional(v.number()),
   })
     .index("by_parentId", ["parentId"])
     .index("by_rootId", ["rootId"])
     .index("by_parentId_and_deleted", ["parentId", "deleted"])
     .index("by_authorId_and_parentId_and_deleted", ["authorId", "parentId", "deleted"]),
+  // One row per (user, message). Who liked what is never exposed; only counts.
+  likes: defineTable({
+    userId: v.id("users"),
+    postId: v.id("posts"),
+  })
+    .index("by_userId_and_postId", ["userId", "postId"])
+    .index("by_postId", ["postId"]),
+  // Private saves of top-level posts, readable only by their owner.
+  bookmarks: defineTable({
+    userId: v.id("users"),
+    postId: v.id("posts"),
+  })
+    .index("by_userId_and_postId", ["userId", "postId"])
+    .index("by_userId", ["userId"]),
 });

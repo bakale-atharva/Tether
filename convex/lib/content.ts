@@ -33,6 +33,14 @@ export function isVisibleInConversation(post: { deleted: boolean; childCount?: n
   return !post.deleted || (post.childCount ?? 0) > 0;
 }
 
+// A like count after a viewer moves from `before` to `after`. Shared by the
+// mutation and the client's optimistic update so both agree, and repeated
+// requests for the same state leave the count unchanged.
+export function nextLikeCount(count: number, before: boolean, after: boolean): number {
+  if (before === after) return count;
+  return Math.max(0, count + (after ? 1 : -1));
+}
+
 export function bioProblem(bio: string): string | null {
   return characterCount(bio.trim()) > BIO_MAX ? "Keep your bio to 160 characters." : null;
 }
