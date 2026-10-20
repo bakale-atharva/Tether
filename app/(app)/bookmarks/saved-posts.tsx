@@ -1,6 +1,7 @@
 "use client";
 
 import { SignInButton } from "@clerk/nextjs";
+import Link from "next/link";
 import { useMutation, usePaginatedQuery } from "convex/react";
 import { useState } from "react";
 import { api } from "@/convex/_generated/api";
@@ -33,7 +34,11 @@ export function SavedPosts() {
   if (!ready || status === "LoadingFirstPage") return <LoadingState label="Loading bookmarks" />;
   if (status === "Exhausted" && results.length === 0) {
     return (
-      <EmptyState icon={<BookmarkIcon className="size-6" />} title="Nothing saved yet">
+      <EmptyState
+        icon={<BookmarkIcon className="size-6" />}
+        title="Nothing saved yet"
+        action={<Link href="/" className={buttonStyles({ variant: "secondary" })}>Browse the feed</Link>}
+      >
         Tap the bookmark on any post to keep it here, privately.
       </EmptyState>
     );
