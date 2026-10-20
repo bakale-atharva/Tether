@@ -19,7 +19,7 @@ export function Field({ id, label, hint, error, prefix, className = "", ...props
         {label}
       </label>
       <div
-        className={`flex h-11 items-center rounded-xl border bg-surface transition-colors focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/25 ${
+        className={`flex h-11 items-center rounded-xl border bg-surface transition-colors focus-within:border-ring ${
           error ? "border-danger" : "border-line-strong"
         }`}
       >
