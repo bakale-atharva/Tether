@@ -17,6 +17,19 @@ export function postProblem(body: string, imageCount: number): string | null {
   return null;
 }
 
+// Replies are text-only, so there is no image-only exception.
+export function replyProblem(body: string): string | null {
+  if (body.trim().length === 0) return "Write a reply.";
+  if (characterCount(body.trim()) > POST_MAX) return "Keep your reply to 280 characters.";
+  return null;
+}
+
+// A deleted message stays in its conversation as a placeholder only while it
+// has replies beneath it; a deleted leaf disappears entirely.
+export function isVisibleInConversation(post: { deleted: boolean; childCount?: number }): boolean {
+  return !post.deleted || (post.childCount ?? 0) > 0;
+}
+
 export function bioProblem(bio: string): string | null {
   return characterCount(bio.trim()) > BIO_MAX ? "Keep your bio to 160 characters." : null;
 }
