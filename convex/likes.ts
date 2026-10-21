@@ -1,11 +1,11 @@
 import { ConvexError, v } from "convex/values";
 import { mutation } from "./_generated/server";
+import { likeCounts } from "./lib/aggregates";
 import { requireViewer } from "./lib/auth";
-import { nextLikeCount } from "./lib/content";
 
 // Sets the viewer's like to the requested state rather than toggling it, so a
-// retried or duplicated request can never flip the like back. The row and the
-// post's count change in one serializable transaction.
+// retried or duplicated request can never flip the like back. The row and its
+// count change in one serializable transaction.
 export const set = mutation({
   args: { postId: v.id("posts"), liked: v.boolean() },
   returns: v.null(),
@@ -18,19 +18,22 @@ export const set = mutation({
       .query("likes")
       .withIndex("by_userId_and_postId", (q) => q.eq("userId", viewer._id).eq("postId", post._id))
       .unique();
-    const wasLiked = existing !== null;
-    if (wasLiked === args.liked) return null;
 
-    if (args.liked) {
-      if (post.deleted) {
-        throw new ConvexError({ code: "CONTENT_UNAVAILABLE", message: "This message was deleted, so it can't be liked." });
-      }
-      await ctx.db.insert("likes", { userId: viewer._id, postId: post._id });
-    } else if (existing) {
+    if (!args.liked) {
       // Unliking stays possible after deletion so nobody is stuck with a like.
-      await ctx.db.delete("likes", existing._id);
+      if (existing) {
+        await ctx.db.delete("likes", existing._id);
+        await likeCounts.delete(ctx, existing);
+      }
+      return null;
     }
-    await ctx.db.patch("posts", post._id, { likeCount: nextLikeCount(post.likeCount ?? 0, wasLiked, args.liked) });
+    if (existing) return null;
+    if (post.deleted) {
+      throw new ConvexError({ code: "CONTENT_UNAVAILABLE", message: "This message was deleted, so it can't be liked." });
+    }
+    const likeId = await ctx.db.insert("likes", { userId: viewer._id, postId: post._id });
+    const like = await ctx.db.get("likes", likeId);
+    if (like) await likeCounts.insert(ctx, like);
     return null;
   },
 });

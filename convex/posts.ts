@@ -15,7 +15,6 @@ export const publicPostValidator = v.object({
   parentId: v.union(v.id("posts"), v.null()),
   rootId: v.union(v.id("posts"), v.null()),
   replyCount: v.number(),
-  likeCount: v.number(),
   // True once any reply exists beneath this message, even if later deleted.
   hasReplies: v.boolean(),
   body: v.string(), deleted: v.boolean(),
@@ -31,7 +30,7 @@ export async function publicPost(ctx: QueryCtx, post: Doc<"posts">) {
   return {
     _id: post._id, _creationTime: post._creationTime,
     author: await toPublicProfile(ctx, author), authorKind: post.authorKind,
-    parentId: post.parentId, rootId: post.rootId, replyCount: post.replyCount ?? 0, likeCount: post.deleted ? 0 : post.likeCount ?? 0, hasReplies: (post.childCount ?? 0) > 0,
+    parentId: post.parentId, rootId: post.rootId, replyCount: post.replyCount ?? 0, hasReplies: (post.childCount ?? 0) > 0,
     body: post.deleted ? "" : post.body, deleted: post.deleted,
     images: post.deleted ? [] : await Promise.all(post.images.map(async image => ({
       url: await uploadUrl(ctx, image.uploadId), alt: image.alt,
@@ -56,7 +55,7 @@ export const create = mutation({
     }
     return await ctx.db.insert("posts", {
       authorId: viewer._id, authorKind: "user", parentId: null, rootId: null,
-      body, images: args.images.map(image => ({ ...image, alt: image.alt.trim() })), deleted: false, replyCount: 0, childCount: 0, likeCount: 0,
+      body, images: args.images.map(image => ({ ...image, alt: image.alt.trim() })), deleted: false, replyCount: 0, childCount: 0,
     });
   },
 });

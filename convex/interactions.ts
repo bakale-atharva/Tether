@@ -1,5 +1,6 @@
 import { v, type Infer } from "convex/values";
 import { query } from "./_generated/server";
+import { likeCounts } from "./lib/aggregates";
 import { getViewer } from "./lib/auth";
 
 export const interactionStateValidator = v.object({
@@ -18,7 +19,7 @@ export const viewerState = query({
   returns: interactionStateValidator,
   handler: async (ctx, args) => {
     const post = await ctx.db.get("posts", args.postId);
-    const likeCount = post && !post.deleted ? post.likeCount ?? 0 : 0;
+    const likeCount = post && !post.deleted ? await likeCounts.count(ctx, { namespace: post._id }) : 0;
     const viewer = await getViewer(ctx);
     if (!viewer) return { likeCount, liked: false, bookmarked: false };
 

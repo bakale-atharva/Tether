@@ -11,9 +11,15 @@ Branch: `claude/03-likes-bookmarks`. No worktree. Base: `4db55b1` (Phase 2 merge
 - `likes:set` and `bookmarks:set` set a requested state (`liked` /
   `bookmarked`) instead of toggling. Repeated or retried requests are no-ops.
   The acting user always comes from the verified identity.
-- `posts.likeCount` is optional, so older rows need no backfill. It changes in
-  the same mutation as the like row. `nextLikeCount` in `convex/lib/content.ts`
-  is shared by the mutation and the client's optimistic update.
+- Like counts come from the `@convex-dev/aggregate` component (`likeCounts`,
+  one namespace per post, defined in `convex/lib/aggregates.ts`). It is updated
+  in the same mutation as each like row. Changed in review: a counter on the
+  post document meant every like rewrote the post. That re-ran every feed,
+  profile, and thread query showing it, and competed with replies and deletion
+  for the same document. Counts are now derived from the like rows, so they
+  can't drift. Posts don't carry a count; cards read it from
+  `interactions:viewerState`. `nextLikeCount` in `convex/lib/content.ts`
+  predicts the count for the client's optimistic update.
 - New likes and saves are rejected for deleted content. Unliking and removing a
   bookmark still work, so nobody is stuck with a like or a bookmark. Replies
   can be liked but not bookmarked.
@@ -44,8 +50,9 @@ Branch: `claude/03-likes-bookmarks`. No worktree. Base: `4db55b1` (Phase 2 merge
   - Liking twice left one row and a count of 1. Unliking a post that wasn't
     liked was a no-op. Visitors were rejected, and an extra `userId` argument
     was rejected by the validator.
-  - 12 concurrent like/unlike calls from two users ended with a stored count
-    equal to the like rows.
+  - 12 concurrent like/unlike calls from two users ended with an aggregate
+    count equal to the like rows (re-run after the aggregate change). Post
+    documents no longer change when liked.
   - Saving a reply was rejected (`NOT_BOOKMARKABLE`). Saving twice left one
     bookmark. Beta's list and `viewerState` showed none of alpha's bookmarks,
     and visitors couldn't list bookmarks.

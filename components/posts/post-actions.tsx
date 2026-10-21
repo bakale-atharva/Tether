@@ -15,11 +15,13 @@ import { errorMessage } from "@/lib/errors";
 export const actionButtonClass =
   "inline-flex h-9 items-center gap-1.5 rounded-full px-2 text-sm text-muted transition-colors hover:bg-accent-soft hover:text-accent-text disabled:cursor-not-allowed disabled:opacity-55";
 
-// Live counts and the viewer's own choices. Until the query answers, the card's
-// own count stands in so nothing jumps on first paint.
-function useInteractionState(post: PublicPost): InteractionState {
+const UNKNOWN_STATE: InteractionState = { likeCount: 0, liked: false, bookmarked: false };
+
+// Live count and the viewer's own choices. Counts aren't on the post itself, so
+// controls stay disabled until this answers instead of toggling a guessed state.
+function useInteractionState(post: PublicPost) {
   const state = useQuery(api.interactions.viewerState, { postId: post._id });
-  return state ?? { likeCount: post.likeCount, liked: false, bookmarked: false };
+  return { state: state ?? UNKNOWN_STATE, loaded: state !== undefined };
 }
 
 // Visitors see the same control, but pressing it opens sign-in instead.
@@ -34,7 +36,7 @@ function SignInAction({ label, children }: { label: string; children: ReactNode 
 export function LikeButton({ post }: { post: PublicPost }) {
   const viewer = useViewer();
   const toast = useToast();
-  const state = useInteractionState(post);
+  const { state, loaded } = useInteractionState(post);
   // Convex discards this local change automatically if the mutation fails.
   const setLiked = useMutation(api.likes.set).withOptimisticUpdate((store, { postId, liked }) => {
     const current = store.getQuery(api.interactions.viewerState, { postId });
@@ -45,7 +47,7 @@ export function LikeButton({ post }: { post: PublicPost }) {
     }
   });
 
-  const countLabel = state.likeCount === 1 ? "1 like" : `${state.likeCount} likes`;
+  const countLabel = !loaded ? "" : state.likeCount === 1 ? ", 1 like" : `, ${state.likeCount} likes`;
   const content = (
     <>
       <HeartIcon filled={state.liked} className={`size-[1.125rem] ${state.liked ? "text-accent" : ""}`} />
@@ -53,7 +55,7 @@ export function LikeButton({ post }: { post: PublicPost }) {
     </>
   );
 
-  if (viewer.status === "signedOut") return <SignInAction label={`Sign in to like. ${countLabel}`}>{content}</SignInAction>;
+  if (viewer.status === "signedOut") return <SignInAction label={`Sign in to like${countLabel}`}>{content}</SignInAction>;
 
   async function toggle() {
     const liked = !state.liked;
@@ -68,9 +70,9 @@ export function LikeButton({ post }: { post: PublicPost }) {
     <button
       type="button"
       onClick={toggle}
-      disabled={viewer.status !== "ready"}
+      disabled={viewer.status !== "ready" || !loaded}
       aria-pressed={state.liked}
-      aria-label={`Like, ${countLabel}`}
+      aria-label={`Like${countLabel}`}
       className={`${actionButtonClass} ${state.liked ? "text-accent-text" : ""}`}
     >
       {content}
@@ -82,7 +84,7 @@ export function LikeButton({ post }: { post: PublicPost }) {
 export function BookmarkButton({ post }: { post: PublicPost }) {
   const viewer = useViewer();
   const toast = useToast();
-  const state = useInteractionState(post);
+  const { state, loaded } = useInteractionState(post);
   const setBookmarked = useMutation(api.bookmarks.set).withOptimisticUpdate((store, { postId, bookmarked }) => {
     const current = store.getQuery(api.interactions.viewerState, { postId });
     if (current) store.setQuery(api.interactions.viewerState, { postId }, { ...current, bookmarked });
@@ -104,7 +106,7 @@ export function BookmarkButton({ post }: { post: PublicPost }) {
     <button
       type="button"
       onClick={toggle}
-      disabled={viewer.status !== "ready"}
+      disabled={viewer.status !== "ready" || !loaded}
       aria-pressed={state.bookmarked}
       aria-label="Bookmark"
       title={state.bookmarked ? "Remove bookmark" : "Bookmark privately"}

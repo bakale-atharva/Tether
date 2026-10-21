@@ -34,7 +34,6 @@ export const create = mutation({
       deleted: false,
       replyCount: 0,
       childCount: 0,
-      likeCount: 0,
     });
     // Serializable mutations keep both counters exact under concurrent replies.
     await ctx.db.patch("posts", parent._id, {

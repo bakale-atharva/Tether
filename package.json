@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.17",
+    "@convex-dev/aggregate": "^0.3.3",
     "convex": "^1.47.0",
     "next": "16.4.2",
     "react": "19.3.0",
