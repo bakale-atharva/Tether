@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Suspense, type ReactNode } from "react";
 import { Logo, LogoMark } from "@/components/brand/logo";
+import { ToastProvider } from "@/components/ui/toast";
 import { HeaderAccount, JoinCard, SidebarAccount, ViewerCard } from "./account";
 import { SidebarNav, SidebarNavFallback, TabNav, TabNavFallback } from "./nav";
 import { OnboardingRedirect } from "./onboarding-redirect";
@@ -54,7 +55,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <HeaderAccount />
             </div>
           </div>
-          {children}
+          <ToastProvider>{children}</ToastProvider>
         </main>
 
         <aside

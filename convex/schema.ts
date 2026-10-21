@@ -45,4 +45,19 @@ export default defineSchema({
     .index("by_rootId", ["rootId"])
     .index("by_parentId_and_deleted", ["parentId", "deleted"])
     .index("by_authorId_and_parentId_and_deleted", ["authorId", "parentId", "deleted"]),
+  // One row per (user, message). Who liked what is never exposed; counts come
+  // from the likeCounts aggregate (convex/lib/aggregates.ts).
+  likes: defineTable({
+    userId: v.id("users"),
+    postId: v.id("posts"),
+  })
+    .index("by_userId_and_postId", ["userId", "postId"])
+    .index("by_postId", ["postId"]),
+  // Private saves of top-level posts, readable only by their owner.
+  bookmarks: defineTable({
+    userId: v.id("users"),
+    postId: v.id("posts"),
+  })
+    .index("by_userId_and_postId", ["userId", "postId"])
+    .index("by_userId", ["userId"]),
 });

@@ -108,6 +108,17 @@ export function FeatherIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function HeartIcon({ filled, ...props }: IconProps) {
+  return (
+    <Icon {...props}>
+      <path
+        d="M12 20s-7.5-4.6-8.9-9.6C2.2 7.1 4.4 4.5 7.4 4.5c1.9 0 3.6 1.1 4.6 2.8 1-1.7 2.7-2.8 4.6-2.8 3 0 5.2 2.6 4.3 5.9C19.5 15.4 12 20 12 20"
+        fill={filled ? "currentColor" : "none"}
+      />
+    </Icon>
+  );
+}
+
 export function ChatIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <Icon {...props}>

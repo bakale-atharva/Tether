@@ -14,5 +14,8 @@ export const THREAD_AUTO_EXPAND_DEPTH = 2;
 export const THREAD_FIRST_PAGE_SIZE = 10;
 export const THREAD_NESTED_PAGE_SIZE = 3;
 
+// How long an error toast stays before dismissing itself.
+export const TOAST_DURATION_MS = 6000;
+
 // Theme preference in localStorage.
 export const THEME_STORAGE_KEY = "tether-theme";
