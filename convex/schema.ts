@@ -60,4 +60,13 @@ export default defineSchema({
   })
     .index("by_userId_and_postId", ["userId", "postId"])
     .index("by_userId", ["userId"]),
+  // One row per (follower, followee). Public, like the lists built from it;
+  // counts come from the followerCounts/followingCounts aggregates.
+  follows: defineTable({
+    followerId: v.id("users"),
+    followeeId: v.id("users"),
+  })
+    .index("by_followerId_and_followeeId", ["followerId", "followeeId"])
+    .index("by_followerId", ["followerId"])
+    .index("by_followeeId", ["followeeId"]),
 });

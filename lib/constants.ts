@@ -4,6 +4,21 @@
 // Feeds and profile post lists.
 export const FEED_PAGE_SIZE = 12;
 
+// Home feed tabs, selected by the `feed` search param ("everyone" is the default).
+export const HOME_FEEDS = [
+  { id: "everyone", label: "For everyone" },
+  { id: "following", label: "Following" },
+] as const;
+export type HomeFeed = (typeof HOME_FEEDS)[number]["id"];
+
+// Follower/following lists on profiles, at /[handle]/followers and /[handle]/following.
+export const PEOPLE_LISTS = [
+  { kind: "following", label: "Following" },
+  { kind: "followers", label: "Followers" },
+] as const;
+export type PeopleListKind = (typeof PEOPLE_LISTS)[number]["kind"];
+export const PEOPLE_PAGE_SIZE = 20;
+
 // Conversations.
 // Levels rendered beneath the focused message before handing off to the
 // deeper message's own permalink, which keeps indentation readable on phones.

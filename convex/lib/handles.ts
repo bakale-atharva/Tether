@@ -7,10 +7,12 @@ export const DISPLAY_NAME_MAX = 50;
 
 const HANDLE_PATTERN = /^[A-Za-z0-9_]+$/;
 
-// `tether` belongs to the agent. The rest collide with app routes or would
-// impersonate the platform.
+// The agent's account. Nobody can claim it, and nobody can follow it.
+export const AGENT_HANDLE = "tether";
+
+// The rest collide with app routes or would impersonate the platform.
 export const RESERVED_HANDLES: ReadonlySet<string> = new Set([
-  "tether",
+  AGENT_HANDLE,
   "tetherai",
   "tether_ai",
   "admin",

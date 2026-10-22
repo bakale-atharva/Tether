@@ -15,3 +15,26 @@ export const likeCounts = new TableAggregate<{
   namespace: (like) => like.postId,
   sortKey: () => null,
 });
+
+// Follow counts, kept off the user document for the same reason: following
+// someone never rewrites a profile that every post card reads. Every insert or
+// delete on `follows` must update both in the same mutation.
+export const followerCounts = new TableAggregate<{
+  Namespace: Id<"users">;
+  Key: null;
+  DataModel: DataModel;
+  TableName: "follows";
+}>(components.followerCounts, {
+  namespace: (follow) => follow.followeeId,
+  sortKey: () => null,
+});
+
+export const followingCounts = new TableAggregate<{
+  Namespace: Id<"users">;
+  Key: null;
+  DataModel: DataModel;
+  TableName: "follows";
+}>(components.followingCounts, {
+  namespace: (follow) => follow.followerId,
+  sortKey: () => null,
+});

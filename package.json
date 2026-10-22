@@ -15,6 +15,7 @@
     "@clerk/nextjs": "^7.9.17",
     "@convex-dev/aggregate": "^0.3.3",
     "convex": "^1.47.0",
+    "convex-helpers": "^0.1.128",
     "next": "16.4.2",
     "react": "19.3.0",
     "react-dom": "19.3.0"

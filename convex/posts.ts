@@ -1,9 +1,11 @@
 import { paginationOptsValidator, paginationResultValidator } from "convex/server";
 import { ConvexError, v, type Infer } from "convex/values";
+import { mergedStream, stream } from "convex-helpers/server/stream";
 import type { Doc } from "./_generated/dataModel";
 import { mutation, query, type QueryCtx } from "./_generated/server";
 import { requireViewer } from "./lib/auth";
-import { ALT_MAX, characterCount, postProblem } from "./lib/content";
+import { ALT_MAX, FOLLOWING_MAX, characterCount, postProblem } from "./lib/content";
+import schema from "./schema";
 import { attachUpload, releaseUpload, uploadUrl } from "./uploads";
 import { publicProfileValidator, toPublicProfile } from "./users";
 
@@ -78,6 +80,29 @@ export const byAuthor = query({
     const result = await ctx.db.query("posts")
       .withIndex("by_authorId_and_parentId_and_deleted", q => q.eq("authorId", args.authorId).eq("parentId", null).eq("deleted", false))
       .order("desc").paginate(args.paginationOpts);
+    return { ...result, page: await Promise.all(result.page.map(post => publicPost(ctx, post))) };
+  },
+});
+
+// Top-level posts from the accounts the viewer follows, newest first. Each
+// followed account contributes its own indexed stream, merged by creation
+// time, so the feed never scans the public timeline. Pages are pinned with
+// `endCursor` by the convex-helpers `usePaginatedQuery`, which keeps them
+// gapless as follows and posts change.
+export const following = query({
+  args: { paginationOpts: paginationOptsValidator },
+  returns: paginationResultValidator(publicPostValidator),
+  handler: async (ctx, args) => {
+    const viewer = await requireViewer(ctx);
+    const follows = await ctx.db
+      .query("follows")
+      .withIndex("by_followerId", q => q.eq("followerId", viewer._id))
+      .take(FOLLOWING_MAX);
+    if (follows.length === 0) return { page: [], isDone: true, continueCursor: "" };
+    const authorStreams = follows.map(follow => stream(ctx.db, schema).query("posts")
+      .withIndex("by_authorId_and_parentId_and_deleted", q => q.eq("authorId", follow.followeeId).eq("parentId", null).eq("deleted", false))
+      .order("desc"));
+    const result = await mergedStream(authorStreams, ["_creationTime"]).paginate(args.paginationOpts);
     return { ...result, page: await Promise.all(result.page.map(post => publicPost(ctx, post))) };
   },
 });
