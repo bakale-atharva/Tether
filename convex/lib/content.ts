@@ -33,13 +33,17 @@ export function isVisibleInConversation(post: { deleted: boolean; childCount?: n
   return !post.deleted || (post.childCount ?? 0) > 0;
 }
 
-// A like count after a viewer moves from `before` to `after`, as the client's
-// optimistic update predicts it. It mirrors `likes:set`, where repeating the
-// current state changes nothing.
-export function nextLikeCount(count: number, before: boolean, after: boolean): number {
+// A like or follower count after a viewer moves from `before` to `after`, as
+// the client's optimistic update predicts it. It mirrors `likes:set` and
+// `follows:set`, where repeating the current state changes nothing.
+export function nextToggledCount(count: number, before: boolean, after: boolean): number {
   if (before === after) return count;
   return Math.max(0, count + (after ? 1 : -1));
 }
+
+// The Following feed merges one indexed stream per followed account, so the
+// number of accounts bounds the reads behind every page.
+export const FOLLOWING_MAX = 500;
 
 export function bioProblem(bio: string): string | null {
   return characterCount(bio.trim()) > BIO_MAX ? "Keep your bio to 160 characters." : null;

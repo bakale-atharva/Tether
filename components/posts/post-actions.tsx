@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "convex/react";
 import type { ReactNode } from "react";
 import { api } from "@/convex/_generated/api";
 import type { InteractionState } from "@/convex/interactions";
-import { nextLikeCount } from "@/convex/lib/content";
+import { nextToggledCount } from "@/convex/lib/content";
 import type { PublicPost } from "@/convex/posts";
 import { BookmarkIcon, HeartIcon } from "@/components/shell/icons";
 import { useToast } from "@/components/ui/toast";
@@ -42,7 +42,7 @@ export function LikeButton({ post }: { post: PublicPost }) {
     const current = store.getQuery(api.interactions.viewerState, { postId });
     if (current) {
       store.setQuery(api.interactions.viewerState, { postId }, {
-        ...current, liked, likeCount: nextLikeCount(current.likeCount, current.liked, liked),
+        ...current, liked, likeCount: nextToggledCount(current.likeCount, current.liked, liked),
       });
     }
   });

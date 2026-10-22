@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useMutation, usePaginatedQuery, useQuery } from "convex/react";
 import { useState } from "react";
 import { api } from "@/convex/_generated/api";
@@ -8,14 +7,15 @@ import type { Id } from "@/convex/_generated/dataModel";
 import type { PublicProfile } from "@/convex/users";
 import { FEED_PAGE_SIZE } from "@/lib/constants";
 import { PageHeader } from "@/components/ui/page-header";
-import { UserIcon } from "@/components/shell/icons";
 import { Avatar } from "@/components/ui/avatar";
-import { buttonStyles } from "@/components/ui/button";
 import { EmptyState, LoadingState } from "@/components/ui/states";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { ErrorState } from "@/components/ui/states";
-import { PostCard } from "@/components/posts/post-card";
+import { PostFeedList } from "@/components/posts/post-feed-list";
+import { FollowButton } from "@/components/profiles/follow-button";
+import { FollowCounts } from "@/components/profiles/follow-counts";
+import { MissingProfile } from "@/components/profiles/missing-profile";
 import { useImageUpload } from "@/components/posts/use-image-upload";
 import { useViewer } from "@/hooks/use-viewer";
 
@@ -23,24 +23,7 @@ export function ProfileView({ handle }: { handle: string }) {
   const profile = useQuery(api.users.getByHandle, { handle });
 
   if (profile === undefined) return <LoadingState label="Loading profile" />;
-  if (profile === null) {
-    return (
-      <>
-        <PageHeader title="Profile" />
-        <EmptyState
-          icon={<UserIcon className="size-6" />}
-          title="This account doesn't exist"
-          action={
-            <Link href="/" className={buttonStyles({ variant: "secondary" })}>
-              Back to home
-            </Link>
-          }
-        >
-          Try searching for another handle.
-        </EmptyState>
-      </>
-    );
-  }
+  if (profile === null) return <MissingProfile />;
 
   const joined = new Date(profile._creationTime).toLocaleDateString(undefined, {
     month: "long",
@@ -52,15 +35,17 @@ export function ProfileView({ handle }: { handle: string }) {
       <PageHeader title={profile.displayName} />
       <div aria-hidden="true" className="h-32 bg-gradient-to-br from-accent-soft via-surface-2 to-bg sm:h-40" style={profile.bannerUrl ? { backgroundImage: `url(${profile.bannerUrl})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined} />
       <div className="px-4 pb-6 md:px-6">
-        <div className="-mt-10">
+        <div className="-mt-10 flex items-end justify-between gap-3">
           <span className="inline-flex rounded-full ring-4 ring-bg">
             <Avatar name={profile.displayName} src={profile.avatarUrl} size="lg" />
           </span>
+          <FollowButton profile={profile} />
         </div>
         <ProfileIdentity profile={profile} />
         <p className="text-muted">@{profile.handle}</p>
         {profile.bio ? <p className="mt-3 whitespace-pre-wrap">{profile.bio}</p> : null}
         <p className="mt-3 text-sm text-muted">Joined {joined}</p>
+        <FollowCounts profile={profile} />
       </div>
       <ProfilePosts authorId={profile._id} handle={profile.handle} />
     </>
@@ -86,7 +71,5 @@ function ProfileEditor({ profile, onSaved }: { profile: PublicProfile; onSaved: 
 
 function ProfilePosts({ authorId, handle }: { authorId: PublicProfile["_id"]; handle: string }) {
   const { results, status, loadMore } = usePaginatedQuery(api.posts.byAuthor, { authorId }, { initialNumItems: FEED_PAGE_SIZE });
-  if (status === "LoadingFirstPage") return <LoadingState label="Loading posts" />;
-  if (status === "Exhausted" && results.length === 0) return <EmptyState title="No posts yet">Posts from @{handle} will show up here.</EmptyState>;
-  return <div className="border-t border-line">{results.map(post => <PostCard key={post._id} post={post} />)}{status === "CanLoadMore" ? <div className="p-5 text-center"><Button variant="secondary" onClick={() => loadMore(FEED_PAGE_SIZE)}>Load more</Button></div> : null}</div>;
+  return <div className="border-t border-line"><PostFeedList results={results} status={status} loadMore={loadMore} empty={<EmptyState title="No posts yet">Posts from @{handle} will show up here.</EmptyState>} /></div>;
 }

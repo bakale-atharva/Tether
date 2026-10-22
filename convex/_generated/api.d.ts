@@ -10,6 +10,7 @@
 
 import type * as bookmarks from "../bookmarks.js";
 import type * as crons from "../crons.js";
+import type * as follows from "../follows.js";
 import type * as http from "../http.js";
 import type * as interactions from "../interactions.js";
 import type * as lib_aggregates from "../lib/aggregates.js";
@@ -31,6 +32,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   bookmarks: typeof bookmarks;
   crons: typeof crons;
+  follows: typeof follows;
   http: typeof http;
   interactions: typeof interactions;
   "lib/aggregates": typeof lib_aggregates;
@@ -72,4 +74,6 @@ export declare const internal: FilterApi<
 
 export declare const components: {
   likeCounts: import("@convex-dev/aggregate/_generated/component.js").ComponentApi<"likeCounts">;
+  followerCounts: import("@convex-dev/aggregate/_generated/component.js").ComponentApi<"followerCounts">;
+  followingCounts: import("@convex-dev/aggregate/_generated/component.js").ComponentApi<"followingCounts">;
 };
