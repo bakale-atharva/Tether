@@ -44,7 +44,11 @@ export default defineSchema({
     .index("by_parentId", ["parentId"])
     .index("by_rootId", ["rootId"])
     .index("by_parentId_and_deleted", ["parentId", "deleted"])
-    .index("by_authorId_and_parentId_and_deleted", ["authorId", "parentId", "deleted"]),
+    .index("by_authorId_and_parentId_and_deleted", ["authorId", "parentId", "deleted"])
+    .searchIndex("search_body", {
+      searchField: "body",
+      filterFields: ["parentId", "deleted"],
+    }),
   // One row per (user, message). Who liked what is never exposed; counts come
   // from the likeCounts aggregate (convex/lib/aggregates.ts).
   likes: defineTable({
