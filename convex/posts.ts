@@ -5,6 +5,7 @@ import type { Doc } from "./_generated/dataModel";
 import { mutation, query, type QueryCtx } from "./_generated/server";
 import { requireViewer } from "./lib/auth";
 import { ALT_MAX, FOLLOWING_MAX, characterCount, postProblem } from "./lib/content";
+import { parseSearchQuery } from "./lib/search";
 import schema from "./schema";
 import { attachUpload, releaseUpload, uploadUrl } from "./uploads";
 import { publicProfileValidator, toPublicProfile } from "./users";
@@ -69,6 +70,26 @@ export const list = query({
     const result = await ctx.db.query("posts")
       .withIndex("by_parentId_and_deleted", q => q.eq("parentId", null).eq("deleted", false))
       .order("desc").paginate(args.paginationOpts);
+    return { ...result, page: await Promise.all(result.page.map(post => publicPost(ctx, post))) };
+  },
+});
+
+// Search results keep Convex's relevance order. Filtering happens inside the
+// search index, so replies and deleted roots do not consume page slots.
+export const search = query({
+  args: { text: v.string(), paginationOpts: paginationOptsValidator },
+  returns: paginationResultValidator(publicPostValidator),
+  handler: async (ctx, args) => {
+    const parsed = parseSearchQuery(args.text);
+    if (parsed.kind !== "valid") {
+      throw new ConvexError({
+        code: "INVALID_SEARCH",
+        message: parsed.kind === "empty" ? "Enter a search term." : "Keep searches to 100 characters.",
+      });
+    }
+    const result = await ctx.db.query("posts")
+      .withSearchIndex("search_body", q => q.search("body", parsed.query).eq("parentId", null).eq("deleted", false))
+      .paginate(args.paginationOpts);
     return { ...result, page: await Promise.all(result.page.map(post => publicPost(ctx, post))) };
   },
 });

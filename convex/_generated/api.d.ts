@@ -17,6 +17,7 @@ import type * as lib_aggregates from "../lib/aggregates.js";
 import type * as lib_auth from "../lib/auth.js";
 import type * as lib_content from "../lib/content.js";
 import type * as lib_handles from "../lib/handles.js";
+import type * as lib_search from "../lib/search.js";
 import type * as likes from "../likes.js";
 import type * as posts from "../posts.js";
 import type * as replies from "../replies.js";
@@ -39,6 +40,7 @@ declare const fullApi: ApiFromModules<{
   "lib/auth": typeof lib_auth;
   "lib/content": typeof lib_content;
   "lib/handles": typeof lib_handles;
+  "lib/search": typeof lib_search;
   likes: typeof likes;
   posts: typeof posts;
   replies: typeof replies;
