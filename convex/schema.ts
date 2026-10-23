@@ -2,6 +2,17 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
+  // Private display cache only. Live Clerk reads authorize every generation.
+  billingSubscriptions: defineTable({
+    clerkUserId: v.string(),
+    summary: v.object({
+      allowed: v.boolean(), verified: v.boolean(), plan: v.union(v.literal("free"), v.literal("pro")),
+      status: v.string(), accessUntil: v.union(v.number(), v.null()), canceled: v.boolean(), sourceUpdatedAt: v.number(),
+    }),
+  }).index("by_clerkUserId", ["clerkUserId"]),
+  billingEvents: defineTable({
+    eventId: v.string(), eventType: v.string(), receivedAt: v.number(),
+  }).index("by_eventId", ["eventId"]),
   // One document per person who finished onboarding. Keyed on the verified
   // Clerk token identifier; email and billing data stay in Clerk.
   users: defineTable({

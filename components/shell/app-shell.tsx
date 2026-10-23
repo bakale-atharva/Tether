@@ -1,3 +1,4 @@
+import { BillingProvider } from "@/components/billing/billing-provider";
 import Link from "next/link";
 import { Suspense, type ReactNode } from "react";
 import { Logo, LogoMark } from "@/components/brand/logo";
@@ -9,7 +10,7 @@ import { ThemeToggle } from "./theme-toggle";
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-[80rem] justify-center">
+    <BillingProvider><div className="mx-auto flex min-h-dvh w-full max-w-[80rem] justify-center">
       <OnboardingRedirect />
 
       {/* Desktop and tablet sidebar */}
@@ -72,6 +73,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               for an AI take on any thread.
             </p>
           </section>
+          <Link href="/pricing" className="px-1 text-sm font-medium text-accent-text hover:underline">Explore Free &amp; Pro plans</Link>
           <p className="px-1 text-xs text-muted">Development preview · No live payments</p>
         </aside>
       </div>
@@ -85,6 +87,6 @@ export function AppShell({ children }: { children: ReactNode }) {
           <TabNav />
         </Suspense>
       </nav>
-    </div>
+    </div></BillingProvider>
   );
 }

@@ -4,7 +4,10 @@ import { httpAction } from "./_generated/server";
 import { IMAGE_BYTES_MAX, imageBytesMatch, imageProblem } from "./lib/content";
 import type { UploadPurpose } from "./uploads";
 
+import { clerkBilling } from "./billingWebhook";
+
 const http = httpRouter();
+http.route({ path: "/webhooks/clerk", method: "POST", handler: clerkBilling });
 // Bearer-token requests, no cookies or credentialed CORS. Convex validates
 // Clerk's JWT and propagates that identity to the internal functions.
 const cors = {

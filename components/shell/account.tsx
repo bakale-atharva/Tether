@@ -1,6 +1,7 @@
 "use client";
 
 import { SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { PlanBadge } from "@/components/billing/plan-badge";
 import { useViewer } from "@/hooks/use-viewer";
 import { Avatar } from "@/components/ui/avatar";
 import { buttonStyles } from "@/components/ui/button";
@@ -40,7 +41,7 @@ export function SidebarAccount() {
     <div className="flex items-center gap-3 rounded-full p-1.5 md:justify-center lg:justify-start">
       <UserButton />
       <div className="min-w-0 md:hidden lg:block">
-        <p className="truncate text-sm font-semibold text-ink">{name}</p>
+        <p className="truncate text-sm font-semibold text-ink">{name} <PlanBadge /></p>
         <p className="truncate text-sm text-muted">{handle}</p>
       </div>
     </div>
@@ -60,7 +61,7 @@ export function HeaderAccount() {
       </SignInButton>
     );
   }
-  return <UserButton />;
+  return <div className="flex items-center gap-2"><PlanBadge /><UserButton /></div>;
 }
 
 // Right-rail card shown to visitors on wide screens.

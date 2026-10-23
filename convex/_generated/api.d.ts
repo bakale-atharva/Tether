@@ -8,6 +8,8 @@
  * @module
  */
 
+import type * as billing from "../billing.js";
+import type * as billingWebhook from "../billingWebhook.js";
 import type * as bookmarks from "../bookmarks.js";
 import type * as crons from "../crons.js";
 import type * as follows from "../follows.js";
@@ -15,6 +17,7 @@ import type * as http from "../http.js";
 import type * as interactions from "../interactions.js";
 import type * as lib_aggregates from "../lib/aggregates.js";
 import type * as lib_auth from "../lib/auth.js";
+import type * as lib_billing from "../lib/billing.js";
 import type * as lib_content from "../lib/content.js";
 import type * as lib_handles from "../lib/handles.js";
 import type * as lib_search from "../lib/search.js";
@@ -31,6 +34,8 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  billing: typeof billing;
+  billingWebhook: typeof billingWebhook;
   bookmarks: typeof bookmarks;
   crons: typeof crons;
   follows: typeof follows;
@@ -38,6 +43,7 @@ declare const fullApi: ApiFromModules<{
   interactions: typeof interactions;
   "lib/aggregates": typeof lib_aggregates;
   "lib/auth": typeof lib_auth;
+  "lib/billing": typeof lib_billing;
   "lib/content": typeof lib_content;
   "lib/handles": typeof lib_handles;
   "lib/search": typeof lib_search;
