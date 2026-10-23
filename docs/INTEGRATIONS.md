@@ -56,3 +56,26 @@ installed package types. Update this file whenever an integration changes.
 - Browser verification uses the Claude preview (`.claude/launch.json`) at
   desktop and 375px mobile widths, light and dark.
 - Per the plan, there is no Vitest or end-to-end test tooling.
+
+## Clerk Billing (Phase 6)
+
+- Development user plans: `free_user` (Free), `pro` ($10 USD/month); feature
+  `tether_agent` on Pro. No annual Pro billing or trials. Configuration:
+  `config/clerk-billing.dev.json`; preview with `clerk config patch --instance dev
+  --file config/clerk-billing.dev.json --dry-run` before applying.
+- Pricing uses `PricingTable for="user"`; management uses
+  `SubscriptionDetailsButton` from `@clerk/nextjs/experimental`. Backend SDK is
+  pinned at 3.25.0 for webhook verification.
+- Convex typed env: `CLERK_SECRET_KEY` and `CLERK_WEBHOOK_SIGNING_SECRET`, both
+  optional so an unconfigured environment fails closed. Store only in deployment
+  env, never in source. This app does not configure Stripe directly.
+- Live authorization fetches `/users/{id}/billing/subscription` plus
+  `/billing/plans?payer_type=user&limit=100`. The embedded subscription plan can
+  omit its features; join the authoritative catalog by plan ID. No session or
+  cache-based entitlement grants. Details and verification: `docs/PHASE-6.md`.
+- Development webhook: `/webhooks/clerk` on the Convex site domain, not Next.js.
+  Signature verification occurs before any action. Duplicate IDs and stale
+  snapshots are rejected atomically, and lookup outages return 503 for retries.
+- Tailwind utilities now compile through `postcss.config.mjs` with the official
+  `@tailwindcss/postcss` plugin for both bundlers. The previous custom Turbopack
+  rule did not process utilities in production Webpack builds.

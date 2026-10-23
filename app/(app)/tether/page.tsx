@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/page-header";
 import { SparkIcon } from "@/components/shell/icons";
@@ -13,6 +14,7 @@ export default function TetherAiPage() {
         Pro members will be able to chat privately with Tether and mention{" "}
         <span className="font-medium text-accent-text">@tether</span> in any thread.
       </EmptyState>
+      <div className="px-4 pb-8 text-center"><Link href="/pricing" className="font-medium text-accent-text underline underline-offset-4">Explore Pro</Link></div>
     </>
   );
 }

@@ -1,0 +1,24 @@
+{
+  "billing": {
+    "user_enabled": true,
+    "organization_enabled": false,
+    "features": {
+      "tether_agent": { "name": "Tether AI", "description": "Private AI conversations and contextual replies. Available in the upcoming agent phases." }
+    },
+    "plans": {
+      "free_user": {
+        "name": "Free", "payer_type": "user", "amount": 0,
+        "currency": "usd", "is_recurring": true, "publicly_visible": true,
+        "description": "Post, reply, follow people, and save conversations.",
+        "free_trial_enabled": false, "features": []
+      },
+      "pro": {
+        "name": "Pro", "payer_type": "user", "amount": 1000,
+        "currency": "usd", "is_recurring": true, "publicly_visible": true,
+        "description": "Everything in Free, plus Tether AI as it becomes available.",
+        "free_trial_enabled": false, "free_trial_days": null,
+        "features": ["tether_agent"]
+      }
+    }
+  }
+}
