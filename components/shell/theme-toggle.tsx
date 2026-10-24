@@ -49,10 +49,10 @@ export function ThemeToggle({ showLabel = false }: { showLabel?: boolean }) {
       onClick={() => applyTheme(next)}
       aria-label={`${labels[theme]}. Switch to ${labels[next].toLowerCase()}.`}
       title={labels[theme]}
-      className="inline-flex h-10 items-center gap-3 rounded-full px-2.5 text-muted transition-colors hover:bg-surface-2 hover:text-ink"
+      className="inline-flex h-11 min-w-11 items-center justify-center gap-3 rounded-xl px-3 text-muted transition-colors duration-150 hover:bg-surface-2 hover:text-ink"
     >
       <IconFor className="size-5" />
-      {showLabel ? <span className="text-sm">{labels[theme]}</span> : null}
+      {showLabel ? <span className="hidden text-sm lg:inline">{labels[theme]}</span> : null}
     </button>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 import { PlanBadge } from "@/components/billing/plan-badge";
 import { useViewer } from "@/hooks/use-viewer";
 import { Avatar } from "@/components/ui/avatar";
@@ -13,20 +14,21 @@ export function SidebarAccount() {
   const viewer = useViewer();
 
   if (viewer.status === "loading") {
-    return <Skeleton className="h-14 w-full rounded-full" />;
+    return <Skeleton className="h-14 w-full rounded-xl" />;
   }
   if (viewer.status === "signedOut") {
     return (
-      <div className="flex flex-col gap-2 md:hidden lg:flex">
+      <div className="flex flex-col gap-2">
         <SignUpButton mode="modal">
-          <button type="button" className={buttonStyles({ className: "w-full" })}>
-            Create account
+          <button type="button" className={buttonStyles({ className: "min-h-11 w-full px-2 lg:px-4" })}>
+            <span className="lg:hidden">Join</span>
+            <span className="hidden lg:inline">Create account</span>
           </button>
         </SignUpButton>
         <SignInButton mode="modal">
           <button
             type="button"
-            className={buttonStyles({ variant: "secondary", className: "w-full" })}
+            className={buttonStyles({ variant: "secondary", className: "min-h-11 w-full px-2 lg:px-4" })}
           >
             Sign in
           </button>
@@ -38,11 +40,17 @@ export function SidebarAccount() {
   const name = viewer.status === "ready" ? viewer.profile.displayName : "Finish setup";
   const handle = viewer.status === "ready" ? `@${viewer.profile.handle}` : "Choose a handle";
   return (
-    <div className="flex items-center gap-3 rounded-full p-1.5 md:justify-center lg:justify-start">
-      <UserButton />
-      <div className="min-w-0 md:hidden lg:block">
-        <p className="truncate text-sm font-semibold text-ink">{name} <PlanBadge /></p>
+    <div className="flex flex-col gap-2 rounded-xl border-t border-line pt-4 lg:flex-row lg:items-start lg:gap-3 lg:px-2">
+      <div className="flex min-h-11 min-w-11 shrink-0 items-center justify-center">
+        <UserButton />
+      </div>
+      <Link href="/billing" className="flex min-h-11 items-center justify-center rounded-xl text-xs font-medium text-accent-text transition-colors duration-150 hover:bg-surface-2 lg:hidden">
+        Billing
+      </Link>
+      <div className="hidden min-w-0 lg:block">
+        <p className="truncate text-sm font-semibold text-ink">{name}</p>
         <p className="truncate text-sm text-muted">{handle}</p>
+        <div className="mt-2"><PlanBadge /></div>
       </div>
     </div>
   );
@@ -51,36 +59,43 @@ export function SidebarAccount() {
 // Compact account control for the mobile header.
 export function HeaderAccount() {
   const viewer = useViewer();
-  if (viewer.status === "loading") return <Skeleton className="size-8 rounded-full" />;
+  if (viewer.status === "loading") return <Skeleton className="size-11 rounded-full" />;
   if (viewer.status === "signedOut") {
     return (
-      <SignInButton mode="modal">
-        <button type="button" className={buttonStyles({ size: "sm" })}>
-          Sign in
-        </button>
-      </SignInButton>
+      <div className="flex items-center gap-1">
+        <SignUpButton mode="modal">
+          <button type="button" className={buttonStyles({ variant: "ghost", size: "sm", className: "min-h-11 px-3" })}>
+            Join
+          </button>
+        </SignUpButton>
+        <SignInButton mode="modal">
+          <button type="button" className={buttonStyles({ size: "sm", className: "min-h-11 px-3" })}>
+            Sign in
+          </button>
+        </SignInButton>
+      </div>
     );
   }
-  return <div className="flex items-center gap-2"><PlanBadge /><UserButton /></div>;
+  return <div className="flex min-h-11 items-center gap-2"><PlanBadge /><span className="flex min-h-11 min-w-11 items-center justify-center"><UserButton /></span></div>;
 }
 
-// Right-rail card shown to visitors on wide screens.
+// Visitor information, reached from the compact shell footer at every width.
 export function JoinCard() {
   const viewer = useViewer();
   if (viewer.status !== "signedOut") return null;
   return (
     <section
       aria-labelledby="join-heading"
-      className="rounded-2xl border border-line bg-surface p-5 shadow-card"
+      className="mt-5 border-t border-line pt-4"
     >
-      <h2 id="join-heading" className="font-display text-xl font-semibold">
+      <h2 id="join-heading" className="text-base font-semibold text-ink">
         New to Tether?
       </h2>
       <p className="mt-1.5 text-sm text-muted">
         Join to post, reply, and keep the conversations you care about close.
       </p>
       <SignUpButton mode="modal">
-        <button type="button" className={buttonStyles({ className: "mt-4 w-full" })}>
+        <button type="button" className={buttonStyles({ className: "mt-4 min-h-11" })}>
           Create account
         </button>
       </SignUpButton>

@@ -50,11 +50,12 @@ function SidebarLinks({ pathname }: { pathname: string | null }) {
             <Link
               href={href}
               aria-current={active ? "page" : undefined}
-              className={`group flex h-12 items-center gap-4 rounded-full px-3 text-[1.0625rem] transition-colors hover:bg-surface-2 md:justify-center lg:justify-start lg:pr-5 ${
-                active ? "font-semibold text-ink" : "text-muted hover:text-ink"
+              title={label}
+              className={`group flex h-12 items-center gap-3 rounded-xl px-3 text-[0.9375rem] transition-colors duration-150 md:justify-center lg:justify-start lg:pr-5 ${
+                active ? "bg-accent-soft font-semibold text-accent-text" : "text-muted hover:bg-surface-2 hover:text-ink"
               }`}
             >
-              <Icon filled={active} className={`size-6 ${active ? "text-accent-text" : ""}`} />
+              <Icon filled={active} className="size-6 shrink-0" />
               <span className="md:sr-only lg:not-sr-only">{label}</span>
             </Link>
           </li>
@@ -76,11 +77,13 @@ function TabLinks({ pathname }: { pathname: string | null }) {
               href={href}
               aria-current={active ? "page" : undefined}
               aria-label={label}
-              className={`flex h-full flex-col items-center justify-center gap-0.5 text-[0.6875rem] ${
+              className={`flex h-full min-h-14 flex-col items-center justify-center gap-0.5 text-[0.6875rem] transition-colors duration-150 hover:bg-surface-2 ${
                 active ? "font-semibold text-accent-text" : "text-muted"
               }`}
             >
-              <Icon filled={active} className="size-6" />
+              <span className={`flex h-8 w-12 items-center justify-center rounded-xl ${active ? "bg-accent-soft" : ""}`}>
+                <Icon filled={active} className="size-5" />
+              </span>
               <span>{label}</span>
             </Link>
           </li>
