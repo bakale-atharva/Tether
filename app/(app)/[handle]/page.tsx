@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { LoadingState } from "@/components/ui/states";
-import { ProfileView } from "./profile-view";
+import { ProfileLoader } from "./profile-loader";
 
 export default function ProfilePage({ params }: PageProps<"/[handle]">) {
   return (
@@ -8,9 +8,4 @@ export default function ProfilePage({ params }: PageProps<"/[handle]">) {
       <ProfileLoader params={params} />
     </Suspense>
   );
-}
-
-async function ProfileLoader({ params }: { params: PageProps<"/[handle]">["params"] }) {
-  const { handle } = await params;
-  return <ProfileView handle={decodeURIComponent(handle)} />;
 }

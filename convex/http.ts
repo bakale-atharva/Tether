@@ -2,7 +2,6 @@ import { httpRouter } from "convex/server";
 import { internal } from "./_generated/api";
 import { httpAction } from "./_generated/server";
 import { IMAGE_BYTES_MAX, imageBytesMatch, imageProblem } from "./lib/content";
-import type { UploadPurpose } from "./uploads";
 
 import { clerkBilling } from "./billingWebhook";
 
@@ -48,7 +47,7 @@ http.route({ path: "/images/upload", method: "POST", handler: httpAction(async (
   if (!imageBytesMatch(type, new Uint8Array(await blob.arrayBuffer()))) return fail("The file doesn't match its image type.");
   const storageId = await ctx.storage.store(blob);
   try {
-    const uploadId = await ctx.runMutation(internal.uploads.register, { storageId, purpose: purpose as UploadPurpose });
+    const uploadId = await ctx.runMutation(internal.uploads.register, { storageId, purpose });
     return Response.json({ uploadId }, { headers: cors });
   } catch {
     await ctx.storage.delete(storageId);

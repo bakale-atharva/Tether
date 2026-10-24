@@ -38,8 +38,9 @@ export function BillingProvider({ children }: { children: ReactNode }) {
   const current = isAuthenticated && summary && summary.userId === userId ? summary.value : null;
   useEffect(() => {
     if (!current?.allowed || !current.accessUntil || !userId) return;
+    const accessUntil = current.accessUntil;
     const timer = setTimeout(() => {
-      if (current.accessUntil! <= Date.now()) setSummary({ userId, value: { ...current, allowed: false, plan: "free" } });
+      if (accessUntil <= Date.now()) setSummary({ userId, value: { ...current, allowed: false, plan: "free" } });
       refresh();
     }, Math.min(Math.max(0, current.accessUntil - Date.now()), 2_147_483_647));
     return () => clearTimeout(timer);

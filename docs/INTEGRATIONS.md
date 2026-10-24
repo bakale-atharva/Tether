@@ -79,3 +79,18 @@ installed package types. Update this file whenever an integration changes.
 - Tailwind utilities now compile through `postcss.config.mjs` with the official
   `@tailwindcss/postcss` plugin for both bundlers. The previous custom Turbopack
   rule did not process utilities in production Webpack builds.
+
+## Private Agent (Phase 7)
+
+- Convex Agent 0.7.7 with AI SDK 7.0.28, provider 4.0.3 and provider-utils 5.0.10;
+  OpenRouter provider 3.1.0; rate-limiter 0.4.2. Keep these versions aligned.
+- Components mount as `agent` and `rateLimiter`. Typed optional env:
+  `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`; generation runs in a Node action.
+- All configured models must use an explicit `:free` identifier. SDK retries and
+  provider fallback are disabled. The code default is the agreed NVIDIA model;
+  the personal dev environment explicitly overrides it with verified free
+  `liquid/lfm-2.5-2.6b:free` because the NVIDIA provider returned 404.
+- Application conversation ownership authorizes every history/delta read.
+  Live Clerk authorization is checked on submission and immediately before model
+  execution. Shared transactional quotas/lock live in `lib/agentQuota.ts` and
+  `agentRequests.ts`. See `docs/PHASE-7.md` for verification and remaining checks.

@@ -2,6 +2,24 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
+  agentConversations: defineTable({
+    ownerId: v.id("users"), threadId: v.string(), title: v.string(),
+    updatedAt: v.number(), lastRequestId: v.optional(v.id("agentRequests")),
+  }).index("by_ownerId_and_updatedAt", ["ownerId", "updatedAt"])
+    .index("by_threadId", ["threadId"]),
+  // Shared by private chat and future public mention jobs. Retries keep this row.
+  agentRequests: defineTable({
+    ownerId: v.id("users"), kind: v.union(v.literal("private"), v.literal("mention")),
+    conversationId: v.optional(v.id("agentConversations")),
+    sourcePostId: v.optional(v.id("posts")), threadId: v.string(),
+    clientRequestId: v.string(), promptMessageId: v.string(), promptOrder: v.number(),
+    status: v.union(v.literal("queued"), v.literal("running"), v.literal("stopping"), v.literal("complete"), v.literal("failed"), v.literal("canceled")),
+    attempt: v.number(), expiresAt: v.number(),
+    error: v.optional(v.object({ code: v.string(), message: v.string() })),
+  }).index("by_ownerId_and_clientRequestId", ["ownerId", "clientRequestId"]),
+  agentLocks: defineTable({
+    ownerId: v.id("users"), requestId: v.optional(v.id("agentRequests")),
+  }).index("by_ownerId", ["ownerId"]),
   // Private display cache only. Live Clerk reads authorize every generation.
   billingSubscriptions: defineTable({
     clerkUserId: v.string(),

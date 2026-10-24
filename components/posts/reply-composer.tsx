@@ -66,6 +66,7 @@ export function ReplyComposer({ parentId, parentHandle, autoFocus = false, compa
   }
 
   function onKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (sending || event.nativeEvent.isComposing) return;
     if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
       event.preventDefault();
       void submit();
@@ -87,6 +88,7 @@ export function ReplyComposer({ parentId, parentHandle, autoFocus = false, compa
             Replying to <span className="font-medium text-accent-text">@{parentHandle}</span>
           </label>
           <textarea
+            disabled={sending}
             id={inputId}
             value={body}
             autoFocus={autoFocus}
@@ -103,7 +105,7 @@ export function ReplyComposer({ parentId, parentHandle, autoFocus = false, compa
             <span className={`mr-auto text-sm tabular-nums ${remaining < 0 ? "text-danger" : remaining <= 20 ? "text-accent-text" : "text-muted"}`}>
               {remaining < 0 ? `${-remaining} over the limit` : `${remaining} left`}
             </span>
-            {onCancel ? <Button variant="ghost" size="sm" onClick={onCancel}>Cancel</Button> : null}
+            {onCancel ? <Button variant="ghost" size="sm" disabled={sending} onClick={onCancel}>Cancel</Button> : null}
             <Button type="submit" size="sm" loading={sending} disabled={body.trim().length === 0 || remaining < 0}>
               Reply
             </Button>

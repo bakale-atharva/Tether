@@ -182,7 +182,7 @@ export const updateProfile = mutation({
     for (const purpose of ["avatar", "banner"] as const) {
       const key = purpose === "avatar" ? "avatarUploadId" : "bannerUploadId";
       const next = args[key];
-      if (next === undefined) continue;
+      if (next === undefined || next === viewer[key]) continue;
       if (next !== null) await attachUpload(ctx, next, viewer._id, purpose);
       const old = viewer[key];
       if (old) await releaseUpload(ctx, old);
