@@ -8,6 +8,9 @@
  * @module
  */
 
+import type * as agentChat from "../agentChat.js";
+import type * as agentGeneration from "../agentGeneration.js";
+import type * as agentRequests from "../agentRequests.js";
 import type * as billing from "../billing.js";
 import type * as billingWebhook from "../billingWebhook.js";
 import type * as bookmarks from "../bookmarks.js";
@@ -15,6 +18,11 @@ import type * as crons from "../crons.js";
 import type * as follows from "../follows.js";
 import type * as http from "../http.js";
 import type * as interactions from "../interactions.js";
+import type * as lib_agent from "../lib/agent.js";
+import type * as lib_agentAccess from "../lib/agentAccess.js";
+import type * as lib_agentContext from "../lib/agentContext.js";
+import type * as lib_agentPolicy from "../lib/agentPolicy.js";
+import type * as lib_agentQuota from "../lib/agentQuota.js";
 import type * as lib_aggregates from "../lib/aggregates.js";
 import type * as lib_auth from "../lib/auth.js";
 import type * as lib_billing from "../lib/billing.js";
@@ -34,6 +42,9 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  agentChat: typeof agentChat;
+  agentGeneration: typeof agentGeneration;
+  agentRequests: typeof agentRequests;
   billing: typeof billing;
   billingWebhook: typeof billingWebhook;
   bookmarks: typeof bookmarks;
@@ -41,6 +52,11 @@ declare const fullApi: ApiFromModules<{
   follows: typeof follows;
   http: typeof http;
   interactions: typeof interactions;
+  "lib/agent": typeof lib_agent;
+  "lib/agentAccess": typeof lib_agentAccess;
+  "lib/agentContext": typeof lib_agentContext;
+  "lib/agentPolicy": typeof lib_agentPolicy;
+  "lib/agentQuota": typeof lib_agentQuota;
   "lib/aggregates": typeof lib_aggregates;
   "lib/auth": typeof lib_auth;
   "lib/billing": typeof lib_billing;
@@ -81,6 +97,8 @@ export declare const internal: FilterApi<
 >;
 
 export declare const components: {
+  agent: import("@convex-dev/agent/_generated/component.js").ComponentApi<"agent">;
+  rateLimiter: import("@convex-dev/rate-limiter/_generated/component.js").ComponentApi<"rateLimiter">;
   likeCounts: import("@convex-dev/aggregate/_generated/component.js").ComponentApi<"likeCounts">;
   followerCounts: import("@convex-dev/aggregate/_generated/component.js").ComponentApi<"followerCounts">;
   followingCounts: import("@convex-dev/aggregate/_generated/component.js").ComponentApi<"followingCounts">;

@@ -12,14 +12,21 @@
     "verify": "pnpm lint && pnpm typecheck && pnpm build"
   },
   "dependencies": {
+    "@ai-sdk/provider": "4.0.3",
+    "@ai-sdk/provider-utils": "5.0.10",
     "@clerk/backend": "3.25.0",
     "@clerk/nextjs": "7.9.17",
+    "@convex-dev/agent": "0.7.7",
     "@convex-dev/aggregate": "^0.3.3",
+    "@convex-dev/rate-limiter": "0.4.2",
+    "@openrouter/ai-sdk-provider": "3.1.0",
+    "ai": "7.0.28",
     "convex": "^1.47.0",
     "convex-helpers": "^0.1.128",
     "next": "16.4.2",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.3",
