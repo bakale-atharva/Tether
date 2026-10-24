@@ -13,7 +13,7 @@ import { useViewer } from "@/hooks/use-viewer";
 import { errorMessage } from "@/lib/errors";
 
 export const actionButtonClass =
-  "inline-flex h-9 items-center gap-1.5 rounded-full px-2 text-sm text-muted transition-colors hover:bg-accent-soft hover:text-accent-text disabled:cursor-not-allowed disabled:opacity-55";
+  "inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-xl px-2 text-sm text-muted transition-colors duration-150 hover:bg-accent-soft hover:text-accent-text focus-visible:bg-accent-soft disabled:cursor-not-allowed disabled:opacity-55 sm:min-h-9 sm:min-w-9";
 
 const UNKNOWN_STATE: InteractionState = { likeCount: 0, liked: false, bookmarked: false };
 

@@ -22,9 +22,9 @@ export function PostFeedList({ results, status, loadMore, empty }: PostFeedListP
   if (status === "Exhausted" && results.length === 0) return <>{empty}</>;
   return (
     <>
-      <div>{results.map(post => <PostCard key={post._id} post={post} />)}</div>
+      <div className="min-w-0 bg-surface">{results.map(post => <PostCard key={post._id} post={post} />)}</div>
       {status === "CanLoadMore" || status === "LoadingMore" ? (
-        <div className="p-5 text-center">
+        <div className="bg-surface px-4 py-6 text-center sm:px-6">
           <Button variant="secondary" loading={status === "LoadingMore"} onClick={() => loadMore(FEED_PAGE_SIZE)}>Load more</Button>
         </div>
       ) : null}

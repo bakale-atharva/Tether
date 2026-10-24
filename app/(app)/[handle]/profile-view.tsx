@@ -26,18 +26,18 @@ export function ProfileView({ handle }: { handle: string }) {
   return (
     <>
       <PageHeader title={profile.displayName} />
-      <div aria-hidden="true" className="h-32 bg-gradient-to-br from-accent-soft via-surface-2 to-bg sm:h-40" style={profile.bannerUrl ? { backgroundImage: `url(${profile.bannerUrl})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined} />
-      <div className="px-4 pb-6 md:px-6">
-        <div className="-mt-10 flex items-end justify-between gap-3">
-          <span className="inline-flex rounded-full ring-4 ring-bg">
+      <div aria-hidden="true" className="h-32 border-b border-line bg-accent-soft sm:h-44" style={profile.bannerUrl ? { backgroundImage: `url(${profile.bannerUrl})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined} />
+      <div className="bg-surface px-4 pb-6 sm:px-6 sm:pb-8">
+        <div className="relative -mt-10 flex flex-wrap items-end justify-between gap-3">
+          <span className="inline-flex rounded-full ring-4 ring-surface">
             <Avatar name={profile.displayName} src={profile.avatarUrl} size="lg" />
           </span>
           <FollowButton profile={profile} />
         </div>
         <ProfileIdentity profile={profile} />
-        <p className="text-muted">@{profile.handle}</p>
-        {profile.bio ? <p className="mt-3 whitespace-pre-wrap">{profile.bio}</p> : null}
-        <p className="mt-3 text-sm text-muted">Joined {joined}</p>
+        <p className="mt-1 text-sm wrap-anywhere text-muted">@{profile.handle}</p>
+        {profile.bio ? <p className="mt-4 whitespace-pre-wrap text-base leading-relaxed wrap-anywhere text-ink">{profile.bio}</p> : null}
+        <p className="mt-4 text-sm text-muted">Joined {joined}</p>
         <FollowCounts profile={profile} />
       </div>
       <ProfilePosts authorId={profile._id} handle={profile.handle} />

@@ -22,9 +22,9 @@ export function PeopleList({ handle, kind }: { handle: string; kind: PeopleListK
   return (
     <>
       <PageHeader title={profile.displayName}>
-        <Link href={`/${profile.handle}`} className="hover:underline">@{profile.handle}</Link>
+        <Link href={`/${profile.handle}`} className="wrap-anywhere underline-offset-4 hover:underline">@{profile.handle}</Link>
       </PageHeader>
-      <nav aria-label="People" className="flex border-b border-line">
+      <nav aria-label="People" className="flex gap-6 border-b border-line bg-surface px-4 sm:px-6">
         {PEOPLE_LISTS.map(list => {
           const current = list.kind === kind;
           return (
@@ -32,7 +32,7 @@ export function PeopleList({ handle, kind }: { handle: string; kind: PeopleListK
               key={list.kind}
               href={`/${profile.handle}/${list.kind}`}
               aria-current={current ? "page" : undefined}
-              className={`flex-1 border-b-2 py-3 text-center text-sm font-medium transition-colors hover:bg-surface-2 ${current ? "border-accent text-ink" : "border-transparent text-muted"}`}
+              className={`min-h-12 border-b-2 px-1 py-3 text-center text-sm font-semibold transition-colors duration-150 hover:text-accent-text ${current ? "border-accent text-accent-text" : "border-transparent text-muted"}`}
             >
               {list.label}
             </Link>
@@ -61,9 +61,9 @@ function People({ profile, kind }: { profile: PublicProfile; kind: PeopleListKin
 
   return (
     <>
-      <ol>{results.map(row => <li key={row._id}><ProfileRow profile={row.profile} /></li>)}</ol>
+      <ol className="min-w-0 bg-surface">{results.map(row => <li key={row._id}><ProfileRow profile={row.profile} /></li>)}</ol>
       {status === "CanLoadMore" || status === "LoadingMore" ? (
-        <div className="p-5 text-center">
+        <div className="bg-surface px-4 py-6 text-center sm:px-6">
           <Button variant="secondary" loading={status === "LoadingMore"} onClick={() => loadMore(PEOPLE_PAGE_SIZE)}>Load more</Button>
         </div>
       ) : null}
