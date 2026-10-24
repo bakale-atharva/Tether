@@ -50,7 +50,7 @@ export function bioProblem(bio: string): string | null {
 }
 
 export function imageProblem(type: string, size: number): string | null {
-  if (!(IMAGE_TYPES as readonly string[]).includes(type)) return "Choose a JPEG, PNG, or WebP image.";
+  if (!IMAGE_TYPES.some(imageType => imageType === type)) return "Choose a JPEG, PNG, or WebP image.";
   if (size <= 0) return "This image is empty. Choose another file.";
   if (size > IMAGE_BYTES_MAX) return "Each image must be 5 MB or smaller.";
   return null;

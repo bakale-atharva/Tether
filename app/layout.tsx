@@ -2,7 +2,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Geist } from "next/font/google";
 import { ConvexClientProvider } from "@/components/providers/convex-client-provider";
-import { themeInitScript } from "@/components/shell/theme-toggle";
+import { themeInitScript } from "@/lib/theme";
 import "./globals.css";
 
 const body = Geist({

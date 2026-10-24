@@ -12,8 +12,12 @@ export type Entitlement = {
   canceled: boolean;
   sourceUpdatedAt: number;
 };
-const record = (value: unknown): Record<string, unknown> =>
-  value !== null && typeof value === "object" ? value as Record<string, unknown> : {};
+// SDK resources are class instances; accept objects while keeping every field
+// unknown until its individual runtime check below. Arrays are not records.
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+const record = (value: unknown): Record<string, unknown> => isRecord(value) ? value : {};
 const finite = (value: unknown): value is number => typeof value === "number" && Number.isFinite(value);
 export const unavailable = (): Entitlement => ({ allowed: false, verified: false, plan: "free", status: "unavailable", accessUntil: null, canceled: false, sourceUpdatedAt: 0 });
 
