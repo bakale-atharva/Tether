@@ -28,7 +28,7 @@ export function Avatar({
       <img
         src={src}
         alt=""
-        className={`${sizes[size]} shrink-0 rounded-full border border-line object-cover`}
+        className={`${sizes[size]} shrink-0 rounded-full border border-line object-cover bg-surface-2`}
       />
     );
   }

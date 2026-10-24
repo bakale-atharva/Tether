@@ -1,20 +1,8 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Geist } from "next/font/google";
 import { ConvexClientProvider } from "@/components/providers/convex-client-provider";
 import { themeInitScript } from "@/lib/theme";
 import "./globals.css";
-
-const body = Geist({
-  variable: "--font-body",
-  subsets: ["latin"],
-});
-
-const display = Fraunces({
-  variable: "--font-display",
-  subsets: ["latin"],
-  axes: ["SOFT", "opsz"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -27,8 +15,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbf7f0" },
-    { media: "(prefers-color-scheme: dark)", color: "#12141b" },
+    { media: "(prefers-color-scheme: light)", color: "#f0f3f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#171b26" },
   ],
 };
 
@@ -37,7 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${body.variable} ${display.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />

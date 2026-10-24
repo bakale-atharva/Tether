@@ -6,67 +6,89 @@
 
 :root {
   color-scheme: light;
-  --bg: #fbf7f0; /* warm ivory */
-  --surface: #fffdf9;
-  --surface-2: #f3ece0;
-  --ink: #1b1f2a; /* deep ink */
-  --muted: #5a5f6d;
-  --border: #e5dccb;
-  --border-strong: #cfc3ad;
-  --accent: #c64a32; /* coral, AA with white text */
-  --accent-hover: #ad3f29;
+  --font-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --bg: #f0f3f7;
+  --surface: #ffffff;
+  --surface-2: #e8edf4;
+  --ink: #252b3a;
+  --muted: #566074;
+  --border: #c7ceda;
+  --border-strong: #8994a8;
+  --accent: #5145a0;
+  --accent-hover: #44388c;
   --accent-fg: #ffffff;
-  --accent-text: #ad3f29; /* coral for text on ivory */
-  --accent-soft: #fbe4dc;
-  --danger: #b42318;
-  --danger-soft: #fde8e6;
-  --success: #1d7a4a;
-  --ring: #c64a32;
-  --shadow: 0 1px 2px rgb(27 31 42 / 0.06), 0 8px 24px -12px rgb(27 31 42 / 0.12);
+  --accent-text: #5145a0;
+  --accent-soft: #e3dff3;
+  --danger: #b42332;
+  --danger-fg: #ffffff;
+  --danger-soft: #fce8ec;
+  --success: #217348;
+  --ring: var(--accent);
+  --shadow: 0 2px 8px -4px rgb(37 43 58 / 0.18);
+
+  /* One dark palette, shared by system preference and the saved override. */
+  --dark-bg: #171b26;
+  --dark-surface: #202635;
+  --dark-surface-2: #2a3244;
+  --dark-ink: #edf0f8;
+  --dark-muted: #b3bdd0;
+  --dark-border: #3d465d;
+  --dark-border-strong: #79859e;
+  --dark-accent: #b8acf5;
+  --dark-accent-hover: #cabffa;
+  --dark-accent-fg: #251e48;
+  --dark-accent-text: #c6bafb;
+  --dark-accent-soft: #342d50;
+  --dark-danger: #ffabb4;
+  --dark-danger-fg: #38121b;
+  --dark-danger-soft: #422631;
+  --dark-success: #84d4ad;
+  --dark-shadow: 0 2px 8px -4px rgb(0 0 0 / 0.4);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #12141b;
-    --surface: #191c25;
-    --surface-2: #222632;
-    --ink: #f3eee6;
-    --muted: #a6abb8;
-    --border: #2c3140;
-    --border-strong: #3d4356;
-    --accent: #f0806a;
-    --accent-hover: #f59a87;
-    --accent-fg: #1f0f0b;
-    --accent-text: #f49883;
-    --accent-soft: #3a211c;
-    --danger: #ff8f84;
-    --danger-soft: #3b1d1b;
-    --success: #6fd3a0;
-    --ring: #f0806a;
-    --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+    --bg: var(--dark-bg);
+    --surface: var(--dark-surface);
+    --surface-2: var(--dark-surface-2);
+    --ink: var(--dark-ink);
+    --muted: var(--dark-muted);
+    --border: var(--dark-border);
+    --border-strong: var(--dark-border-strong);
+    --accent: var(--dark-accent);
+    --accent-hover: var(--dark-accent-hover);
+    --accent-fg: var(--dark-accent-fg);
+    --accent-text: var(--dark-accent-text);
+    --accent-soft: var(--dark-accent-soft);
+    --danger: var(--dark-danger);
+    --danger-fg: var(--dark-danger-fg);
+    --danger-soft: var(--dark-danger-soft);
+    --success: var(--dark-success);
+    --shadow: var(--dark-shadow);
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #12141b;
-  --surface: #191c25;
-  --surface-2: #222632;
-  --ink: #f3eee6;
-  --muted: #a6abb8;
-  --border: #2c3140;
-  --border-strong: #3d4356;
-  --accent: #f0806a;
-  --accent-hover: #f59a87;
-  --accent-fg: #1f0f0b;
-  --accent-text: #f49883;
-  --accent-soft: #3a211c;
-  --danger: #ff8f84;
-  --danger-soft: #3b1d1b;
-  --success: #6fd3a0;
-  --ring: #f0806a;
-  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --bg: var(--dark-bg);
+  --surface: var(--dark-surface);
+  --surface-2: var(--dark-surface-2);
+  --ink: var(--dark-ink);
+  --muted: var(--dark-muted);
+  --border: var(--dark-border);
+  --border-strong: var(--dark-border-strong);
+  --accent: var(--dark-accent);
+  --accent-hover: var(--dark-accent-hover);
+  --accent-fg: var(--dark-accent-fg);
+  --accent-text: var(--dark-accent-text);
+  --accent-soft: var(--dark-accent-soft);
+  --danger: var(--dark-danger);
+  --danger-fg: var(--dark-danger-fg);
+  --danger-soft: var(--dark-danger-soft);
+  --success: var(--dark-success);
+  --shadow: var(--dark-shadow);
 }
 
 /* Clerk components follow the same tokens in both themes. */
@@ -100,22 +122,29 @@
   --color-accent-text: var(--accent-text);
   --color-accent-soft: var(--accent-soft);
   --color-danger: var(--danger);
+  --color-danger-fg: var(--danger-fg);
   --color-danger-soft: var(--danger-soft);
   --color-success: var(--success);
   --color-ring: var(--ring);
   --font-sans: var(--font-body);
-  --font-display: var(--font-display);
+  --font-display: var(--font-body);
   --shadow-card: var(--shadow);
 }
 
 html {
   background: var(--bg);
+  scrollbar-color: var(--border-strong) var(--bg);
 }
 
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  text-underline-offset: 0.2em;
+  accent-color: var(--accent);
+  caret-color: var(--accent);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -124,7 +153,6 @@ body {
 :focus-visible:not(input, textarea, select) {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
-  border-radius: 0.375rem;
 }
 
 ::selection {
