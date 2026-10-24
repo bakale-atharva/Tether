@@ -18,7 +18,9 @@ and internal `requirePro` for trusted background jobs. Call immediately before
 model execution. Neither session claims, editable metadata, nor the webhook
 cache authorizes generation. User-facing actions accept no user identifier.
 
-The guard reads Clerk's current user subscription and the user-plan catalog,
+The guard uses the pinned `@clerk/backend` Billing SDK:
+`billing.getUserBillingSubscription(userId)` and
+`billing.getPlanList({ payerType: "user", limit: 100 })`,
 matching immutable plan IDs before checking `pro` and `tether_agent`. **Clerk's
 subscription response can contain an empty embedded feature list even when its
 plan catalog contains the feature** (observed in a successful development
@@ -27,7 +29,8 @@ catalog lookup. Missing plan/features, unknown states, Clerk errors, invalid
 responses, past-due/incomplete/ended items, trials, future or expired periods
 all deny access. Canceled items remain valid only until their paid period ends.
 Catalog reads are bounded at 100 plans and fail closed if the plan is absent.
-Canceled items may retain status `active` with `canceled_at` set; this timestamp
+SDK resources use camelCase fields and millisecond timestamps.
+Canceled items may retain status `active` with `canceledAt` set; this timestamp
 drives the nonrenewal display without revoking the remaining paid access.
 
 ## Webhooks
@@ -55,7 +58,8 @@ and never authorize requests. Event IDs persist for replay protection.
   access without a successful live subscription lookup.
 - Policy tests cover lifecycle transitions, expiry boundaries, malformed data,
   lookup failures, feature omission, plan ID mismatch, organization exclusion,
-  and stale/replayed snapshots. Uses node:test; no Vitest or E2E tooling.
+  and stale/replayed snapshots. Lookup tests exercise the installed Billing SDK
+  with mocked HTTP responses, including SDK resource deserialization. Uses node:test; no Vitest or E2E tooling.
 - Cancellation through Clerk's drawer succeeded; the live authoritative action
   returned `allowed: true`, `canceled: true`, and the original paid-period end.
   Browser text showed “Your subscription won’t renew.”
