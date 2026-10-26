@@ -31,17 +31,17 @@ export function ChatWorkspace() {
     finally { setBusy(false); }
   }
   const allowed = !!summary?.allowed;
-  return <div className="min-w-0 bg-surface">
-    {!allowed && <div className="border-b border-line bg-bg px-4 py-5 sm:px-6">
+  return <div className="min-w-0">
+    {!allowed && <div className="border-b border-line bg-surface-2/40 px-4 py-5 sm:px-6 sm:py-6">
       <p className="text-base font-semibold text-ink">{loading ? "Checking your plan…" : summary?.verified ? "Make room for a conversation with Pro" : "We couldn't verify your plan"}</p>
       <p className="mt-2 text-sm leading-relaxed text-muted">{summary?.verified ? "Get private AI conversations for $10/month. Your existing history is always here to read." : "Refresh your plan to try again. Your saved conversations are still available."}</p>
       <div className="mt-4 flex flex-wrap gap-2"><Link href="/pricing" className={buttonStyles({ size: "sm" })}>Explore Pro</Link><Button size="sm" variant="secondary" onClick={refresh} loading={loading}>Refresh plan</Button></div>
     </div>}
     <div className="sm:grid sm:grid-cols-[10rem_minmax(0,1fr)]">
-    <nav aria-label="Private conversations" className="min-w-0 border-b border-line bg-bg px-4 py-4 sm:border-r sm:border-b-0 sm:px-3 sm:py-5">
+    <nav aria-label="Private conversations" className="min-w-0 border-b border-line bg-surface-2/25 px-4 py-5 sm:border-r sm:border-b-0 sm:px-3 sm:py-6">
       <div className="flex items-center justify-between gap-3 sm:flex-col sm:items-stretch"><h2 className="text-sm font-semibold text-ink">Your conversations</h2><Button size="sm" variant="secondary" loading={busy} onClick={newConversation}>New chat</Button></div>
       {conversations.status === "LoadingFirstPage" ? <p className="mt-4 text-sm leading-relaxed text-muted" role="status">Loading conversations…</p> : conversations.results.length ? <ul className="mt-4 flex gap-2 overflow-x-auto px-0.5 pb-2 sm:max-h-[65dvh] sm:flex-col sm:overflow-y-auto">
-        {conversations.results.map(c => <li key={c.threadId} className="min-w-0 shrink-0"><Link href={`/tether?thread=${encodeURIComponent(c.threadId)}`} aria-current={c.threadId === threadId ? "page" : undefined} className={`block min-h-11 max-w-48 content-center truncate rounded-xl px-3 py-2.5 text-sm transition-colors duration-150 sm:max-w-none ${c.threadId === threadId ? "bg-accent-soft font-semibold text-accent-text" : "text-muted hover:bg-surface-2 hover:text-ink"}`}>{c.title}</Link></li>)}
+        {conversations.results.map(c => <li key={c.threadId} className="min-w-0 shrink-0"><Link href={`/tether?thread=${encodeURIComponent(c.threadId)}`} aria-current={c.threadId === threadId ? "page" : undefined} className={`block min-h-11 max-w-48 content-center truncate rounded-full px-3 py-2.5 text-sm transition-colors duration-150 sm:max-w-none ${c.threadId === threadId ? "bg-surface-2 font-semibold text-ink" : "text-muted hover:bg-surface-2 hover:text-ink"}`}>{c.title}</Link></li>)}
       </ul> : <p className="mt-3 text-sm text-muted">Your chats will be saved here.</p>}
       {conversations.status === "CanLoadMore" && <Button variant="ghost" size="sm" className="mt-2 h-auto min-h-11 max-w-full whitespace-normal py-2 text-left sm:w-full" onClick={() => conversations.loadMore(10)}>Older conversations</Button>}
       {error && <p role="alert" className="mt-3 text-sm leading-relaxed text-danger [overflow-wrap:anywhere]">{error}</p>}

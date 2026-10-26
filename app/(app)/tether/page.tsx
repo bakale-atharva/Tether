@@ -10,7 +10,7 @@ export default function TetherAiPage() {
   return (
     <>
       <PageHeader title="Tether AI">Private conversations with Tether, for Pro members.</PageHeader>
-      <div className="min-w-0 bg-surface">
+      <div className="min-w-0">
         <Suspense fallback={<LoadingState label="Loading conversations" />}><PrivateChat /></Suspense>
       </div>
     </>
