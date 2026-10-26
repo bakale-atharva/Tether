@@ -19,12 +19,12 @@ export function Field({ id, label, hint, error, prefix, className = "", ...props
         {label}
       </label>
       <div
-        className={`flex h-12 items-center rounded-xl border bg-surface transition-colors duration-150 focus-within:border-ring focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring has-disabled:bg-surface-2 ${
+        className={`flex h-12 items-center rounded-full border bg-surface-2 transition-colors duration-150 focus-within:border-ring focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring has-disabled:bg-surface-2 ${
           error ? "border-danger" : "border-line-strong"
         }`}
       >
         {prefix ? (
-          <span aria-hidden="true" className="pl-3.5 text-muted">
+          <span aria-hidden="true" className="pl-4 text-muted">
             {prefix}
           </span>
         ) : null}
@@ -32,8 +32,8 @@ export function Field({ id, label, hint, error, prefix, className = "", ...props
           id={id}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
-          className={`h-full w-full min-w-0 rounded-xl bg-transparent text-base text-ink outline-none placeholder:text-muted focus-visible:outline-none disabled:cursor-not-allowed disabled:text-muted ${
-            prefix ? "pl-1 pr-3.5" : "px-3.5"
+          className={`h-full w-full min-w-0 rounded-full bg-transparent text-base text-ink outline-none placeholder:text-muted focus-visible:outline-none disabled:cursor-not-allowed disabled:text-muted ${
+            prefix ? "pl-1 pr-4" : "px-4"
           }`}
           {...props}
         />

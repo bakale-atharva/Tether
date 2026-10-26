@@ -3,7 +3,7 @@ import { Spinner } from "./spinner";
 
 export function Card({ className = "", children }: { className?: string; children: ReactNode }) {
   return (
-    <div className={`rounded-2xl border border-line bg-surface ${className}`}>
+    <div className={`shell-panel ${className}`}>
       {children}
     </div>
   );
@@ -21,14 +21,14 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center px-6 py-16 text-center">
+    <div className="flex flex-col items-center px-6 py-20 text-center">
       {icon ? (
-        <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-accent-soft text-accent-text">
+        <div className="mb-5 flex size-12 items-center justify-center rounded-full bg-surface-2 text-muted">
           {icon}
         </div>
       ) : null}
       <h2 className="font-display text-xl font-semibold tracking-tight text-balance text-ink">{title}</h2>
-      {children ? <div className="mt-2 max-w-sm leading-relaxed text-muted">{children}</div> : null}
+      {children ? <div className="mt-3 max-w-sm leading-relaxed text-muted">{children}</div> : null}
       {action ? <div className="mt-6">{action}</div> : null}
     </div>
   );
@@ -46,7 +46,7 @@ export function ErrorState({
   return (
     <div
       role="alert"
-      className="m-4 rounded-2xl border border-danger/40 bg-danger-soft px-5 py-4 text-ink"
+      className="m-4 rounded-[1.25rem] border border-danger/40 bg-danger-soft px-5 py-4 text-ink"
     >
       <p className="font-semibold text-danger">{title}</p>
       {children ? <div className="mt-2 text-sm leading-relaxed text-ink">{children}</div> : null}
