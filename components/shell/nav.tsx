@@ -42,7 +42,7 @@ function isActive(pathname: string | null, href: string) {
 function SidebarLinks({ pathname }: { pathname: string | null }) {
   const items = useNavItems();
   return (
-    <ul className="flex flex-col gap-1">
+    <ul className="flex flex-col gap-2">
       {items.map(({ href, label, icon: Icon }) => {
         const active = isActive(pathname, href);
         return (
@@ -51,8 +51,8 @@ function SidebarLinks({ pathname }: { pathname: string | null }) {
               href={href}
               aria-current={active ? "page" : undefined}
               title={label}
-              className={`group flex h-12 items-center gap-3 rounded-xl px-3 text-[0.9375rem] transition-colors duration-150 md:justify-center lg:justify-start lg:pr-5 ${
-                active ? "bg-accent-soft font-semibold text-accent-text" : "text-muted hover:bg-surface-2 hover:text-ink"
+              className={`group flex min-h-12 items-center gap-3 rounded-full px-3 text-base transition-colors duration-150 md:justify-center lg:justify-start lg:pr-4 ${
+                active ? "bg-surface-2 font-semibold text-ink" : "text-muted hover:bg-surface-2 hover:text-ink"
               }`}
             >
               <Icon filled={active} className="size-6 shrink-0" />
@@ -78,10 +78,10 @@ function TabLinks({ pathname }: { pathname: string | null }) {
               aria-current={active ? "page" : undefined}
               aria-label={label}
               className={`flex h-full min-h-14 flex-col items-center justify-center gap-0.5 text-[0.6875rem] transition-colors duration-150 hover:bg-surface-2 ${
-                active ? "font-semibold text-accent-text" : "text-muted"
+                active ? "font-semibold text-ink" : "text-muted"
               }`}
             >
-              <span className={`flex h-8 w-12 items-center justify-center rounded-xl ${active ? "bg-accent-soft" : ""}`}>
+              <span className={`flex h-8 w-12 items-center justify-center rounded-full ${active ? "bg-surface-2" : ""}`}>
                 <Icon filled={active} className="size-5" />
               </span>
               <span>{label}</span>
