@@ -46,13 +46,13 @@ export function SavedPosts() {
 
   return (
     <>
-      <ol>
+      <ol aria-label="Saved posts">
         {results.map(({ _id, post }) => (
           <li key={_id}>{post.deleted ? <DeletedBookmark postId={post._id} /> : <PostCard post={post} />}</li>
         ))}
       </ol>
       {status === "CanLoadMore" || status === "LoadingMore" ? (
-        <div className="p-5 text-center">
+        <div className="border-t border-line px-4 py-6 text-center sm:px-6">
           <Button variant="secondary" loading={status === "LoadingMore"} onClick={() => loadMore(FEED_PAGE_SIZE)}>Load more</Button>
         </div>
       ) : null}
@@ -77,9 +77,12 @@ function DeletedBookmark({ postId }: { postId: Id<"posts"> }) {
   }
 
   return (
-    <article aria-label="Deleted post" className="flex items-center justify-between gap-3 border-b border-line px-4 py-4 md:px-6">
-      <p className="text-sm italic text-muted">This post was deleted by its author.</p>
-      <Button variant="secondary" size="sm" loading={removing} onClick={remove}>Remove</Button>
+    <article aria-label="Deleted post" className="flex items-start justify-between gap-4 border-b border-line bg-surface-2/40 px-4 py-5 sm:px-6">
+      <div className="flex min-w-0 items-start gap-3 pt-2">
+        <BookmarkIcon aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-muted" />
+        <p className="text-sm leading-relaxed text-muted">This post was deleted by its author.</p>
+      </div>
+      <Button variant="secondary" size="sm" className="shrink-0" loading={removing} onClick={remove}>Remove</Button>
     </article>
   );
 }

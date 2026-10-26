@@ -107,14 +107,14 @@ function ProfileSetup({
   }
 
   return (
-    <Card className="w-full max-w-md p-6 sm:p-8">
-      <h1 className="font-display text-3xl font-semibold tracking-tight">Make it yours</h1>
-      <p className="mt-2 text-muted">
+    <Card className="w-full p-6 sm:p-8">
+      <h1 className="text-[1.75rem] leading-tight font-semibold tracking-tight text-balance sm:text-3xl">Make it yours</h1>
+      <p className="mt-3 leading-relaxed text-muted">
         Pick the name people see and a unique handle. You can change your name
         later; your handle is how others find you.
       </p>
 
-      <form noValidate onSubmit={onSubmit} className="mt-7 flex flex-col gap-5">
+      <form noValidate onSubmit={onSubmit} className="mt-8 flex flex-col gap-6">
         <Field
           id="displayName"
           label="Display name"
@@ -152,7 +152,7 @@ function ProfileSetup({
         />
 
         {submitError ? (
-          <p role="alert" className="rounded-xl bg-danger-soft px-4 py-3 text-sm text-danger">
+          <p role="alert" className="rounded-xl border border-danger/40 bg-danger-soft px-4 py-3 text-sm leading-relaxed text-danger">
             {submitError}
           </p>
         ) : null}

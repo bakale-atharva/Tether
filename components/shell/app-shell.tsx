@@ -15,7 +15,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <OnboardingRedirect />
 
         {/* Desktop and tablet sidebar */}
-        <header className="sticky top-0 hidden h-dvh w-16 shrink-0 flex-col py-6 md:flex lg:w-58">
+        <header className="sticky top-0 hidden h-dvh min-h-0 w-16 shrink-0 flex-col overflow-y-auto py-6 md:flex lg:w-58">
           <Link
             href="/"
             aria-label="Tether home"
