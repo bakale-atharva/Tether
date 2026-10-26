@@ -42,10 +42,12 @@ baseline after their coordinated checks.
 
 ## Brand Commitments
 
-Keep the product name Tether. The owner chose the exploratory layout
-“A familiar corner”: quiet sidebar navigation and a single conversation column.
-Palette, typography, and final visual identity remain open; the initial layout
-mockup did not approve those details.
+Keep the product name Tether. On 2026-10-26 the owner replaced the earlier
+Window seat direction with a supplied floating charcoal-panel reference:
+three desktop panels, spacious profile imagery, a static sculpted backdrop,
+soft highlights and large rounded corners. Both themes remain, with dark
+matching the reference and saved/system preference behavior preserved. Do not
+copy the reference's X branding or introduce its unsupported product features.
 
 ## Evidence on Hand
 
