@@ -26,7 +26,7 @@ export function ReplyList({ parentId, depth }: { parentId: Id<"posts">; depth: n
 
   if (status === "LoadingFirstPage") {
     return (
-      <div className="flex items-center gap-2 px-4 py-4 text-sm text-muted">
+      <div className="flex items-center gap-2 px-4 py-6 text-sm text-muted sm:px-8">
         <Spinner className="size-4" label="Loading replies" />
       </div>
     );
@@ -41,7 +41,7 @@ export function ReplyList({ parentId, depth }: { parentId: Id<"posts">; depth: n
 
   return (
     <div>
-      <ol className="flex min-w-0 flex-col divide-y divide-line">
+      <ol className="flex min-w-0 flex-col divide-y divide-line/70">
         {results.map((reply) => (
           <li key={reply._id}>
             <ReplyNode reply={reply} depth={depth} />
@@ -49,7 +49,7 @@ export function ReplyList({ parentId, depth }: { parentId: Id<"posts">; depth: n
         ))}
       </ol>
       {status === "CanLoadMore" || status === "LoadingMore" ? (
-        <div className={depth === 0 ? "px-4 py-3 md:px-6" : "px-3 py-1"}>
+        <div className={depth === 0 ? "px-4 py-5 sm:px-8" : "px-3 py-2"}>
           <Button variant="ghost" size="sm" loading={status === "LoadingMore"} onClick={() => loadMore(pageSize)}>
             Show more replies
           </Button>
@@ -72,7 +72,7 @@ function ReplyNode({ reply, depth }: { reply: PublicPost; depth: number }) {
   }
 
   return (
-    <div className={depth === 0 ? "min-w-0 px-2 sm:px-3" : "min-w-0"}>
+    <div className={depth === 0 ? "min-w-0 px-2 sm:px-5" : "min-w-0"}>
       <PostCard
         post={reply}
         compact
@@ -80,7 +80,7 @@ function ReplyNode({ reply, depth }: { reply: PublicPost; depth: number }) {
         replyOpen={composing}
       />
       {composing ? (
-        <div className="mb-4 sm:ml-11">
+        <div className="mb-5 sm:ml-12">
           <ReplyComposer
             compact
             autoFocus
@@ -96,7 +96,7 @@ function ReplyNode({ reply, depth }: { reply: PublicPost; depth: number }) {
         </div>
       ) : null}
       {postedId ? (
-        <p role="status" className="mb-4 px-2 text-sm text-muted sm:ml-11">
+        <p role="status" className="mb-5 px-2 text-sm text-muted sm:ml-12">
           Reply posted.{" "}
           <Link href={`/${reply.author.handle}/post/${reply._id}`} className="font-medium text-accent-text hover:underline">
             View thread
@@ -106,7 +106,7 @@ function ReplyNode({ reply, depth }: { reply: PublicPost; depth: number }) {
       {reply.hasReplies ? (
         <div className="ml-2 min-w-0 border-l border-line pl-1 sm:ml-[1.625rem] sm:pl-2">
           {!canNest ? (
-            <Link href={postHref(reply)} className="inline-flex min-h-11 items-center rounded-xl px-3 py-2 text-sm font-medium text-accent-text hover:bg-accent-soft">
+            <Link href={postHref(reply)} className="inline-flex min-h-11 items-center rounded-full px-3 py-2 text-sm font-medium text-accent-text hover:bg-accent-soft">
               Continue this thread →
             </Link>
           ) : expanded ? (
@@ -116,7 +116,7 @@ function ReplyNode({ reply, depth }: { reply: PublicPost; depth: number }) {
               type="button"
               onClick={() => setExpanded(true)}
               aria-expanded={false}
-              className="inline-flex min-h-11 items-center rounded-xl px-3 py-2 text-sm font-medium text-accent-text hover:bg-accent-soft"
+              className="inline-flex min-h-11 items-center rounded-full px-3 py-2 text-sm font-medium text-accent-text hover:bg-accent-soft"
             >
               {reply.replyCount > 0
                 ? `Show ${reply.replyCount === 1 ? "1 reply" : `${reply.replyCount} replies`}`
@@ -134,7 +134,7 @@ export function Ancestors({ postId }: { postId: Id<"posts"> }) {
   const data = useQuery(api.replies.ancestors, { postId });
   if (data === undefined) {
     return (
-      <div className="flex items-center gap-2 px-4 py-4 text-sm text-muted md:px-6">
+      <div className="flex items-center gap-2 px-4 py-6 text-sm text-muted sm:px-8">
         <Spinner className="size-4" label="Loading earlier messages" />
       </div>
     );
@@ -142,9 +142,9 @@ export function Ancestors({ postId }: { postId: Id<"posts"> }) {
   if (data.posts.length === 0) return null;
 
   return (
-    <nav aria-label="Earlier in this conversation" className="border-b border-line bg-surface px-2 pt-3 sm:px-3">
+    <nav aria-label="Earlier in this conversation" className="border-b border-line/70 px-2 pt-3 sm:px-5">
       {data.truncated && data.root ? (
-        <Link href={postHref(data.root)} className="mb-2 inline-flex min-h-11 items-center rounded-xl px-3 py-2 text-sm font-medium text-accent-text hover:bg-accent-soft">
+        <Link href={postHref(data.root)} className="mb-2 inline-flex min-h-11 items-center rounded-full px-3 py-2 text-sm font-medium text-accent-text hover:bg-accent-soft">
           ↑ Go to the start of this conversation
         </Link>
       ) : null}
@@ -152,7 +152,7 @@ export function Ancestors({ postId }: { postId: Id<"posts"> }) {
         {data.posts.map((ancestor) => (
           <li key={ancestor._id} className="relative">
             {/* Connector from each ancestor's avatar down to the next message. */}
-            <span aria-hidden="true" className="absolute top-13 bottom-0 left-6 w-px bg-line sm:left-7" />
+            <span aria-hidden="true" className="absolute top-14 bottom-0 left-6 w-px bg-line/70 sm:top-16 sm:left-7" />
             <PostCard post={ancestor} compact />
           </li>
         ))}

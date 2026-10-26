@@ -23,16 +23,16 @@ export function HomeWelcome() {
   if (viewer.status === "signedOut") {
     return (
       <>
-        <section className="border-b border-line bg-surface px-4 py-6 sm:px-6">
-          <div className="flex items-start gap-3">
-            <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent-text"><FeatherIcon className="size-5" /></span>
+        <section className="border-b border-line/70 px-4 py-7 sm:px-8 sm:py-8">
+          <div className="flex items-start gap-3 sm:gap-4">
+            <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent-text"><FeatherIcon className="size-5" /></span>
             <div className="min-w-0">
               <h2 className="text-lg font-semibold text-ink">Conversations worth staying for</h2>
-              <p className="mt-2 max-w-lg text-sm leading-relaxed text-muted">
+              <p className="mt-2.5 max-w-lg text-base leading-relaxed text-muted">
                 Tether is a calm place for public threads. Create an account to post,
                 reply, and save what matters.
               </p>
-              <div className="mt-4">
+              <div className="mt-5">
                 <SignUpButton mode="modal">
                   <button type="button" className={buttonStyles()}>
                     Join Tether

@@ -39,7 +39,7 @@ export function ProfileEditor({ profile, onSaved }: { profile: PublicProfile; on
     } finally { setSaving(false); }
   }
 
-  return <form className="mt-5 rounded-2xl border border-line bg-surface-2 p-4 sm:p-5" onSubmit={submit}>
+  return <form className="mt-6 rounded-[20px] bg-surface-2/60 p-4 sm:p-6" onSubmit={submit}>
     <fieldset disabled={saving} className="grid min-w-0 gap-5">
       <legend className="mb-4 text-base font-semibold text-ink">Edit your profile</legend>
       <Field id="profile-name" label="Display name" value={displayName} onChange={event => setDisplayName(event.target.value)} maxLength={DISPLAY_NAME_MAX} required />

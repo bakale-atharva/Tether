@@ -24,7 +24,7 @@ export function PeopleList({ handle, kind }: { handle: string; kind: PeopleListK
       <PageHeader title={profile.displayName}>
         <Link href={`/${profile.handle}`} className="wrap-anywhere underline-offset-4 hover:underline">@{profile.handle}</Link>
       </PageHeader>
-      <nav aria-label="People" className="flex gap-6 border-b border-line bg-surface px-4 sm:px-6">
+      <nav aria-label="People" className="mx-4 flex gap-6 border-b border-line sm:mx-8 sm:gap-8">
         {PEOPLE_LISTS.map(list => {
           const current = list.kind === kind;
           return (
@@ -32,7 +32,7 @@ export function PeopleList({ handle, kind }: { handle: string; kind: PeopleListK
               key={list.kind}
               href={`/${profile.handle}/${list.kind}`}
               aria-current={current ? "page" : undefined}
-              className={`min-h-12 border-b-2 px-1 py-3 text-center text-sm font-semibold transition-colors duration-150 hover:text-accent-text ${current ? "border-accent text-accent-text" : "border-transparent text-muted"}`}
+              className={`relative min-h-14 px-2 py-4 text-center text-sm font-semibold transition-colors duration-150 hover:text-ink ${current ? "text-ink after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:rounded-full after:bg-accent-text" : "text-muted"}`}
             >
               {list.label}
             </Link>
@@ -61,9 +61,9 @@ function People({ profile, kind }: { profile: PublicProfile; kind: PeopleListKin
 
   return (
     <>
-      <ol className="min-w-0 bg-surface">{results.map(row => <li key={row._id}><ProfileRow profile={row.profile} /></li>)}</ol>
+      <ol className="min-w-0">{results.map(row => <li key={row._id}><ProfileRow profile={row.profile} /></li>)}</ol>
       {status === "CanLoadMore" || status === "LoadingMore" ? (
-        <div className="bg-surface px-4 py-6 text-center sm:px-6">
+        <div className="px-4 py-8 text-center sm:px-8 sm:py-10">
           <Button variant="secondary" loading={status === "LoadingMore"} onClick={() => loadMore(PEOPLE_PAGE_SIZE)}>Load more</Button>
         </div>
       ) : null}

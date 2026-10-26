@@ -25,8 +25,8 @@ export function PostDetail({ handle, id }: { handle: string; id: string }) {
         onReply={() => document.getElementById(replyInputId(post._id))?.focus()}
       />
       {post.deleted ? null : <ReplyComposer key={post._id} parentId={post._id} parentHandle={post.author.handle} />}
-      <section aria-label="Replies" className="min-w-0 bg-surface pb-4">
-        <h2 className="border-b border-line px-4 py-4 text-sm font-semibold text-ink sm:px-6">Replies</h2>
+      <section aria-label="Replies" className="min-w-0 pb-6">
+        <h2 className="mx-4 border-b border-line py-5 text-sm font-semibold text-ink sm:mx-8">Replies</h2>
         <ReplyList parentId={post._id} depth={0} />
       </section>
     </>

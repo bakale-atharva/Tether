@@ -43,8 +43,8 @@ export function PostCard({ post, detail = false, compact = false, onReply, reply
   const href = postHref(post);
   const created = new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", year: detail ? "numeric" : undefined, hour: "numeric", minute: "2-digit" }).format(post._creationTime);
   const frame = compact
-    ? "px-2 py-4 sm:px-3"
-    : `border-b border-line px-4 py-5 sm:px-6 sm:py-6 ${detail ? "bg-surface-2" : "bg-surface"}`;
+    ? "px-2 py-5 sm:px-3 sm:py-6"
+    : `border-b border-line/70 px-4 py-6 sm:px-8 sm:py-8 ${detail ? "bg-surface-2/30" : "bg-transparent"}`;
 
   async function deletePost() {
     const noun = isReply ? "reply" : "post";
@@ -69,25 +69,25 @@ export function PostCard({ post, detail = false, compact = false, onReply, reply
       aria-label={`${isReply ? "Reply" : "Post"} by ${post.author.displayName}`}
       className={`${frame} min-w-0 transition-colors duration-150`}
     >
-      <div className="flex gap-3">
+      <div className="flex gap-3 sm:gap-4">
         <Link href={`/${post.author.handle}`} aria-label={`View ${post.author.displayName}'s profile`} className="shrink-0 self-start rounded-full">
           <Avatar name={post.author.displayName} src={post.author.avatarUrl} size={compact ? "sm" : "md"} />
         </Link>
         <div className="min-w-0 flex-1">
           <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-0.5 text-sm">
-            <Link href={`/${post.author.handle}`} className="min-w-0 font-semibold wrap-anywhere text-ink hover:underline">{post.author.displayName}</Link>
+            <Link href={`/${post.author.handle}`} className="min-w-0 text-base font-semibold wrap-anywhere text-ink hover:underline">{post.author.displayName}</Link>
             <Link href={`/${post.author.handle}`} className="min-w-0 wrap-anywhere text-muted hover:underline">@{post.author.handle}</Link>
             <Link href={href} className="text-xs leading-5 text-muted hover:underline"><time dateTime={new Date(post._creationTime).toISOString()}>{created}</time></Link>
           </div>
           {post.body ? (
-            <Link href={href} className={`mt-2 block whitespace-pre-wrap wrap-anywhere text-ink ${detail ? "text-lg leading-relaxed" : "text-base leading-relaxed"}`}>{post.body}</Link>
+            <Link href={href} className={`mt-2.5 block max-w-[70ch] whitespace-pre-wrap wrap-anywhere text-ink ${detail ? "text-lg leading-relaxed" : "text-base leading-relaxed"}`}>{post.body}</Link>
           ) : null}
-          {post.images.length ? <div className={`mt-3 grid gap-2 ${post.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
-            {post.images.map((image, index) => image.url ? <img key={index} src={image.url} alt={image.alt} className="max-h-[27.5rem] min-w-0 w-full rounded-xl border border-line object-cover" /> : null)}
+          {post.images.length ? <div className={`mt-4 grid gap-2 ${post.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
+            {post.images.map((image, index) => image.url ? <img key={index} src={image.url} alt={image.alt} className={`max-h-[27.5rem] min-w-0 w-full rounded-2xl object-cover sm:rounded-[20px] ${post.images.length > 1 ? "aspect-square" : ""}`} /> : null)}
           </div> : null}
         </div>
       </div>
-      <div className={`mt-3 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 ${compact ? "sm:pl-11" : "sm:pl-[3.25rem]"}`}>
+      <div className={`mt-4 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 ${compact ? "sm:pl-12" : "sm:pl-14"}`}>
         <div className="flex min-w-0 flex-wrap items-center gap-1 sm:gap-3">
           {onReply ? (
             <button
@@ -119,7 +119,7 @@ export function PostCard({ post, detail = false, compact = false, onReply, reply
           <LikeButton post={post} />
           {isReply ? null : <BookmarkButton post={post} />}
         </div>
-        {isOwner ? <Button variant="ghost" size="sm" className="min-h-11 text-muted sm:min-h-9" loading={removing} onClick={deletePost}>Delete</Button> : null}
+        {isOwner ? <Button variant="ghost" size="sm" className="min-h-11 text-muted md:min-h-9" loading={removing} onClick={deletePost}>Delete</Button> : null}
       </div>
       {error ? <ErrorState title="Message wasn't deleted">{error}</ErrorState> : null}
     </article>

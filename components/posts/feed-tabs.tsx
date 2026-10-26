@@ -33,7 +33,7 @@ export function FeedTabs({ selected, onSelect }: { selected: HomeFeed; onSelect:
   }
 
   return (
-    <div role="tablist" aria-label="Home feeds" onKeyDown={onKeyDown} className="flex gap-6 border-b border-line bg-surface px-4 sm:px-6">
+    <div role="tablist" aria-label="Home feeds" onKeyDown={onKeyDown} className="mx-4 flex gap-6 border-b border-line sm:mx-8 sm:gap-8">
       {HOME_FEEDS.map(feed => {
         const active = feed.id === selected;
         return (
@@ -50,7 +50,7 @@ export function FeedTabs({ selected, onSelect }: { selected: HomeFeed; onSelect:
             aria-controls={feedPanelId(feed.id)}
             tabIndex={active ? 0 : -1}
             onClick={() => onSelect(feed.id)}
-            className={`min-h-12 border-b-2 px-1 py-3 text-sm font-semibold transition-colors duration-150 hover:text-accent-text focus-visible:bg-accent-soft ${active ? "border-accent text-accent-text" : "border-transparent text-muted"}`}
+            className={`relative min-h-14 px-2 py-4 text-sm font-semibold transition-colors duration-150 hover:text-ink focus-visible:bg-accent-soft ${active ? "text-ink after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:rounded-full after:bg-accent-text" : "text-muted"}`}
           >
             {feed.label}
           </button>

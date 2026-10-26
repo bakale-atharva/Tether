@@ -7,8 +7,8 @@ export function DraftImages({ images, onRemove, onDescribe }: {
   onRemove: (index: number) => void;
   onDescribe: (index: number, alt: string) => void;
 }) {
-  return <div className="grid min-w-0 grid-cols-1 gap-3 pb-4 sm:grid-cols-2">
-    {images.map((image, index) => <div key={image.preview} className="min-w-0 overflow-hidden rounded-xl border border-line bg-surface-2">
+  return <div className="grid min-w-0 grid-cols-1 gap-4 pb-5 sm:grid-cols-2">
+    {images.map((image, index) => <div key={image.preview} className="min-w-0 overflow-hidden rounded-[20px] bg-surface-2/60">
       <img src={image.preview} alt="" className="h-40 w-full object-cover" />
       <div className="flex items-center justify-between gap-2 px-3 pt-2">
         <label className="text-xs font-medium text-muted" htmlFor={`alt-${index}`}>Image description</label>

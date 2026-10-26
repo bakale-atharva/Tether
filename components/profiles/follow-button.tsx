@@ -32,7 +32,7 @@ export function FollowButton({ profile }: { profile: PublicProfile }) {
   if (viewer.status === "signedOut") {
     return (
       <SignInButton mode="modal">
-        <button type="button" aria-label={label} className={buttonStyles({ size: "sm", className: "min-h-11 min-w-24 shrink-0 sm:min-h-9" })}>Follow</button>
+        <button type="button" aria-label={label} className={buttonStyles({ variant: "secondary", size: "sm", className: "min-h-11 min-w-24 shrink-0 bg-transparent" })}>Follow</button>
       </SignInButton>
     );
   }
@@ -52,13 +52,13 @@ export function FollowButton({ profile }: { profile: PublicProfile }) {
   return (
     <Button
       size="sm"
-      variant={following ? "secondary" : "primary"}
+      variant="secondary"
       onClick={toggle}
       disabled={viewer.status !== "ready" || state === undefined}
       aria-pressed={following}
       aria-label={label}
       // `!` outranks the variant's own hover colours, which share specificity.
-      className={`group min-h-11 min-w-24 shrink-0 sm:min-h-9 ${following ? "hover:border-danger/40! hover:bg-danger-soft! hover:text-danger! focus-visible:text-danger!" : ""}`}
+      className={`group min-h-11 min-w-24 shrink-0 bg-transparent ${following ? "hover:border-danger/40! hover:bg-danger-soft! hover:text-danger! focus-visible:text-danger!" : ""}`}
     >
       {following ? (
         <>

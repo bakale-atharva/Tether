@@ -9,7 +9,7 @@ export function MissingProfile() {
   return (
     <>
       <PageHeader title="Profile" />
-      <div className="bg-surface px-2 py-6 sm:px-4">
+      <div className="px-2 py-8 sm:px-4">
         <EmptyState
           icon={<UserIcon className="size-6" />}
           title="This account doesn't exist"
