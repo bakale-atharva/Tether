@@ -10,7 +10,7 @@ export function Pricing() {
       newSubscriptionRedirectUrl="/billing"
       fallback={
         <div role="status" aria-label="Loading plans">
-          <Skeleton className="h-80 w-full rounded-2xl" />
+          <Skeleton className="h-80 w-full rounded-[1.25rem]" />
         </div>
       }
       appearance={{
@@ -21,11 +21,11 @@ export function Pricing() {
           colorMutedForeground: "var(--muted)",
           colorBorder: "var(--border)",
           fontFamily: "var(--font-body)",
-          borderRadius: "0.75rem",
+          borderRadius: "1.25rem",
         },
         elements: {
           pricingTable: "gap-4",
-          pricingTableCard: "min-w-0 rounded-2xl border border-line bg-surface shadow-none",
+          pricingTableCard: "min-w-0 rounded-[1.25rem] border border-line bg-transparent shadow-none",
         },
       }}
     />
