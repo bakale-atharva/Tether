@@ -29,18 +29,18 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {children}
       <div
         role="alert"
-        className="pointer-events-none fixed inset-x-4 bottom-20 z-40 flex flex-col items-center gap-2 md:bottom-6"
+        className="pointer-events-none fixed inset-x-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-40 flex flex-col items-center gap-2 md:bottom-6"
       >
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className="pointer-events-auto flex w-full max-w-sm items-center justify-between gap-3 rounded-2xl border border-danger/30 bg-danger-soft px-4 py-3 text-sm text-ink shadow-card"
+            className="pointer-events-auto flex w-full max-w-sm items-center justify-between gap-3 rounded-2xl border border-danger/40 bg-danger-soft px-4 py-3 text-sm text-ink"
           >
-            <span>{toast.message}</span>
+            <span className="min-w-0 wrap-anywhere">{toast.message}</span>
             <button
               type="button"
               onClick={() => dismiss(toast.id)}
-              className="shrink-0 rounded-full px-2 py-1 font-medium text-muted hover:bg-surface-2 hover:text-ink"
+              className="min-h-11 shrink-0 rounded-xl px-3 font-semibold text-danger transition-colors duration-150 hover:bg-danger/10 md:min-h-9"
             >
               Dismiss
             </button>

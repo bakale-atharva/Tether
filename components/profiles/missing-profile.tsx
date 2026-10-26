@@ -9,13 +9,15 @@ export function MissingProfile() {
   return (
     <>
       <PageHeader title="Profile" />
-      <EmptyState
-        icon={<UserIcon className="size-6" />}
-        title="This account doesn't exist"
-        action={<Link href="/" className={buttonStyles({ variant: "secondary" })}>Back to home</Link>}
-      >
-        Try searching for another handle.
-      </EmptyState>
+      <div className="bg-surface px-2 py-6 sm:px-4">
+        <EmptyState
+          icon={<UserIcon className="size-6" />}
+          title="This account doesn't exist"
+          action={<Link href="/" className={buttonStyles({ variant: "secondary" })}>Back to home</Link>}
+        >
+          Try searching for another handle.
+        </EmptyState>
+      </div>
     </>
   );
 }

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useLayoutEffect, useRef, useState } from "react";
 import { FeatherIcon } from "@/components/shell/icons";
 import { buttonStyles } from "@/components/ui/button";
-import { EmptyState, LoadingState } from "@/components/ui/states";
+import { LoadingState } from "@/components/ui/states";
 import { useViewer } from "@/hooks/use-viewer";
 import { FeedTabs, feedPanelId, feedTabId } from "@/components/posts/feed-tabs";
 import { FollowingFeed } from "@/components/posts/following-feed";
@@ -22,20 +22,28 @@ export function HomeWelcome() {
 
   if (viewer.status === "signedOut") {
     return (
-      <><EmptyState
-          icon={<FeatherIcon className="size-6" />}
-          title="Conversations worth staying for"
-          action={
-            <SignUpButton mode="modal">
-              <button type="button" className={buttonStyles({ size: "lg" })}>
-                Join Tether
-              </button>
-            </SignUpButton>
-          }
-        >
-          Tether is a calm place for public threads. Create an account to post,
-          reply, and save what matters.
-        </EmptyState><HomeFeeds /></>
+      <>
+        <section className="border-b border-line bg-surface px-4 py-6 sm:px-6">
+          <div className="flex items-start gap-3">
+            <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent-text"><FeatherIcon className="size-5" /></span>
+            <div className="min-w-0">
+              <h2 className="text-lg font-semibold text-ink">Conversations worth staying for</h2>
+              <p className="mt-2 max-w-lg text-sm leading-relaxed text-muted">
+                Tether is a calm place for public threads. Create an account to post,
+                reply, and save what matters.
+              </p>
+              <div className="mt-4">
+                <SignUpButton mode="modal">
+                  <button type="button" className={buttonStyles()}>
+                    Join Tether
+                  </button>
+                </SignUpButton>
+              </div>
+            </div>
+          </div>
+        </section>
+        <HomeFeeds />
+      </>
     );
   }
 

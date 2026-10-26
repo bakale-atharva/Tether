@@ -6,13 +6,13 @@ import { FollowButton } from "./follow-button";
 // One account in a people list: identity linking to the profile, plus Follow.
 export function ProfileRow({ profile }: { profile: PublicProfile }) {
   return (
-    <article className="flex items-start gap-3 border-b border-line px-4 py-4 md:px-6">
-      <Link href={`/${profile.handle}`} className="flex min-w-0 flex-1 items-start gap-3 rounded-xl">
+    <article className="flex min-w-0 flex-wrap items-start gap-x-3 gap-y-3 border-b border-line bg-surface px-4 py-5 sm:px-6">
+      <Link href={`/${profile.handle}`} className="flex min-w-0 flex-1 basis-32 items-start gap-3 rounded-xl">
         <Avatar name={profile.displayName} src={profile.avatarUrl} />
         <span className="min-w-0">
           <span className="block truncate font-semibold text-ink hover:underline">{profile.displayName}</span>
           <span className="block truncate text-sm text-muted">@{profile.handle}</span>
-          {profile.bio ? <span className="mt-1 line-clamp-2 block text-sm text-ink">{profile.bio}</span> : null}
+          {profile.bio ? <span className="mt-2 line-clamp-2 block text-sm leading-relaxed wrap-anywhere text-ink">{profile.bio}</span> : null}
         </span>
       </Link>
       <FollowButton profile={profile} />

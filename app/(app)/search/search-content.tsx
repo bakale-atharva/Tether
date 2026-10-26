@@ -15,21 +15,26 @@ export async function SearchContent({ searchParams }: {
 
   return (
     <>
-      <form action="/search" method="get" role="search" className="flex gap-2 border-b border-line p-4 sm:p-5">
-        <label htmlFor="search-query" className="sr-only">Search posts</label>
-        <input
-          key={rawQuery}
-          id="search-query"
-          name="q"
-          type="search"
-          defaultValue={rawQuery}
-          placeholder="Search posts"
-          autoComplete="off"
-          aria-describedby={parsed.kind === "too_long" ? "search-error" : undefined}
-          aria-invalid={parsed.kind === "too_long" || undefined}
-          className="h-11 min-w-0 flex-1 rounded-xl border border-line-strong bg-surface px-3.5 text-base text-ink outline-none placeholder:text-muted/70 focus-visible:border-ring"
-        />
-        <Button type="submit" className="h-11">Search</Button>
+      <form action="/search" method="get" role="search" className="space-y-3 border-b border-line bg-surface px-4 py-6 sm:px-6">
+        <label htmlFor="search-query" className="block text-sm font-semibold text-ink">Search posts</label>
+        <div className="flex gap-2 sm:gap-3">
+          <div className="relative min-w-0 flex-1">
+            <SearchIcon aria-hidden="true" className="pointer-events-none absolute top-3 left-3.5 size-5 text-muted" />
+            <input
+              key={rawQuery}
+              id="search-query"
+              name="q"
+              type="search"
+              defaultValue={rawQuery}
+              placeholder="Search posts"
+              autoComplete="off"
+              aria-describedby={parsed.kind === "too_long" ? "search-error" : undefined}
+              aria-invalid={parsed.kind === "too_long" || undefined}
+              className="h-11 w-full min-w-0 rounded-xl border border-line-strong bg-surface py-2 pr-3.5 pl-11 text-base text-ink outline-none transition-colors duration-150 placeholder:text-muted focus-visible:border-ring focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            />
+          </div>
+          <Button type="submit">Search</Button>
+        </div>
       </form>
       {parsed.kind === "empty" ? (
         <EmptyState icon={<SearchIcon className="size-6" />} title="Find a conversation">

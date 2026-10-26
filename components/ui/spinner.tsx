@@ -7,7 +7,7 @@ export function Spinner({
   label?: string | null;
 }) {
   return (
-    <span role={label ? "status" : undefined} className="inline-flex">
+    <span role={label ? "status" : undefined} className="inline-flex shrink-0 align-middle">
       <svg
         viewBox="0 0 24 24"
         fill="none"
@@ -24,6 +24,6 @@ export function Spinner({
 
 export function Skeleton({ className = "" }: { className?: string }) {
   return (
-    <div aria-hidden="true" className={`animate-pulse rounded-lg bg-surface-2 ${className}`} />
+    <div aria-hidden="true" className={`animate-pulse rounded-xl bg-surface-2 ${className}`} />
   );
 }

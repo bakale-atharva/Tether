@@ -39,16 +39,17 @@ export function ProfileEditor({ profile, onSaved }: { profile: PublicProfile; on
     } finally { setSaving(false); }
   }
 
-  return <form className="mt-4 rounded-2xl border border-line bg-surface-2 p-4" onSubmit={submit}>
-    <fieldset disabled={saving} className="grid min-w-0 gap-3">
+  return <form className="mt-5 rounded-2xl border border-line bg-surface-2 p-4 sm:p-5" onSubmit={submit}>
+    <fieldset disabled={saving} className="grid min-w-0 gap-5">
+      <legend className="mb-4 text-base font-semibold text-ink">Edit your profile</legend>
       <Field id="profile-name" label="Display name" value={displayName} onChange={event => setDisplayName(event.target.value)} maxLength={DISPLAY_NAME_MAX} required />
       <label className="flex flex-col gap-1.5 text-sm font-medium text-ink">Bio
-        <textarea value={bio} onChange={event => setBio(event.target.value)} rows={3} className="rounded-xl border border-line-strong bg-surface px-3.5 py-2.5 text-base font-normal outline-none focus:border-ring" />
-        <span className="text-xs font-normal text-muted">{BIO_MAX - characterCount(bio.trim())} characters remaining</span>
+        <textarea value={bio} onChange={event => setBio(event.target.value)} rows={3} className="min-w-0 rounded-xl border border-line-strong bg-surface px-3.5 py-2.5 text-base leading-relaxed font-normal outline-none focus:border-ring focus:ring-2 focus:ring-ring/20" />
+        <span className="text-xs font-normal tabular-nums text-muted">{BIO_MAX - characterCount(bio.trim())} characters remaining</span>
       </label>
-      <label className="text-sm font-medium text-ink">Avatar<input className="mt-1 block w-full text-sm font-normal" type="file" accept="image/jpeg,image/png,image/webp" onChange={event => setAvatar(event.target.files?.[0] ?? null)} /></label>
-      <label className="text-sm font-medium text-ink">Banner<input className="mt-1 block w-full text-sm font-normal" type="file" accept="image/jpeg,image/png,image/webp" onChange={event => setBanner(event.target.files?.[0] ?? null)} /></label>
-      <div className="flex justify-end"><Button type="submit" loading={saving}>Save profile</Button></div>
+      <label className="min-w-0 text-sm font-medium text-ink">Avatar<input className="mt-2 block min-h-11 w-full min-w-0 rounded-xl border border-line-strong bg-surface text-sm font-normal text-muted file:mr-3 file:min-h-11 file:cursor-pointer file:border-0 file:border-r file:border-line file:bg-surface-2 file:px-3 file:text-sm file:font-medium file:text-ink" type="file" accept="image/jpeg,image/png,image/webp" onChange={event => setAvatar(event.target.files?.[0] ?? null)} /></label>
+      <label className="min-w-0 text-sm font-medium text-ink">Banner<input className="mt-2 block min-h-11 w-full min-w-0 rounded-xl border border-line-strong bg-surface text-sm font-normal text-muted file:mr-3 file:min-h-11 file:cursor-pointer file:border-0 file:border-r file:border-line file:bg-surface-2 file:px-3 file:text-sm file:font-medium file:text-ink" type="file" accept="image/jpeg,image/png,image/webp" onChange={event => setBanner(event.target.files?.[0] ?? null)} /></label>
+      <div className="flex justify-end border-t border-line pt-4"><Button type="submit" loading={saving}>Save profile</Button></div>
       {error && <ErrorState title="Profile wasn't saved">{error}</ErrorState>}
     </fieldset>
   </form>;

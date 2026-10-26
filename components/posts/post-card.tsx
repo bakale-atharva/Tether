@@ -43,8 +43,8 @@ export function PostCard({ post, detail = false, compact = false, onReply, reply
   const href = postHref(post);
   const created = new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", year: detail ? "numeric" : undefined, hour: "numeric", minute: "2-digit" }).format(post._creationTime);
   const frame = compact
-    ? "rounded-xl px-3 py-3"
-    : `border-b border-line px-4 py-4 md:px-6 ${detail ? "bg-surface/60" : ""}`;
+    ? "px-2 py-4 sm:px-3"
+    : `border-b border-line px-4 py-5 sm:px-6 sm:py-6 ${detail ? "bg-surface-2" : "bg-surface"}`;
 
   async function deletePost() {
     const noun = isReply ? "reply" : "post";
@@ -67,62 +67,61 @@ export function PostCard({ post, detail = false, compact = false, onReply, reply
   return (
     <article
       aria-label={`${isReply ? "Reply" : "Post"} by ${post.author.displayName}`}
-      className={`${frame} transition-colors hover:bg-surface/50`}
+      className={`${frame} min-w-0 transition-colors duration-150`}
     >
       <div className="flex gap-3">
         <Link href={`/${post.author.handle}`} aria-label={`View ${post.author.displayName}'s profile`} className="shrink-0 self-start rounded-full">
           <Avatar name={post.author.displayName} src={post.author.avatarUrl} size={compact ? "sm" : "md"} />
         </Link>
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-x-1 text-sm">
-            <Link href={`/${post.author.handle}`} className="font-semibold text-ink hover:underline">{post.author.displayName}</Link>
-            <Link href={`/${post.author.handle}`} className="text-muted hover:underline">@{post.author.handle}</Link>
-            <span aria-hidden="true" className="text-muted">·</span>
-            <Link href={href} className="text-muted hover:underline"><time dateTime={new Date(post._creationTime).toISOString()}>{created}</time></Link>
+          <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-0.5 text-sm">
+            <Link href={`/${post.author.handle}`} className="min-w-0 font-semibold wrap-anywhere text-ink hover:underline">{post.author.displayName}</Link>
+            <Link href={`/${post.author.handle}`} className="min-w-0 wrap-anywhere text-muted hover:underline">@{post.author.handle}</Link>
+            <Link href={href} className="text-xs leading-5 text-muted hover:underline"><time dateTime={new Date(post._creationTime).toISOString()}>{created}</time></Link>
           </div>
           {post.body ? (
-            <Link href={href} className={`mt-1 block whitespace-pre-wrap break-words leading-relaxed text-ink ${detail ? "text-lg" : ""}`}>{post.body}</Link>
+            <Link href={href} className={`mt-2 block whitespace-pre-wrap wrap-anywhere text-ink ${detail ? "text-lg leading-relaxed" : "text-base leading-relaxed"}`}>{post.body}</Link>
           ) : null}
           {post.images.length ? <div className={`mt-3 grid gap-2 ${post.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
-            {post.images.map((image, index) => image.url ? <img key={index} src={image.url} alt={image.alt} className="max-h-[27.5rem] w-full rounded-2xl border border-line object-cover" /> : null)}
+            {post.images.map((image, index) => image.url ? <img key={index} src={image.url} alt={image.alt} className="max-h-[27.5rem] min-w-0 w-full rounded-xl border border-line object-cover" /> : null)}
           </div> : null}
-          <div className="-ml-2 mt-2 flex items-center justify-between">
-            <div className="flex items-center gap-2 sm:gap-4">
-              {onReply ? (
-                <button
-                  id={replyButtonId(post._id)}
-                  type="button"
-                  onClick={onReply}
-                  aria-expanded={replyOpen}
-                  className={actionButtonClass}
-                >
-                  <ChatIcon className="size-[1.125rem]" />
-                  <span>Reply</span>
-                  {post.replyCount > 0 ? (
-                    <>
-                      <span aria-hidden="true" className="tabular-nums">· {post.replyCount}</span>
-                      <span className="sr-only">, {replyLabel}</span>
-                    </>
-                  ) : null}
-                </button>
-              ) : (
-                <Link
-                  href={href}
-                  aria-label={post.replyCount > 0 ? `${replyLabel}. Open conversation` : "Reply"}
-                  className={actionButtonClass}
-                >
-                  <ChatIcon className="size-[1.125rem]" />
-                  <span aria-hidden="true">{post.replyCount > 0 ? post.replyCount : "Reply"}</span>
-                </Link>
-              )}
-              <LikeButton post={post} />
-              {isReply ? null : <BookmarkButton post={post} />}
-            </div>
-            {isOwner ? <Button variant="ghost" size="sm" loading={removing} onClick={deletePost}>Delete</Button> : null}
-          </div>
-          {error ? <ErrorState title="Message wasn't deleted">{error}</ErrorState> : null}
         </div>
       </div>
+      <div className={`mt-3 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 ${compact ? "sm:pl-11" : "sm:pl-[3.25rem]"}`}>
+        <div className="flex min-w-0 flex-wrap items-center gap-1 sm:gap-3">
+          {onReply ? (
+            <button
+              id={replyButtonId(post._id)}
+              type="button"
+              onClick={onReply}
+              aria-expanded={replyOpen}
+              className={actionButtonClass}
+            >
+              <ChatIcon className="size-[1.125rem]" />
+              <span>Reply</span>
+              {post.replyCount > 0 ? (
+                <>
+                  <span aria-hidden="true" className="tabular-nums">· {post.replyCount}</span>
+                  <span className="sr-only">, {replyLabel}</span>
+                </>
+              ) : null}
+            </button>
+          ) : (
+            <Link
+              href={href}
+              aria-label={post.replyCount > 0 ? `${replyLabel}. Open conversation` : "Reply"}
+              className={actionButtonClass}
+            >
+              <ChatIcon className="size-[1.125rem]" />
+              <span aria-hidden="true">{post.replyCount > 0 ? post.replyCount : "Reply"}</span>
+            </Link>
+          )}
+          <LikeButton post={post} />
+          {isReply ? null : <BookmarkButton post={post} />}
+        </div>
+        {isOwner ? <Button variant="ghost" size="sm" className="min-h-11 text-muted sm:min-h-9" loading={removing} onClick={deletePost}>Delete</Button> : null}
+      </div>
+      {error ? <ErrorState title="Message wasn't deleted">{error}</ErrorState> : null}
     </article>
   );
 }

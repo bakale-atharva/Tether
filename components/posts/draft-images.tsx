@@ -7,12 +7,14 @@ export function DraftImages({ images, onRemove, onDescribe }: {
   onRemove: (index: number) => void;
   onDescribe: (index: number, alt: string) => void;
 }) {
-  return <div className="grid grid-cols-2 gap-2 pb-3">
-    {images.map((image, index) => <div key={image.preview} className="relative rounded-2xl border border-line p-2">
-      <img src={image.preview} alt="" className="h-32 w-full rounded-xl object-cover" />
-      <button type="button" className="absolute top-3 right-3 rounded-full bg-ink px-2 py-1 text-xs text-bg" onClick={() => onRemove(index)} aria-label={`Remove image ${index + 1}`}>Remove</button>
-      <label className="sr-only" htmlFor={`alt-${index}`}>Image description</label>
-      <input id={`alt-${index}`} value={image.alt} maxLength={ALT_MAX} onChange={event => onDescribe(index, event.target.value)} placeholder="Describe this image (optional)" className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-muted" />
+  return <div className="grid min-w-0 grid-cols-1 gap-3 pb-4 sm:grid-cols-2">
+    {images.map((image, index) => <div key={image.preview} className="min-w-0 overflow-hidden rounded-xl border border-line bg-surface-2">
+      <img src={image.preview} alt="" className="h-40 w-full object-cover" />
+      <div className="flex items-center justify-between gap-2 px-3 pt-2">
+        <label className="text-xs font-medium text-muted" htmlFor={`alt-${index}`}>Image description</label>
+        <button type="button" className="min-h-11 shrink-0 rounded-lg px-2 text-xs font-medium text-danger transition-colors hover:bg-danger-soft" onClick={() => onRemove(index)} aria-label={`Remove image ${index + 1}`}>Remove</button>
+      </div>
+      <input id={`alt-${index}`} value={image.alt} maxLength={ALT_MAX} onChange={event => onDescribe(index, event.target.value)} placeholder="Describe this image (optional)" className="mx-3 mb-3 block min-h-11 w-[calc(100%-1.5rem)] min-w-0 rounded-lg border border-line-strong bg-surface px-3 text-sm text-ink outline-none placeholder:text-muted focus:border-ring focus:ring-2 focus:ring-ring/20" />
     </div>)}
   </div>;
 }

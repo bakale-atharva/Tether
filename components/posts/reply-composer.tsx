@@ -35,7 +35,7 @@ export function ReplyComposer({ parentId, parentHandle, autoFocus = false, compa
   if (viewer.status === "loading" || viewer.status === "needsOnboarding") return null;
   if (viewer.status === "signedOut") {
     return (
-      <div className={`flex flex-wrap items-center justify-between gap-3 ${compact ? "rounded-xl bg-surface-2 px-3 py-3" : "border-b border-line px-4 py-4 md:px-6"}`}>
+      <div className={`flex flex-wrap items-center justify-between gap-3 ${compact ? "rounded-xl bg-surface-2 p-3" : "border-b border-line bg-surface px-4 py-5 sm:px-6"}`}>
         <p className="text-sm text-muted">Sign in to join the conversation.</p>
         <SignInButton mode="modal">
           <button type="button" className={buttonStyles({ size: "sm" })}>Sign in to reply</button>
@@ -79,12 +79,12 @@ export function ReplyComposer({ parentId, parentHandle, autoFocus = false, compa
   return (
     <form
       onSubmit={submit}
-      className={compact ? "rounded-xl border border-line bg-surface px-3 py-3" : "border-b border-line px-4 py-4 md:px-6"}
+      className={compact ? "rounded-xl border border-line bg-surface p-3" : "border-b border-line bg-surface px-4 py-5 sm:px-6"}
     >
       <div className="flex gap-3">
         <Avatar name={viewer.profile.displayName} src={viewer.profile.avatarUrl} size={compact ? "sm" : "md"} />
         <div className="min-w-0 flex-1">
-          <label htmlFor={inputId} className="text-sm text-muted">
+          <label htmlFor={inputId} className="block text-sm wrap-anywhere text-muted">
             Replying to <span className="font-medium text-accent-text">@{parentHandle}</span>
           </label>
           <textarea
@@ -98,19 +98,19 @@ export function ReplyComposer({ parentId, parentHandle, autoFocus = false, compa
             rows={compact ? 2 : 3}
             aria-invalid={error ? true : undefined}
             aria-describedby={error ? errorId : undefined}
-            className="mt-1 w-full resize-y bg-transparent leading-relaxed text-ink outline-none placeholder:text-muted"
+            className="mt-2 min-h-20 w-full resize-y rounded-lg bg-transparent text-base leading-relaxed text-ink outline-none placeholder:text-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
           />
           {error ? <p id={errorId} role="alert" className="mt-1 text-sm text-danger">{error}</p> : null}
-          <div className="mt-2 flex items-center justify-end gap-2 border-t border-line pt-2">
-            <span className={`mr-auto text-sm tabular-nums ${remaining < 0 ? "text-danger" : remaining <= 20 ? "text-accent-text" : "text-muted"}`}>
-              {remaining < 0 ? `${-remaining} over the limit` : `${remaining} left`}
-            </span>
-            {onCancel ? <Button variant="ghost" size="sm" disabled={sending} onClick={onCancel}>Cancel</Button> : null}
-            <Button type="submit" size="sm" loading={sending} disabled={body.trim().length === 0 || remaining < 0}>
-              Reply
-            </Button>
-          </div>
         </div>
+      </div>
+      <div className="mt-3 flex flex-wrap items-center justify-end gap-2 border-t border-line pt-3">
+        <span className={`mr-auto text-sm tabular-nums ${remaining < 0 ? "text-danger" : remaining <= 20 ? "text-accent-text" : "text-muted"}`}>
+          {remaining < 0 ? `${-remaining} over the limit` : `${remaining} left`}
+        </span>
+        {onCancel ? <Button variant="ghost" size="sm" disabled={sending} onClick={onCancel}>Cancel</Button> : null}
+        <Button type="submit" size="sm" loading={sending} disabled={body.trim().length === 0 || remaining < 0}>
+          Reply
+        </Button>
       </div>
     </form>
   );

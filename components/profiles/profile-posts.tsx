@@ -9,5 +9,5 @@ import { EmptyState } from "@/components/ui/states";
 
 export function ProfilePosts({ authorId, handle }: { authorId: PublicProfile["_id"]; handle: string }) {
   const { results, status, loadMore } = usePaginatedQuery(api.posts.byAuthor, { authorId }, { initialNumItems: FEED_PAGE_SIZE });
-  return <div className="border-t border-line"><PostFeedList results={results} status={status} loadMore={loadMore} empty={<EmptyState title="No posts yet">Posts from @{handle} will show up here.</EmptyState>} /></div>;
+  return <section aria-label={`Posts from @${handle}`} className="min-w-0 border-t border-line bg-surface"><h2 className="border-b border-line px-4 py-4 text-sm font-semibold text-ink sm:px-6">Posts</h2><PostFeedList results={results} status={status} loadMore={loadMore} empty={<EmptyState title="No posts yet">Posts from @{handle} will show up here.</EmptyState>} /></section>;
 }

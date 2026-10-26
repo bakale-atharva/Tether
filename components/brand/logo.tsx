@@ -13,7 +13,7 @@ export function Logo({ className = "" }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <LogoMark />
-      <span className="font-display text-[1.375rem] font-semibold tracking-tight text-ink">
+      <span className="text-[1.375rem] font-semibold tracking-tight text-ink">
         Tether
       </span>
     </span>

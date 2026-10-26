@@ -14,12 +14,12 @@ export function Field({ id, label, hint, error, prefix, className = "", ...props
   const describedBy = [errorId, hintId].filter(Boolean).join(" ") || undefined;
 
   return (
-    <div className={`flex flex-col gap-1.5 ${className}`}>
-      <label htmlFor={id} className="text-sm font-medium text-ink">
+    <div className={`flex flex-col gap-2 ${className}`}>
+      <label htmlFor={id} className="text-sm font-semibold text-ink">
         {label}
       </label>
       <div
-        className={`flex h-11 items-center rounded-xl border bg-surface transition-colors focus-within:border-ring ${
+        className={`flex h-12 items-center rounded-xl border bg-surface transition-colors duration-150 focus-within:border-ring focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring has-disabled:bg-surface-2 ${
           error ? "border-danger" : "border-line-strong"
         }`}
       >
@@ -32,7 +32,7 @@ export function Field({ id, label, hint, error, prefix, className = "", ...props
           id={id}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
-          className={`h-full w-full min-w-0 rounded-xl bg-transparent text-base text-ink outline-none placeholder:text-muted/70 focus-visible:outline-none ${
+          className={`h-full w-full min-w-0 rounded-xl bg-transparent text-base text-ink outline-none placeholder:text-muted focus-visible:outline-none disabled:cursor-not-allowed disabled:text-muted ${
             prefix ? "pl-1 pr-3.5" : "px-3.5"
           }`}
           {...props}
