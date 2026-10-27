@@ -110,6 +110,7 @@
 /* Clerk components follow the same tokens in both themes. */
 :root {
   --clerk-color-primary: var(--accent);
+  --clerk-color-primary-hover: var(--accent-hover);
   --clerk-color-primary-foreground: var(--accent-fg);
   --clerk-color-background: var(--surface);
   --clerk-color-foreground: var(--ink);
