@@ -6,20 +6,21 @@ import { ToastProvider } from "@/components/ui/toast";
 import { HeaderAccount, JoinCard, SidebarAccount } from "./account";
 import { SidebarNav, SidebarNavFallback, TabNav, TabNavFallback } from "./nav";
 import { OnboardingRedirect } from "./onboarding-redirect";
+import { RightSidebar } from "./right-sidebar";
 import { ThemeToggle } from "./theme-toggle";
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
     <BillingProvider>
-      <div className="mx-auto flex min-h-dvh w-full max-w-[1000px] justify-center md:gap-4 md:px-4 lg:gap-6 lg:px-8">
+      <div className="mx-auto grid min-h-dvh w-full max-w-[1440px] grid-cols-[minmax(0,1fr)] items-start gap-0 px-2 pt-2 md:grid-cols-[72px_minmax(0,760px)] md:justify-center md:gap-6 md:px-8 md:py-8 lg:grid-cols-[216px_minmax(0,760px)] xl:grid-cols-[232px_minmax(0,760px)_288px]">
         <OnboardingRedirect />
 
         {/* Desktop and tablet sidebar */}
-        <header className="sticky top-0 hidden h-dvh min-h-0 w-16 shrink-0 flex-col overflow-y-auto py-6 md:flex lg:w-58">
+        <header className="shell-panel sticky top-8 hidden h-[calc(100dvh-64px)] max-h-[calc(100dvh-64px)] min-h-0 flex-col overflow-y-auto p-2 md:flex lg:p-4">
           <Link
             href="/"
             aria-label="Tether home"
-            className="mb-8 flex h-12 items-center rounded-xl px-3 md:justify-center lg:justify-start"
+            className="mb-6 flex min-h-12 shrink-0 items-center justify-center rounded-full lg:justify-start lg:px-3"
           >
             <span className="hidden lg:inline-flex">
               <Logo />
@@ -28,15 +29,15 @@ export function AppShell({ children }: { children: ReactNode }) {
               <LogoMark />
             </span>
           </Link>
-          <nav aria-label="Primary">
+          <nav aria-label="Primary" className="shrink-0">
             <Suspense fallback={<SidebarNavFallback />}>
               <SidebarNav />
             </Suspense>
           </nav>
-          <div className="mt-auto flex flex-col gap-3 pt-8">
+          <div className="mt-auto flex shrink-0 flex-col gap-2 pt-8">
             <Link
               href="/pricing"
-              className="flex min-h-11 items-center justify-center rounded-xl px-2 text-sm font-medium text-muted transition-colors duration-150 hover:bg-surface-2 hover:text-ink lg:justify-start lg:px-3"
+              className="flex min-h-11 items-center justify-center rounded-full px-2 text-xs font-medium text-muted transition-colors duration-150 hover:bg-surface-2 hover:text-ink lg:justify-start lg:px-3 lg:text-sm"
             >
               <span className="lg:hidden">Plans</span>
               <span className="hidden lg:inline">Free &amp; Pro plans</span>
@@ -51,10 +52,10 @@ export function AppShell({ children }: { children: ReactNode }) {
         <main
           id="main"
           tabIndex={-1}
-          className="min-h-dvh w-full min-w-0 max-w-[680px] flex-1 border-line bg-surface pb-[calc(5rem+env(safe-area-inset-bottom))] outline-none md:border-x md:pb-0"
+          className="shell-panel min-h-[calc(100dvh-16px)] w-full min-w-0 pb-[calc(5rem+env(safe-area-inset-bottom))] outline-none md:min-h-[calc(100dvh-64px)] md:pb-0"
         >
           {/* Mobile header */}
-          <div className="sticky top-0 z-20 flex h-14 items-center justify-between gap-3 border-b border-line bg-surface px-4 md:hidden">
+          <div className="sticky top-0 z-20 flex h-14 items-center justify-between gap-2 rounded-t-[20px] border-b border-line bg-surface px-3 md:hidden">
             <Link href="/" aria-label="Tether home" className="flex size-11 shrink-0 items-center">
               <LogoMark className="size-8" />
             </Link>
@@ -64,7 +65,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             </div>
           </div>
           <ToastProvider>{children}</ToastProvider>
-          <footer id="about-tether" className="border-t border-line px-4 py-6 text-sm text-muted sm:px-6">
+          <footer id="about-tether" className="border-t border-line px-4 py-6 text-sm text-muted sm:px-6 xl:hidden">
             <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
               <details className="group min-w-0 flex-1 basis-48">
                 <summary className="min-h-11 cursor-pointer content-center rounded-lg font-medium text-ink transition-colors duration-150 hover:text-accent-text">
@@ -87,10 +88,12 @@ export function AppShell({ children }: { children: ReactNode }) {
           </footer>
         </main>
 
+        <RightSidebar />
+
         {/* Mobile bottom tab bar */}
         <nav
           aria-label="Primary"
-          className="fixed inset-x-0 bottom-0 z-30 h-[calc(4rem+env(safe-area-inset-bottom))] border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] md:hidden"
+          className="fixed inset-x-0 bottom-0 z-30 h-[calc(4rem+env(safe-area-inset-bottom))] rounded-t-[20px] border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] md:hidden"
         >
           <Suspense fallback={<TabNavFallback />}>
             <TabNav />

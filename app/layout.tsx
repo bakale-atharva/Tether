@@ -15,8 +15,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f0f3f7" },
-    { media: "(prefers-color-scheme: dark)", color: "#171b26" },
+    { media: "(prefers-color-scheme: light)", color: "#e9eaed" },
+    { media: "(prefers-color-scheme: dark)", color: "#101112" },
   ],
 };
 
@@ -30,7 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="min-h-full">
+      <body className="app-backdrop min-h-full">
         <a
           href="#main"
           className="sr-only z-50 rounded-full bg-accent px-4 py-2 font-medium text-accent-fg focus:not-sr-only focus:fixed focus:top-3 focus:left-3"

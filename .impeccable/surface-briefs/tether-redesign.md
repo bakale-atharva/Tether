@@ -1,30 +1,29 @@
 # Tether application surfaces
 
-Mode: Operate. Audience: casual everyday users sharing ordinary life. Scope:
-existing social, AI, discovery, account, onboarding and billing routes.
-Approved spec: docs/superpowers/specs/2026-10-24-frontend-redesign-design.md.
-Code-first browser workflow confirmed; no generated reference image is required.
+Mode: Operate. Audience: casual everyday users sharing ordinary life.
+Scope: existing social, AI, discovery, account and billing routes.
+Approved spec: docs/superpowers/specs/2026-10-26-charcoal-panels-design.md.
+Code-first; owner-supplied screenshot is visual authority. Replaces Window seat.
 
 ## Direction contract
 
-THESIS: A familiar corner for ordinary sharing. Quiet sidebar navigation and one
-conversation column keep reading and contributing central; no third information rail.
+THESIS: Familiar social conversations inside spacious floating panels. The
+reference's material depth supports clear reading and existing tasks.
 
-OWN-WORLD: Cool cloud canvas, white surfaces, slate text, violet actions and pale
-lavender selection. Clear system sans, round avatars, 10–12px controls and fine
-borders. Dark slate and lavender translate the same hierarchy after dark.
+OWN-WORLD: Near-black sculpted canvas, graduated opaque charcoal, white pills,
+gray metadata and restrained blue links; porcelain/cool-gray light translation.
+System sans,32px outer corners, soft highlights and static depth.
 
-STORY: Visitors understand public conversations and join when ready. Signed-in
-users can post, follow, save, search or enter their private AI space through the
-same existing destinations and access rules.
+STORY: Find navigation, read/share in the center, use existing search/account
+and plan information at right. No manufactured activity or unsupported features.
 
-FIRST VIEWPORT: Desktop shows a quiet 220–240px left navigation area beside an
-approximately 680px main column. A welcoming heading and inline composer precede
-Public/Following tabs and avatar-led posts. Mobile keeps header/account and
-bottom navigation without covering the composer. No invented feed content.
+FIRST VIEWPORT: Wide screens show232px navigation, up-to760px main and288px
+right rail separated by24px gaps. Profile shows inset banner, overlapping
+avatar and outlined actions. Right rail drops below1280; navigation compacts
+below1024 and becomes header/bottom tabs below768. Sidebars fit short windows.
 
-FORM: Owner-pinned layout A, A familiar corner; Window seat visual direction,
-candidate 5, seed 3332da6a. Signature interaction: lavender active-nav inset and
-clear feed underline; short color transitions, immediate under reduced motion.
+FORM: Owner-pinned screenshot and explicit three-panel/material/theme choices
+supersede the previous seed. Signature: softly highlighted panel edges and
+clear active navigation, with short color transitions and reduced-motion support.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

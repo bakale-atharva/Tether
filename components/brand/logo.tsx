@@ -2,9 +2,9 @@
 export function LogoMark({ className = "size-8" }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true" className={className}>
-      <rect width="32" height="32" rx="9" fill="var(--accent)" />
-      <circle cx="11.5" cy="16" r="5" fill="none" stroke="var(--accent-fg)" strokeWidth="2.4" />
-      <circle cx="20.5" cy="16" r="5" fill="none" stroke="var(--accent-fg)" strokeWidth="2.4" />
+      <rect width="32" height="32" rx="10" fill="var(--ink)" />
+      <circle cx="11.5" cy="16" r="5" fill="none" stroke="var(--surface)" strokeWidth="2.4" />
+      <circle cx="20.5" cy="16" r="5" fill="none" stroke="var(--surface)" strokeWidth="2.4" />
     </svg>
   );
 }

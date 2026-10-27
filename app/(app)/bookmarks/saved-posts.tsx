@@ -52,7 +52,7 @@ export function SavedPosts() {
         ))}
       </ol>
       {status === "CanLoadMore" || status === "LoadingMore" ? (
-        <div className="border-t border-line px-4 py-6 text-center sm:px-6">
+        <div className="border-t border-line px-5 py-6 text-center md:px-8">
           <Button variant="secondary" loading={status === "LoadingMore"} onClick={() => loadMore(FEED_PAGE_SIZE)}>Load more</Button>
         </div>
       ) : null}
@@ -77,7 +77,7 @@ function DeletedBookmark({ postId }: { postId: Id<"posts"> }) {
   }
 
   return (
-    <article aria-label="Deleted post" className="flex items-start justify-between gap-4 border-b border-line bg-surface-2/40 px-4 py-5 sm:px-6">
+    <article aria-label="Deleted post" className="flex items-start justify-between gap-4 border-b border-line px-5 py-6 md:px-8">
       <div className="flex min-w-0 items-start gap-3 pt-2">
         <BookmarkIcon aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-muted" />
         <p className="text-sm leading-relaxed text-muted">This post was deleted by its author.</p>

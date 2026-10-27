@@ -35,7 +35,7 @@ export function ReplyComposer({ parentId, parentHandle, autoFocus = false, compa
   if (viewer.status === "loading" || viewer.status === "needsOnboarding") return null;
   if (viewer.status === "signedOut") {
     return (
-      <div className={`flex flex-wrap items-center justify-between gap-3 ${compact ? "rounded-xl bg-surface-2 p-3" : "border-b border-line bg-surface px-4 py-5 sm:px-6"}`}>
+      <div className={`flex flex-wrap items-center justify-between gap-3 ${compact ? "rounded-2xl bg-surface-2/50 p-4" : "border-b border-line/70 px-4 py-6 sm:px-8 sm:py-8"}`}>
         <p className="text-sm text-muted">Sign in to join the conversation.</p>
         <SignInButton mode="modal">
           <button type="button" className={buttonStyles({ size: "sm" })}>Sign in to reply</button>
@@ -79,9 +79,9 @@ export function ReplyComposer({ parentId, parentHandle, autoFocus = false, compa
   return (
     <form
       onSubmit={submit}
-      className={compact ? "rounded-xl border border-line bg-surface p-3" : "border-b border-line bg-surface px-4 py-5 sm:px-6"}
+      className={compact ? "rounded-2xl bg-surface-2/50 p-4" : "border-b border-line/70 px-4 py-6 sm:px-8 sm:py-8"}
     >
-      <div className="flex gap-3">
+      <div className="flex gap-3 sm:gap-4">
         <Avatar name={viewer.profile.displayName} src={viewer.profile.avatarUrl} size={compact ? "sm" : "md"} />
         <div className="min-w-0 flex-1">
           <label htmlFor={inputId} className="block text-sm wrap-anywhere text-muted">
@@ -103,7 +103,7 @@ export function ReplyComposer({ parentId, parentHandle, autoFocus = false, compa
           {error ? <p id={errorId} role="alert" className="mt-1 text-sm text-danger">{error}</p> : null}
         </div>
       </div>
-      <div className="mt-3 flex flex-wrap items-center justify-end gap-2 border-t border-line pt-3">
+      <div className="mt-4 flex flex-wrap items-center justify-end gap-2 border-t border-line/70 pt-4">
         <span className={`mr-auto text-sm tabular-nums ${remaining < 0 ? "text-danger" : remaining <= 20 ? "text-accent-text" : "text-muted"}`}>
           {remaining < 0 ? `${-remaining} over the limit` : `${remaining} left`}
         </span>

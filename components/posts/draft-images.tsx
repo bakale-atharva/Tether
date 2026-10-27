@@ -7,14 +7,16 @@ export function DraftImages({ images, onRemove, onDescribe }: {
   onRemove: (index: number) => void;
   onDescribe: (index: number, alt: string) => void;
 }) {
-  return <div className="grid min-w-0 grid-cols-1 gap-3 pb-4 sm:grid-cols-2">
-    {images.map((image, index) => <div key={image.preview} className="min-w-0 overflow-hidden rounded-xl border border-line bg-surface-2">
-      <img src={image.preview} alt="" className="h-40 w-full object-cover" />
-      <div className="flex items-center justify-between gap-2 px-3 pt-2">
-        <label className="text-xs font-medium text-muted" htmlFor={`alt-${index}`}>Image description</label>
-        <button type="button" className="min-h-11 shrink-0 rounded-lg px-2 text-xs font-medium text-danger transition-colors hover:bg-danger-soft" onClick={() => onRemove(index)} aria-label={`Remove image ${index + 1}`}>Remove</button>
+  return <div className="grid min-w-0 gap-4 pb-5">
+    {images.map((image, index) => <div key={image.preview} className="grid min-w-0 grid-cols-[5rem_minmax(0,1fr)] items-center gap-3">
+      <img src={image.preview} alt="" className="size-20 rounded-xl object-cover" />
+      <div className="min-w-0">
+        <div className="flex min-w-0 items-center justify-between gap-2">
+          <label className="text-xs font-medium text-muted" htmlFor={`alt-${index}`}>Image description</label>
+          <button type="button" className="min-h-11 shrink-0 rounded-full px-2 text-xs font-medium text-danger transition-colors hover:bg-danger-soft" onClick={() => onRemove(index)} aria-label={`Remove image ${index + 1}`}>Remove</button>
+        </div>
+        <input id={`alt-${index}`} value={image.alt} maxLength={ALT_MAX} onChange={event => onDescribe(index, event.target.value)} placeholder="Describe this image (optional)" className="block min-h-11 w-full min-w-0 rounded-xl bg-surface-2 px-3 text-sm text-ink outline-none placeholder:text-muted focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-ring" />
       </div>
-      <input id={`alt-${index}`} value={image.alt} maxLength={ALT_MAX} onChange={event => onDescribe(index, event.target.value)} placeholder="Describe this image (optional)" className="mx-3 mb-3 block min-h-11 w-[calc(100%-1.5rem)] min-w-0 rounded-lg border border-line-strong bg-surface px-3 text-sm text-ink outline-none placeholder:text-muted focus:border-ring focus:ring-2 focus:ring-ring/20" />
     </div>)}
   </div>;
 }

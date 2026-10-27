@@ -34,13 +34,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className="pointer-events-auto flex w-full max-w-sm items-center justify-between gap-3 rounded-2xl border border-danger/40 bg-danger-soft px-4 py-3 text-sm text-ink"
+            className="pointer-events-auto flex w-full max-w-sm items-center justify-between gap-3 rounded-[1.25rem] border border-danger/40 bg-danger-soft px-4 py-3 text-sm text-ink shadow-card"
           >
             <span className="min-w-0 wrap-anywhere">{toast.message}</span>
             <button
               type="button"
               onClick={() => dismiss(toast.id)}
-              className="min-h-11 shrink-0 rounded-xl px-3 font-semibold text-danger transition-colors duration-150 hover:bg-danger/10 md:min-h-9"
+              className="min-h-11 shrink-0 rounded-full px-3 font-semibold text-danger transition-colors duration-150 hover:bg-danger/10 md:min-h-9"
             >
               Dismiss
             </button>

@@ -9,7 +9,7 @@ export default function BillingPage() {
   return (
     <>
       <PageHeader title="Your subscription">Your plan, on your terms.</PageHeader>
-      <div className="px-4 py-6 sm:px-6 sm:py-8">
+      <div className="px-5 py-6 md:px-8 md:py-8">
         <Suspense fallback={<p role="status" className="py-12 text-center text-sm text-muted">Loading subscription…</p>}>
           <Subscription />
         </Suspense>

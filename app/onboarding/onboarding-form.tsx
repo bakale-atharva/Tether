@@ -28,7 +28,7 @@ export function OnboardingForm() {
   }, [viewer.status, router]);
 
   if (viewer.status !== "needsOnboarding") {
-    return <LoadingState label="Checking your account" />;
+    return <div className="shell-panel px-6 sm:px-8"><LoadingState label="Checking your account" /></div>;
   }
   return (
     <ProfileSetup
@@ -152,7 +152,7 @@ function ProfileSetup({
         />
 
         {submitError ? (
-          <p role="alert" className="rounded-xl border border-danger/40 bg-danger-soft px-4 py-3 text-sm leading-relaxed text-danger">
+          <p role="alert" className="rounded-[1.25rem] border border-danger/40 bg-danger-soft px-4 py-3 text-sm leading-relaxed text-danger">
             {submitError}
           </p>
         ) : null}

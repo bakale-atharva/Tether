@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Local Superpowers visual brainstorming sessions
 /.superpowers/
+
+# Working visual QA captures; curated evidence lives in docs/redesign-2.0
+/.impeccable/review/
