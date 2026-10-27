@@ -10,8 +10,51 @@ export const authAppearance = {
     card: "w-full bg-transparent p-6 shadow-none sm:p-8",
     footer: "border-t border-line bg-surface-2/40",
     formButtonPrimary: "min-h-11 rounded-full bg-accent text-accent-fg shadow-none hover:bg-accent-hover",
-    socialButtonsBlockButton: "min-h-11 rounded-full border border-line-strong bg-transparent text-ink shadow-none hover:bg-surface-2",
-    formFieldInput: "min-h-11 rounded-full border-line-strong bg-surface text-ink",
+    socialButtonsBlockButton: {
+      minHeight: "44px",
+      border: "1px solid transparent",
+      borderRadius: "9999px",
+      backgroundColor: "var(--clerk-color-muted)",
+      color: "var(--clerk-color-foreground)",
+      boxShadow: "none",
+      "&:hover:not(:disabled):not([aria-disabled='true'])": {
+        backgroundColor: "var(--clerk-color-background)",
+        color: "var(--clerk-color-foreground)",
+        boxShadow: "none",
+      },
+      "&:focus-visible": {
+        outline: "2px solid var(--clerk-color-ring)",
+        outlineOffset: "2px",
+        boxShadow: "none",
+      },
+      "&:disabled, &[aria-disabled='true']": {
+        backgroundColor: "var(--clerk-color-muted)",
+        color: "var(--clerk-color-muted-foreground)",
+        opacity: 1,
+      },
+    },
+    formFieldInput: {
+      minHeight: "44px",
+      border: "1px solid transparent",
+      borderRadius: "9999px",
+      backgroundColor: "var(--clerk-color-muted)",
+      color: "var(--clerk-color-input-foreground)",
+      boxShadow: "none",
+      "&:focus, &:focus-visible": {
+        borderColor: "transparent",
+        outline: "2px solid var(--clerk-color-ring)",
+        outlineOffset: "2px",
+        boxShadow: "none",
+      },
+      "&[aria-invalid='true']": {
+        backgroundColor: "var(--danger-soft)",
+      },
+      "&:disabled, &[aria-disabled='true']": {
+        backgroundColor: "var(--clerk-color-muted)",
+        color: "var(--clerk-color-muted-foreground)",
+        opacity: 1,
+      },
+    },
     footerActionLink: "text-accent-text",
   },
 };

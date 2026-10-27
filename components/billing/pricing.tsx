@@ -27,11 +27,17 @@ export function Pricing() {
         },
         elements: {
           pricingTable: "gap-4",
-          pricingTableCard: "min-w-0 rounded-[1.25rem] border border-line bg-transparent shadow-none",
+          pricingTableCard: {
+            minWidth: 0,
+            border: "1px solid transparent",
+            borderRadius: "1.25rem",
+            backgroundColor: "var(--clerk-color-muted)",
+            boxShadow: "none",
+          },
           badge: {
             color: "var(--clerk-color-foreground)",
             backgroundColor: "var(--clerk-color-muted)",
-            border: "1px solid var(--clerk-color-border)",
+            border: "1px solid transparent",
             borderRadius: "9999px",
             opacity: 1,
           },
@@ -59,7 +65,7 @@ export function Pricing() {
             "&:disabled, &[aria-disabled='true']": {
               backgroundColor: "var(--clerk-color-muted)",
               color: "var(--clerk-color-muted-foreground)",
-              borderColor: "var(--clerk-color-border)",
+              borderColor: "transparent",
               opacity: 1,
             },
           },

@@ -99,7 +99,7 @@ components:
   button-primary-hover:
     backgroundColor: "{colors.accent-hover}"
   button-secondary:
-    backgroundColor: "transparent"
+    backgroundColor: "{colors.surface-2}"
     textColor: "{colors.ink}"
     rounded: "{rounded.pill}"
     height: "44px"
@@ -128,6 +128,7 @@ components:
     height: "48px"
     padding: "0 12px"
   plan-badge:
+    backgroundColor: "{colors.surface-2}"
     textColor: "{colors.ink}"
     rounded: "{rounded.pill}"
     height: "44px"
@@ -167,7 +168,7 @@ The neutral `accent` / `accent-fg` pair makes primary actions charcoal on porcel
 
 ### Neutral
 
-`bg` is the exposed sculpted ground. `surface` is the opaque panel base and `surface-2` defines fields, active navigation and inner groups. `panel-highlight` / `panel-low` shape the panel gradient; `backdrop-highlight` / `backdrop-low` shape the independent static backdrop. `ink`, `muted`, `border` and `border-strong` organize reading, metadata, separators and stronger control outlines.
+`bg` is the exposed sculpted ground. `surface` is the opaque panel base and `surface-2` defines fields, active navigation and inner groups. `panel-highlight` / `panel-low` shape the panel gradient; `backdrop-highlight` / `backdrop-low` shape the independent static backdrop. `ink`, `muted`, `border` and `border-strong` organize reading, metadata, separators and the retained vendor/scrollbar border vocabulary. Resting controls use transparent borders and tonal surfaces.
 
 ### Semantic feedback
 
@@ -214,19 +215,21 @@ Color transitions last 150ms; no entrance animation or moving backdrop is part o
 
 ## Shapes
 
-Outer panels use the panel-mobile radius (20px), increasing to panel-desktop (32px) at medium. The profile banner uses the same pair but expands at small. Inner image/group surfaces use 16–20px corners. Controls use full pills; avatars are circular. The mobile header and bottom bar retain rounded upper corners. Separators are quiet one-pixel rules; outlined secondary controls use the stronger border role.
+Outer panels use the panel-mobile radius (20px), increasing to panel-desktop (32px) at medium. The profile banner uses the same pair but expands at small. Inner image/group surfaces use 16–20px corners. Controls use full pills; avatars are circular. The mobile header and bottom bar retain rounded upper corners. Separators are quiet one-pixel rules. Following the owner’s correction, controls and pricing containers use transparent resting borders and tonal backgrounds; visible outlines mark focus or selection rather than enclosing every idle control. Existing portrait-image boundaries and structural separators remain distinct from control outlines.
 
 ## Components
 
+**The Quiet Rest Rule.** Keep resting control borders transparent, use tonal backgrounds for grouping, and show one outline at the focused control or its wrapper.
+
 ### Buttons
 
-Compact, neutral and legible. Primary, secondary, ghost and danger variants share full pills, semibold small text, 8px icon gaps and short color transitions. Standard buttons are 44px high with 20px horizontal padding; large is 48px with 24px padding. Small is 44px with 16px padding on mobile and 36px at medium. Explicit min-height overrides keep selected controls, including profile editing, at 44px. Disabled controls use the inner surface, muted ink and strong outline; loading retains the shared spinner.
+Compact, neutral and legible. Primary, secondary, ghost and danger variants share full pills, semibold small text, 8px icon gaps and short color transitions. Standard buttons are 44px high with 20px horizontal padding; large is 48px with 24px padding. Small is 44px with 16px padding on mobile and 36px at medium. Explicit min-height overrides keep selected controls, including profile editing, at 44px. Disabled controls use the inner surface and muted ink without an added outline; loading retains the shared spinner.
 
-Focus is a two-pixel blue outline with a two-pixel offset. Secondary is transparent with a strong border; ghost gains an inner-surface hover; danger retains the feedback pair and reduces background opacity on hover.
+Focus is a two-pixel blue outline with a two-pixel offset. Secondary uses the inner surface with a transparent border and a 70%-opacity inner-surface hover; profile action overrides retain transparent fill. Ghost gains an inner-surface hover; danger retains the feedback pair and reduces background opacity on hover.
 
 ### Inputs / Fields
 
-Pill fields are 48px high, on the inner surface with a strong one-pixel stroke and 16px horizontal inset. A visible label, optional hint and semantic error description accompany fields. Focus belongs to the wrapper, which receives the blue border and two-pixel outline; the input suppresses a duplicate outline. Error changes the border and supporting copy to danger. Disabled fields retain readable muted text. Sidebar search is its own labeled search form with a 48px input and 44px submit control.
+Pill fields are 48px high, on the inner surface with a transparent one-pixel border and 16px horizontal inset. A visible label, optional hint and semantic error description accompany fields. Focus belongs to the wrapper, which receives one two-pixel blue outline; the input suppresses a duplicate outline. Error uses the soft danger background and danger supporting copy, retaining semantic invalid state. Disabled fields retain readable muted text. Sidebar search is its own labeled search form with a 48px input and 44px submit control; the wrapper owns the focus outline and its input/button suppress nested outlines.
 
 ### Navigation
 
@@ -234,7 +237,11 @@ Desktop items use 48px minimum height, 24px drawn icons, 12px gaps and full-pill
 
 ### Cards / Containers
 
-The shared shell panel carries the material, radius and ambient shadow. Feeds remain continuous, avatar-led rows with quiet separators instead of stacked standalone cards. Outlined pricing cards use 20px corners, transparent fill and no shadow inside the main panel. The outlined plan badge has a 44px mobile minimum height, reducing to 28px at medium; it is an account status/action, not invented social metadata.
+The shared shell panel carries the material, radius and ambient shadow. Feeds remain continuous, avatar-led rows with quiet separators instead of stacked standalone cards. Pricing cards use 20px corners, a tonal muted fill, transparent borders and no shadow inside the main panel. The tonal plan badge has a 44px mobile minimum height, reducing to 28px at medium; it is an account status/action, not invented social metadata.
+
+### Draft uploads
+
+Post drafts use compact rows rather than large attachment cards: an 80px-square thumbnail with 12px corners, a minmax(0,1fr) description column and a 12px gap. Rows have 16px vertical separation. Description input and Remove action have 44px minimum height; the input uses tonal fill and one focus outline. The composer places previews and actions across both columns below 640px, then aligns them with the writing column. The Add images action is a compact pill label over the native file input with wrapper focus. These are local upload previews, not new shipping raster assets.
 
 ### Profile imagery
 
@@ -242,7 +249,7 @@ The inset banner and overlapping circular portrait are the signature arrangement
 
 ### Clerk surfaces
 
-Global collision-safe aliases use `--clerk-color-*` and `--clerk-border-radius`, forwarding semantic app variables. Keep these aliases distinct from Clerk-generated/internal variable names to avoid self-referential collisions. The provider supplies the same body font. Pricing passes the aliases through supported appearance variables and keeps badge and footer-button overrides as CSS objects: hover, active, focus and disabled selectors are explicitly specified, including aria-disabled. This exception prevents vendor-state styles from obscuring the neutral primary pair or disabled text. Pricing buttons have a 44px minimum height, no background image or shadow, and retain the blue focus outline. Do not reduce these overrides to default-state utility classes.
+Global collision-safe aliases use `--clerk-color-*` and `--clerk-border-radius`, forwarding semantic app variables. Keep these aliases distinct from Clerk-generated/internal variable names to avoid self-referential collisions. The provider supplies the same body font. Pricing passes the aliases through supported appearance variables and keeps pricing-card, badge and footer-button overrides as CSS objects: hover, active, focus and disabled selectors are explicitly specified, including aria-disabled. This exception prevents vendor-state styles from obscuring the neutral primary pair or disabled text. Pricing buttons have a 44px minimum height, no background image or shadow, and retain the blue focus outline. Disabled pricing buttons retain transparent borders. Auth social buttons and fields likewise use CSS-object overrides: muted tonal fill, transparent borders, no shadow and a single blue focus outline; invalid auth fields use soft danger fill. Auth field/button minimum height is 44px. Do not reduce these overrides to default-state utility classes.
 
 ## Do's and Don'ts
 
@@ -252,11 +259,14 @@ Global collision-safe aliases use `--clerk-color-*` and `--clerk-border-radius`,
 - **Do** preserve the detached shell geometry, quiet separators and opaque panel bases.
 - **Do** keep visible focus, readable disabled states, safe-area padding and mobile touch targets.
 - **Do** use actual uploaded imagery or the existing initials/gradient fallback; retain supplied image alt text.
-- **Do** retain the collision-safe Clerk aliases and CSS-object pricing button state overrides.
+- **Do** retain the collision-safe Clerk aliases and CSS-object pricing/auth state overrides.
+- **Do** keep resting control borders transparent and use one focus outline.
+- **Do** keep upload previews in compact 80px thumbnail rows with reachable descriptions and removal actions.
 
 ### Don't:
 
 - **Don't** replace the static backdrop with animation or introduce blur-dependent readability.
 - **Don't** add invented engagement, recommendations, verification or profile tabs to fill space.
+- **Don't** restore idle outline boxes around fields, plan badges or pricing cards.
 - **Don't** multiply opaque cards inside the continuous feed panel or introduce hard offset shadows.
 - **Don't** treat QA screenshots as runtime image assets or add reference photography as real account content.

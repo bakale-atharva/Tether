@@ -18,7 +18,7 @@ export async function SearchContent({ searchParams }: {
       <form action="/search" method="get" role="search" className="space-y-3 border-b border-line px-5 py-6 md:px-8 md:py-8">
         <label htmlFor="search-query" className="block text-sm font-semibold text-ink">Search posts</label>
         <div className="flex gap-2 sm:gap-3">
-          <div className="relative min-w-0 flex-1">
+          <div className="relative h-11 min-w-0 flex-1 rounded-full border border-transparent bg-surface-2 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring">
             <SearchIcon aria-hidden="true" className="pointer-events-none absolute top-3 left-3.5 size-5 text-muted" />
             <input
               key={rawQuery}
@@ -30,7 +30,7 @@ export async function SearchContent({ searchParams }: {
               autoComplete="off"
               aria-describedby={parsed.kind === "too_long" ? "search-error" : undefined}
               aria-invalid={parsed.kind === "too_long" || undefined}
-              className="h-11 w-full min-w-0 rounded-full border border-line-strong bg-surface py-2 pr-3.5 pl-11 text-base text-ink outline-none transition-colors duration-150 placeholder:text-muted focus-visible:border-ring focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="h-full w-full min-w-0 rounded-full bg-transparent py-2 pr-3.5 pl-11 text-base text-ink outline-none transition-colors duration-150 placeholder:text-muted focus-visible:outline-none"
             />
           </div>
           <Button type="submit">Search</Button>

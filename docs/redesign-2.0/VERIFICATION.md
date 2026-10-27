@@ -98,3 +98,28 @@ configuration changes were performed.
 - Presentation verification uses existing behavior tests and browser evidence,
   without tests mirroring CSS classes. Remaining unexercised states are listed
   above instead of being claimed as passing.
+
+## Upload and focus correction — 2026-10-27
+
+Owner feedback supersedes the original resting field borders: fields now use
+tonal surfaces and one outline when focused. Attachments use 80px thumbnail rows
+beside editable image descriptions, aligned to the writing column on desktop.
+The original upload, validation, removal and submission contracts are retained.
+
+Final lint, TypeScript, all 41 existing regression tests, diff checks and the
+Webpack production build passed. Browser checks used that final production build
+at 1440px and 320px in both themes. One/four local synthetic image drafts fit
+without horizontal overflow; descriptions could be edited and all drafts removed.
+No posts were published. White thumbnails in these captures are intentional test
+fixtures. Theme preference was restored to system after testing.
+
+Computed focused textarea and description styles were a single solid 2px blue
+outline, with no additional box shadow or border. Keyboard focus on the sidebar
+search submit showed the form outline and no duplicate button outline. Explicit
+solid outline utilities corrected a Tailwind outline-none interaction found in
+the browser. Independent scoped code and fresh visual reviews approved the fix.
+
+Evidence: `upload-desktop-light.png`, `upload-desktop-dark.png` and
+`upload-mobile-light.png`. DESIGN.md and its sidecar reflect the revised policy.
+Authentication setup guidance is in [CLERK-CONVEX-AUTH.md](../CLERK-CONVEX-AUTH.md);
+no account settings, authentication code or deployment variables were changed.

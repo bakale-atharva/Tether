@@ -98,3 +98,17 @@ saved/AI flows without paid activity; report unexercised cases honestly.
 Capture desktop/mobile both themes and representative routes, inspect once,
 fix in one batch, confirm. Document actual tokens in DESIGN.md and sidecar.
 No deployment or merge of the new redesign is authorized.
+
+## Owner correction: 2026-10-27
+
+Replace the oversized half-width upload cards with compact attachment rows:
+80px thumbnails beside editable descriptions and accessible removal controls.
+Rows align with the writing column from small desktop widths; on narrow mobile
+they use the composer width deliberately. Preserve one-to-four images, alt-text
+editing, removal, draft lifecycle and upload/submission logic.
+
+Remove persistent outlines from form boxes and secondary controls. Use tonal
+surfaces at rest and one clear outline when focused/selected, including wrapper
+focus for grouped search/field controls. Preserve semantic error text and ARIA,
+keyboard visibility, disabled behavior and contrast. Content separators remain;
+this correction replaces the earlier outlined-secondary-control treatment.

@@ -19,8 +19,8 @@ export function Field({ id, label, hint, error, prefix, className = "", ...props
         {label}
       </label>
       <div
-        className={`flex h-12 items-center rounded-full border bg-surface-2 transition-colors duration-150 focus-within:border-ring focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring has-disabled:bg-surface-2 ${
-          error ? "border-danger" : "border-line-strong"
+        className={`flex h-12 items-center rounded-full border border-transparent transition-colors duration-150 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring has-disabled:bg-surface-2 ${
+          error ? "bg-danger-soft" : "bg-surface-2"
         }`}
       >
         {prefix ? (

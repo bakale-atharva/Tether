@@ -8,16 +8,16 @@ export function RightSidebar() {
       aria-label="Search and Tether information"
       className="shell-panel sticky top-8 hidden max-h-[calc(100dvh-64px)] min-w-0 overflow-y-auto p-5 xl:block"
     >
-      <form action="/search" method="get" role="search" aria-label="Sidebar post search" className="flex min-w-0 items-center rounded-full border border-line bg-surface-2 pl-4">
+      <form action="/search" method="get" role="search" aria-label="Sidebar post search" className="flex min-w-0 items-center rounded-full border border-transparent bg-surface-2 pl-4 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring">
         <label htmlFor="shell-search" className="sr-only">Search posts</label>
         <input
           id="shell-search"
           name="q"
           type="search"
           placeholder="Search posts"
-          className="h-12 w-full min-w-0 rounded-full bg-transparent text-sm text-ink outline-none placeholder:text-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className="h-12 w-full min-w-0 rounded-full bg-transparent text-sm text-ink outline-none placeholder:text-muted focus-visible:outline-none"
         />
-        <button type="submit" aria-label="Search posts" className="m-1 flex size-11 shrink-0 items-center justify-center rounded-full text-muted transition-colors duration-150 hover:bg-surface hover:text-ink">
+        <button type="submit" aria-label="Search posts" className="m-1 flex size-11 shrink-0 items-center justify-center rounded-full text-muted transition-colors duration-150 hover:bg-surface hover:text-ink focus-visible:outline-none!">
           <SearchIcon className="size-5" />
         </button>
       </form>
