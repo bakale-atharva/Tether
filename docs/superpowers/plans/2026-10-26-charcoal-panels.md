@@ -31,10 +31,10 @@ Files EXCLUSIVE: app/globals.css, app/layout.tsx, components/ui/*.
 Interfaces: preserve semantic CSS names/primitive props; produce .shell-panel,
 .app-backdrop and additive Avatar size profile (96px mobile/112px sm+).
 
-- [ ] Read spec/reference/craft floor and installed styling/layout docs.
-- [ ] Replace light/dark palettes, panel material/backdrop, typography and metadata colors. Keep theme precedence, providers and reduced motion intact.
-- [ ] Update buttons/fields/cards/states/header/toast to coherent reference shapes, readable disabled/focus states. Coordinate PageHeader sticky offset56px mobile and32px desktop with shell. No clipping ancestors.
-- [ ] Focused lint/diff check and literal palette contrast checks; report exact files and remaining browser checks. No shared builds or Git writes.
+- [x] Read spec/reference/craft floor and installed styling/layout docs.
+- [x] Replace light/dark palettes, panel material/backdrop, typography and metadata colors. Keep theme precedence, providers and reduced motion intact.
+- [x] Update buttons/fields/cards/states/header/toast to coherent reference shapes, readable disabled/focus states. Coordinate PageHeader sticky offset56px mobile and32px desktop with shell. No clipping ancestors.
+- [x] Focused lint/diff check and literal palette contrast checks; report exact files and remaining browser checks. No shared builds or Git writes.
 
 ### Task 2: Floating shell and right sidebar
 
@@ -42,10 +42,10 @@ Files EXCLUSIVE: components/shell/*, components/brand/logo.tsx. May create
 components/shell/right-sidebar.tsx. Do not edit globals/UI/profile.
 Interfaces: consume .shell-panel/.app-backdrop and unchanged tokens/props.
 
-- [ ] Build spec's >=1280 three-column/1024 two-column/768 icon/mobile shell, bounded scrollable sidebars, mobile56px header and safe bottom nav.
-- [ ] Add right sidebar native GET search with unique shell-search id; reuse existing account/plan/about/join information without new backend calls. Preserve compact info footer below1280.
-- [ ] Preserve all provider/Suspense/landmark/nav/account/auth/theme logic; no inaccessible duplicate landmarks or hidden-only actions.
-- [ ] Focused lint/diff/self-review; report for source review and central browser check at short600px height.
+- [x] Build spec's >=1280 three-column/1024 two-column/768 icon/mobile shell, bounded scrollable sidebars, mobile56px header and safe bottom nav.
+- [x] Add right sidebar native GET search with unique shell-search id; reuse existing account/plan/about/join information without new backend calls. Preserve compact info footer below1280.
+- [x] Preserve all provider/Suspense/landmark/nav/account/auth/theme logic; no inaccessible duplicate landmarks or hidden-only actions.
+- [x] Focused lint/diff/self-review; report for source review and central browser check at short600px height.
 
 ### Task 3: Profiles and social surfaces
 
@@ -54,19 +54,19 @@ app/(app)/page.tsx, home-welcome.tsx, app/(app)/[handle]/{profile-view,people-li
 app/(app)/[handle]/post/[id]/post-detail.tsx. No .ts hooks or globals/UI/shell.
 Interfaces: existing props/handlers unchanged; consume Avatar size profile.
 
-- [ ] Make profile reference-led with inset160/200px banner, profile avatar overlap, spacious identity and outlined actions; keep inline editor/data intact.
-- [ ] Recompose feeds/composers/threads/people with generous continuous-panel rhythm, clear tabs/actions, restrained borders and source-authoritative copy. Keep upload input explicitly bounded.
-- [ ] Preserve all queries/handlers/effects/URLs/form fields/permissions/validation/state ownership/pagination. Structural surfaces transparent where outer panel should show.
-- [ ] Focused lint/relevant existing tests/diff check, report. Browser long text/four images/320px/focus centrally owned.
+- [x] Make profile reference-led with inset160/200px banner, profile avatar overlap, spacious identity and outlined actions; keep inline editor/data intact.
+- [x] Recompose feeds/composers/threads/people with generous continuous-panel rhythm, clear tabs/actions, restrained borders and source-authoritative copy. Keep upload input explicitly bounded.
+- [x] Preserve all queries/handlers/effects/URLs/form fields/permissions/validation/state ownership/pagination. Structural surfaces transparent where outer panel should show.
+- [x] Focused lint/relevant existing tests/diff check, report. Browser long text/four images/320px/focus centrally owned.
 
 ### Task 4: Private AI presentation
 
 Files EXCLUSIVE: components/agent/*.tsx, app/(app)/tether/{page,error}.tsx.
 Interfaces: existing props/hooks/action ids/scroll behavior unchanged.
 
-- [ ] Restyle list/header/messages/composer and plan/error states for charcoal/porcelain materials, rounded controls and responsive message width.
-- [ ] Preserve BOTH list and history scroll regions, follow behavior, all streaming/send/stop/retry/rename/IME/permissions/URL semantics.
-- [ ] Focused lint/existing agent tests/diff check, report. No service/model calls or Git mutations.
+- [x] Restyle list/header/messages/composer and plan/error states for charcoal/porcelain materials, rounded controls and responsive message width.
+- [x] Preserve BOTH list and history scroll regions, follow behavior, all streaming/send/stop/retry/rename/IME/permissions/URL semantics.
+- [x] Focused lint/existing agent tests/diff check, report. No service/model calls or Git mutations.
 
 ### Task 5: Search, saved and account surfaces
 
@@ -75,20 +75,20 @@ billing/page.tsx; components/billing/{pricing,subscription,plan-badge}.tsx;
 components/brand/auth-layout.tsx; onboarding/sign-in/sign-up routes; app/not-found.tsx.
 Interfaces: retain Clerk flows/appearance API, search GET contract, validation.
 
-- [ ] Translate existing wrappers, forms, current-plan and pricing states to matching panel material, avoiding repeated flat nested shells.
-- [ ] Preserve all copy/labels/redirects/query timing/pagination/gating/refresh/payment behavior; no custom auth/checkout.
-- [ ] Focused lint/diff and installed Clerk type checks as needed; report. No package/config/backend edits.
+- [x] Translate existing wrappers, forms, current-plan and pricing states to matching panel material, avoiding repeated flat nested shells.
+- [x] Preserve all copy/labels/redirects/query timing/pagination/gating/refresh/payment behavior; no custom auth/checkout.
+- [x] Focused lint/diff and installed Clerk type checks as needed; report. No package/config/backend edits.
 
 ### Task 6: Integration, reviews and documentation
 
 Files: controller-owned docs/PRODUCT/surface brief; documenter-owned DESIGN.md
 and .impeccable/design.json after implementation and visual review.
 
-- [ ] Review each disjoint task diff and fix actual findings through its owner; commit scoped files centrally.
-- [ ] Run complete lint/typecheck41test suite and production Webpack build; compare baseline and diagnose introduced failures.
-- [ ] Browser matrix from spec; desktop/mobile both themes and representative profile/feed/AI/account screenshots. Validate screenshots, fix a bounded batch and confirm. Triage detector once per changed area.
-- [ ] Fresh whole-branch code review and independent visual finish review with screenshot packet/reference. Resolve material issues and obtain scoped verdicts.
-- [ ] Document actual shipped system, update superseded product/brief context, verification limitations and Next feedback reporting pass. No new merge/deploy.
+- [x] Review each disjoint task diff and fix actual findings through its owner; commit scoped files centrally.
+- [x] Run complete lint/typecheck41test suite and production Webpack build; compare baseline and diagnose introduced failures.
+- [x] Browser matrix from spec; desktop/mobile both themes and representative profile/feed/AI/account screenshots. Validate screenshots, fix a bounded batch and confirm. Triage detector once per changed area.
+- [x] Fresh whole-branch code review and independent visual finish review with screenshot packet/reference. Resolve material issues and obtain scoped verdicts.
+- [x] Document actual shipped system, update superseded product/brief context, verification limitations and Next feedback reporting pass. No new merge/deploy.
 
 ## Preflight
 
